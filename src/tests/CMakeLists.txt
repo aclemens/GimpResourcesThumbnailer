@@ -5,13 +5,11 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../
 
 #------------------------------------------------------------------------
 
-SET(freerotationtest_SRCS freerotationtest.cpp
+SET(brushloadertest_SRCS brushloadertest.cpp
 )
-KDE4_ADD_UNIT_TEST(freerotationtest ${freerotationtest_SRCS})
-TARGET_LINK_LIBRARIES(freerotationtest
-                      ${KDE4_KDECORE_LIBS}
+KDE4_ADD_UNIT_TEST(brushloadertest ${brushloadertest_SRCS})
+TARGET_LINK_LIBRARIES(brushloadertest
                       ${QT_QTGUI_LIBRARY}
                       ${QT_QTTEST_LIBRARY}
-                      digikamcore
                       )
 
