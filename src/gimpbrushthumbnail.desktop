@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Service
+Name=Gimp Brush Thumbnailer
+X-KDE-ServiceTypes=ThumbCreator
+MimeType=image/x-gimpgbr;
+X-KDE-Library=gimpbrushthumbnail
+CacheThumbnail=true
