@@ -1,9 +1,11 @@
 GimpBrushThumbs is a thumbnail generator for all KDE file managers (konqueror, dolphin, ...)
 
-To install, follow these steps:
+To install, follow these steps (inside this folder):
 
 Run cmake
-  cmake -DCMAKE_INSTALL_PREFIX=$KDEDIR -DCMAKE_BUILD_TYPE=release path-to-gimpbrushthumbs-source
+  mkdir build
+  cd build
+  cmake -DCMAKE_INSTALL_PREFIX=$(kde4-config --prefix) -DCMAKE_BUILD_TYPE=release ..
 Run make
   make
 Install as root
