@@ -1,5 +1,8 @@
+2009-06-19 GimpBrushThumbs 1.0.2
+    * Add support for Gimp Brush v1
+
 2009-06-19 GimpBrushThumbs 1.0.1
-    * fix thumbnailing for color brushes.
+    * Fix thumbnailing for color brushes.
 
 2009-06-17 GimpBrushThumbs 1.0
 	* Initial release.
