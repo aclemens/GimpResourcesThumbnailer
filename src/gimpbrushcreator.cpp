@@ -49,7 +49,7 @@ bool GimpBrushCreator::create(const QString &path, int width, int height, QImage
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly))
     {
-        kDebug() << "Error loading GBR file.";
+        kDebug() << "Error loading Gimp Brush (GBR) file.";
         return false;
     }
 
@@ -73,14 +73,14 @@ bool GimpBrushCreator::create(const QString &path, int width, int height, QImage
 
     if ((magic != 0x47494D50))
     {
-        kDebug() << "No GBR file!";
+        kDebug() << "This is no valid Gimp Brush (GBR) file!";
         file.close();
         return false;
     }
 
     if (version != 2 && version != 3)
     {
-        kDebug() << "Unknown GBR version!";
+        kDebug() << "Unknown Gimp Brush (GBR) version!";
         file.close();
         return false;
     }
