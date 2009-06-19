@@ -3,5 +3,6 @@
   <mime-type type="image/x-gimpgbr">
     <comment>Gimp Brush</comment>
     <glob pattern="*.gbr"/>
+    <glob pattern="*.vbr"/>
   </mime-type>
 </mime-info>

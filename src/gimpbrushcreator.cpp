@@ -55,7 +55,7 @@ bool GimpBrushCreator::create(const QString &path, int width, int height, QImage
     bool success = false;
 
     QFileInfo fi(file);
-    if (file.openMode() == QIODevice::Text && fi.suffix() == QString("vbr"))
+    if (fi.suffix().toUpper() == QString("VBR"))
     {
         success = createVBR(file, width, height, img);
     }
