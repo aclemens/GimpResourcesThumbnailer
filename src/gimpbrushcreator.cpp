@@ -232,11 +232,11 @@ bool GimpBrushCreator::createVBR(QFile& file, int width, int height, QImage &img
      Line 10: The brush angle.
      */
 
-    int dataSize    = data.count();
-    QString magic   = data[0];
-    QString version = data[1];
+    int dataSize     = data.count();
+    QString& magic   = data[0];
+    QString& version = data[1];
 
-    // check some basic needed parameters
+    // check basic parameters
 
     if (
         (magic != QString("GIMP-VBR"))                           ||
@@ -250,16 +250,25 @@ bool GimpBrushCreator::createVBR(QFile& file, int width, int height, QImage &img
 
     // now load the rest
     bool shaped = (dataSize == 10) ? true : false;
+    QString empty;
 
-    QString brushName   = data[2];
-    QString spacing     = shaped ? data[4] : data[3];
-    QString radius      = shaped ? data[6] : data[4];
+    QString& brushName   = data[2];
+    QString& spacing     = shaped ? data[4] : data[3];
+    QString& radius      = shaped ? data[6] : data[4];
+    QString& hardness    = shaped ? data[7] : data[5];
+    QString& aspectRatio = shaped ? data[8] : data[6];
+    QString& angle       = shaped ? data[9] : data[7];
+    QString& spikes      = shaped ? data[5] : empty;
+    QString& style       = shaped ? data[3] : empty;
 
-    QString hardness    = shaped ? data[7] : data[5];
-    QString aspectRatio = shaped ? data[8] : data[6];
-    QString angle       = shaped ? data[9] : data[7];
-    QString spikes      = shaped ? data[5] : QString();
-    QString style       = shaped ? data[3] : QString();
+    kDebug() << "brushName: "   << brushName;
+    kDebug() << "spacing: "     << spacing;
+    kDebug() << "radius: "      << radius;
+    kDebug() << "hardness: "    << hardness;
+    kDebug() << "aspectRatio: " << aspectRatio;
+    kDebug() << "angle: "       << angle;
+    kDebug() << "spikes: "      << spikes;
+    kDebug() << "style: "       << style;
 
     return false;
 }
