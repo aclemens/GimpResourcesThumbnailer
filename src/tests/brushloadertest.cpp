@@ -30,15 +30,44 @@
 
 QTEST_MAIN(BrushLoaderTest)
 
-void BrushLoaderTest::testLoadGimpBrushV2()
+void BrushLoaderTest::testLoadGimpBrushV1()
 {
-    QString brushfile("feather.gbr");
+    QString brushfile(KDESRCDIR"/19fcircle.gbr");
+    QString exampleBrushFile(KDESRCDIR"/19fcircle-result.png");
     int width  = 0;
     int height = 0;
     QImage img;
 
+    // basic test: does create() work?
     GimpBrushCreator c;
+    QVERIFY( c.create(brushfile, width, height, img) );
+
+    // compare the resulting thumbnail with an example output
+    QImage example = QImage(exampleBrushFile).convertToFormat(img.format());
+
+    QCOMPARE(img.width(),  example.width());
+    QCOMPARE(img.height(), example.height());
+    QCOMPARE(img.depth(),  example.depth());
+    QCOMPARE(img, example);
+}
+
+void BrushLoaderTest::testLoadGimpBrushV2()
+{
+    QString brushfile(KDESRCDIR"/feather.gbr");
+    QString exampleBrushFile(KDESRCDIR"/feather-result.png");
+    int width  = 0;
+    int height = 0;
+    QImage img;
 
     // basic test: does create() work?
+    GimpBrushCreator c;
     QVERIFY( c.create(brushfile, width, height, img) );
+
+    // compare the resulting thumbnail with an example output
+    QImage example = QImage(exampleBrushFile).convertToFormat(img.format());
+
+    QCOMPARE(img.width(),  example.width());
+    QCOMPARE(img.height(), example.height());
+    QCOMPARE(img.depth(),  example.depth());
+    QCOMPARE(img, example);
 }

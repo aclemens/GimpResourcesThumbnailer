@@ -67,22 +67,29 @@ bool GimpBrushCreator::create(const QString &path, int width, int height, QImage
        >> version
        >> w
        >> h
-       >> colorDepth
-       >> magic
-       >> spacing;
+       >> colorDepth;
 
-    if ((magic != 0x47494D50))
+    if (version == 1)
     {
-        kDebug() << "This is no valid Gimp Brush (GBR) file!";
-        file.close();
-        return false;
+        kDebug() << "Old Gimp Brush (GBR) format detected!";
     }
-
-    if (version != 2 && version != 3)
+    else
     {
-        kDebug() << "Unknown Gimp Brush (GBR) version!";
-        file.close();
-        return false;
+        in >> magic >> spacing;
+
+        if ((magic != 0x47494D50))
+        {
+            kDebug() << "This is no valid Gimp Brush (GBR) file!";
+            file.close();
+            return false;
+        }
+
+        if (version != 2 && version != 3)
+        {
+            kDebug() << "Unknown Gimp Brush (GBR) version!";
+            file.close();
+            return false;
+        }
     }
 
     if (colorDepth != 1 && colorDepth != 4)
@@ -93,7 +100,7 @@ bool GimpBrushCreator::create(const QString &path, int width, int height, QImage
     }
 
     // read the brush name
-    unsigned int nameLength = headerSize - 28;
+    unsigned int nameLength = headerSize - ((version == 1) ? 20 : 28);
     char* brushName_c       = new char[nameLength];
     in.readRawData(brushName_c, nameLength);
     brushName = QString(brushName_c);

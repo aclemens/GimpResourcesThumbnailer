@@ -30,6 +30,7 @@ class BrushLoaderTest : public QObject
 
 private Q_SLOTS:
 
+    void testLoadGimpBrushV1();
     void testLoadGimpBrushV2();
 
 };

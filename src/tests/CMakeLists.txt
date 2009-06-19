@@ -14,4 +14,3 @@ TARGET_LINK_LIBRARIES(brushloadertest
                       ${QT_QTGUI_LIBRARY}
                       ${QT_QTTEST_LIBRARY}
                       )
-
