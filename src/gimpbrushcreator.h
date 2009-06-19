@@ -24,12 +24,22 @@
 
 #include <kio/thumbcreator.h>
 
+class QFile;
+class QImage;
+class QString;
+
 class GimpBrushCreator : public ThumbCreator
 {
 public:
+
     GimpBrushCreator();
-    virtual bool create(const QString &path, int, int, QImage &img);
+    virtual bool create(const QString& path, int, int, QImage& img);
     virtual Flags flags() const;
+
+private:
+
+    bool createGBR(QFile& file, int, int, QImage& img);
+    bool createVBR(QFile& file, int, int, QImage& img);
 };
 
 #endif /* GIMPBRUSHCREATOR_H */

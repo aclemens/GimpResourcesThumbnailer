@@ -21,9 +21,11 @@
 
 // Qt includes
 
+#include <QFile>
+#include <QFileInfo>
 #include <QImage>
 #include <QString>
-#include <QFile>
+#include <QStringList>
 
 // KDE includes
 
@@ -43,16 +45,30 @@ GimpBrushCreator::GimpBrushCreator()
 
 bool GimpBrushCreator::create(const QString &path, int width, int height, QImage &img)
 {
-    Q_UNUSED(width)
-    Q_UNUSED(height)
-
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly))
     {
-        kDebug() << "Error loading Gimp Brush (GBR) file.";
+        kDebug() << "Error loading Gimp Brush file.";
         return false;
     }
 
+    bool success = false;
+
+    QFileInfo fi(file);
+    if (file.openMode() == QIODevice::Text && fi.suffix() == QString("vbr"))
+    {
+        success = createVBR(file, width, height, img);
+    }
+    else
+    {
+        success = createGBR(file, width, height, img);
+    }
+
+    return success;
+}
+
+bool GimpBrushCreator::createGBR(QFile& file, int, int, QImage &img)
+{
     quint32 headerSize;
     quint32 version;
     quint32 w;
@@ -170,6 +186,66 @@ bool GimpBrushCreator::create(const QString &path, int width, int height, QImage
     delete[] data;
 
     return success;
+}
+
+bool GimpBrushCreator::createVBR(QFile& file, int width, int height, QImage &img)
+{
+    int imgSize = qMax(width, height);
+
+    QTextStream in(&file);
+    QStringList data;
+
+    while (!in.atEnd())
+    {
+        data << in.readLine();
+    }
+
+    // close the file
+    file.close();
+
+    /*
+     Non-shaped brushes:
+
+     Line 1: Must always contain the magic string "GIMP-VBR".
+     Line 2: Version number, always "1.0".
+     Line 3: The name of the brush.  This is a UTF-8 string, with a maximum length of 255 bytes.
+     Line 4: The brush spacing.
+     Line 5: The brush radius, in pixels.
+     Line 6: The brush hardness.
+     Line 7: The brush aspect ratio.
+     Line 8: The brush angle.
+
+     Shaped brushes:
+
+     Line 1: Must always contain the magic string "GIMP-VBR".
+     Line 2: Version number, always "1.5".
+     Line 3: The name of the brush.  This is a UTF-8 string, with a maximum length of 255 bytes.
+     Line 4: A string giving the shape of the brush.  Currently "Circle",
+             "Square", and "Diamond" are supported.  The possible shapes
+             are defined by the GimpBrushGeneratedShape enum in
+             core-enums.h.
+     Line 5: The brush spacing.
+     Line 6: The number of spikes for the shape.
+     Line 7: The brush radius, in pixels.
+     Line 8: The brush hardness.
+     Line 9: The brush aspect ratio.
+     Line 10: The brush angle.
+     */
+
+    int dataSize    = data.count();
+    QString magic   = data[0];
+    QString version = data[1];
+
+    if ((dataSize != 8 && dataSize != 10) ||
+        (version != QString("1.0") && version != QString("1.5")) ||
+        (magic != QString("GIMP-VBR")))
+    {
+        kDebug() << "Invalid Gimp Brush (VBR) data!";
+        return false;
+    }
+
+
+    return false;
 }
 
 ThumbCreator::Flags GimpBrushCreator::flags() const
