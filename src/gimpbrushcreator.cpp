@@ -232,13 +232,23 @@ bool GimpBrushCreator::createVBR(QFile& file, int width, int height, QImage &img
      Line 10: The brush angle.
      */
 
-    int dataSize    = data.count();
-    QString magic   = data[0];
-    QString version = data[1];
+    int dataSize        = data.count();
+    QString magic       = data[0];
+    QString version     = data[1];
+    QString brushName   = data[2];
+    QString spacing;
+    QString radius;
+    QString hardness;
+    QString aspectRatio;
+    QString angle;
+    QString spikes;
+    QString style;
 
-    if ((dataSize != 8 && dataSize != 10) ||
+    if (
+        (magic != QString("GIMP-VBR"))                           ||
         (version != QString("1.0") && version != QString("1.5")) ||
-        (magic != QString("GIMP-VBR")))
+        (dataSize != 8 && dataSize != 10)
+       )
     {
         kDebug() << "Invalid Gimp Brush (VBR) data!";
         return false;
