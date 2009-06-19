@@ -78,9 +78,16 @@ bool GimpBrushCreator::create(const QString &path, int width, int height, QImage
         return false;
     }
 
-    if (version != 2)
+    if (version != 2 && version != 3)
     {
         kDebug() << "Unknown GBR version!";
+        file.close();
+        return false;
+    }
+
+    if (colorDepth != 1 && colorDepth != 4)
+    {
+        kDebug() << "Invalid color depth!";
         file.close();
         return false;
     }
@@ -103,22 +110,19 @@ bool GimpBrushCreator::create(const QString &path, int width, int height, QImage
     bool success = true;
 
     QImage::Format imageFormat;
-    if (colorDepth == 1)
-        imageFormat = QImage::Format_RGB32;
-    else
-        imageFormat = QImage::Format_ARGB32;
+    imageFormat = (colorDepth == 1) ? QImage::Format_RGB32 : QImage::Format_ARGB32;
 
     QImage thumbnail(w, h, imageFormat);
-    quint32 hs = headerSize;
+    quint32 step = 0;
 
     if (colorDepth == 1 && data)
     {
         // Grayscale
         for (quint32 y = 0; y < h; ++y)
         {
-            for (quint32 x = 0; x < w; ++x, ++hs)
+            for (quint32 x = 0; x < w; ++x, ++step)
             {
-                qint32 val = 255 - static_cast<uchar> (data[hs]);
+                qint32 val = 255 - static_cast<uchar> (data[step]);
                 thumbnail.setPixel(x, y, qRgb(val, val, val));
             }
         }
@@ -128,9 +132,12 @@ bool GimpBrushCreator::create(const QString &path, int width, int height, QImage
         // RGBA
         for (quint32 y = 0; y < h; ++y)
         {
-            for (quint32 x = 0; x < w; ++x, hs += 4)
+            for (quint32 x = 0; x < w; ++x, step += 4)
             {
-                thumbnail.setPixel(x, y, qRgba(data[hs], data[hs + 1], data[hs + 2], data[hs + 3]));
+                thumbnail.setPixel(x, y, qRgba(static_cast<uchar>(data[step]),
+                                               static_cast<uchar>(data[step+1]),
+                                               static_cast<uchar>(data[step+2]),
+                                               static_cast<uchar>(data[step+3])));
             }
         }
     }
@@ -143,11 +150,11 @@ bool GimpBrushCreator::create(const QString &path, int width, int height, QImage
     {
         // load image data into reference
         img = thumbnail;
-        kDebug() << "Thumbnail for '" << brushName << "' GBR file successfully generated!";
+        kDebug() << "Thumbnail for Gimp Brush (GBR) '" << brushName << "' successfully generated!";
     }
     else
     {
-        kDebug() << "Failed generating GBR thumbnail...";
+        kDebug() << "Failed generating Gimp Brush (GBR) thumbnail...";
         success = false;
     }
 
