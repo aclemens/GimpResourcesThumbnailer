@@ -30,7 +30,7 @@
 
 QTEST_MAIN(BrushLoaderTest)
 
-void BrushLoaderTest::testLoadGimpBrushV1()
+void BrushLoaderTest::testLoadGBRv1()
 {
     QString brushfile(KDESRCDIR"/19fcircle.gbr");
     QString exampleBrushFile(KDESRCDIR"/19fcircle-result.png");
@@ -51,7 +51,7 @@ void BrushLoaderTest::testLoadGimpBrushV1()
     QCOMPARE(img, example);
 }
 
-void BrushLoaderTest::testLoadGimpBrushV2()
+void BrushLoaderTest::testLoadGBRv2_3()
 {
     QString brushfile(KDESRCDIR"/feather.gbr");
     QString exampleBrushFile(KDESRCDIR"/feather-result.png");
