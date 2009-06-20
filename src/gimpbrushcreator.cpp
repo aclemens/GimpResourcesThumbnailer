@@ -237,7 +237,6 @@ bool GimpBrushCreator::createVBR(QFile& file, int width, int height, QImage &img
     QString& version = data[1];
 
     // check basic parameters
-
     if (
         (magic != QString("GIMP-VBR"))                           ||
         (version != QString("1.0") && version != QString("1.5")) ||
