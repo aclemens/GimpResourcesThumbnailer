@@ -85,27 +85,29 @@ bool GimpBrushCreator::createGBR(QFile& file, int, int, QImage &img)
        >> h
        >> colorDepth;
 
-    if (version == 1)
+    // check if the brush has the right version and magic number
+    switch (version)
     {
-        kDebug() << "Old Gimp Brush (GBR) format detected!";
-    }
-    else
-    {
-        in >> magic >> spacing;
-
-        if ((magic != 0x47494D50))
+        case 1:
+            // no magic number and spacing information
+            kDebug() << "Gimp Brush format: v1";
+            break;
+        case 2: case 3:
         {
-            kDebug() << "This is no valid Gimp Brush (GBR) file!";
+            in >> magic >> spacing;
+            if ((magic != 0x47494D50))
+            {
+                kDebug() << "No valid Gimp Brush file!";
+                file.close();
+                return false;
+            }
+            kDebug() << "Gimp Brush format: v2/v3";
+            break;
+        }
+        default:
+            kDebug() << "No valid Gimp Brush file!";
             file.close();
             return false;
-        }
-
-        if (version != 2 && version != 3)
-        {
-            kDebug() << "Unknown Gimp Brush (GBR) version!";
-            file.close();
-            return false;
-        }
     }
 
     if (colorDepth != 1 && colorDepth != 4)
@@ -124,10 +126,16 @@ bool GimpBrushCreator::createGBR(QFile& file, int, int, QImage &img)
     // read the image data
     unsigned int dataLength = w * h * colorDepth;
     char* data              = new char[dataLength];
-    in.readRawData(data, dataLength);
+    int bytesRead = in.readRawData(data, dataLength);
 
     // close file
     file.close();
+
+    // valid brush data?
+    if (bytesRead == -1 || bytesRead != dataLength)
+    {
+        return false;
+    }
 
     // generate thumbnail
     bool success = true;
@@ -138,46 +146,46 @@ bool GimpBrushCreator::createGBR(QFile& file, int, int, QImage &img)
     QImage thumbnail(w, h, imageFormat);
     quint32 step = 0;
 
-    if (colorDepth == 1 && data)
+    switch (colorDepth)
     {
-        // Grayscale
-        for (quint32 y = 0; y < h; ++y)
+        case 1:
         {
-            for (quint32 x = 0; x < w; ++x, ++step)
+            // Grayscale
+            for (quint32 y = 0; y < h; ++y)
             {
-                qint32 val = 255 - static_cast<uchar> (data[step]);
-                thumbnail.setPixel(x, y, qRgb(val, val, val));
+                for (quint32 x = 0; x < w; ++x, ++step)
+                {
+                    qint32 val = 255 - static_cast<uchar> (data[step]);
+                    thumbnail.setPixel(x, y, qRgb(val, val, val));
+                }
+            }
+            break;
+        }
+        case 4:
+        {
+            // RGBA
+            for (quint32 y = 0; y < h; ++y)
+            {
+                for (quint32 x = 0; x < w; ++x, step += 4)
+                {
+                    thumbnail.setPixel(x, y, qRgba(static_cast<uchar>(data[step]),
+                                                   static_cast<uchar>(data[step+1]),
+                                                   static_cast<uchar>(data[step+2]),
+                                                   static_cast<uchar>(data[step+3])));
+                }
             }
         }
-    }
-    else if (colorDepth == 4 && data)
-    {
-        // RGBA
-        for (quint32 y = 0; y < h; ++y)
-        {
-            for (quint32 x = 0; x < w; ++x, step += 4)
-            {
-                thumbnail.setPixel(x, y, qRgba(static_cast<uchar>(data[step]),
-                                               static_cast<uchar>(data[step+1]),
-                                               static_cast<uchar>(data[step+2]),
-                                               static_cast<uchar>(data[step+3])));
-            }
-        }
-    }
-    else
-    {
-        success = false;
     }
 
     if (success)
     {
         // load image data into reference
         img = thumbnail;
-        kDebug() << "Thumbnail for Gimp Brush (GBR) '" << brushName << "' successfully generated!";
+        kDebug() << "Thumbnail for Gimp Brush '" << brushName << "' successfully generated!";
     }
     else
     {
-        kDebug() << "Failed generating Gimp Brush (GBR) thumbnail...";
+        kDebug() << "Failed generating Gimp Brush thumbnail...";
         success = false;
     }
 
