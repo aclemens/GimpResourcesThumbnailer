@@ -86,33 +86,38 @@ bool GimpBrushCreator::createGBR(QFile& file, int, int, QImage &img)
        >> colorDepth;
 
     // check if the brush has the right version and magic number
+    bool validBrushFile = true;
     switch (version)
     {
         case 1:
+        {
             // no magic number and spacing information
             kDebug() << "Gimp Brush format: v1";
             break;
+        }
         case 2: case 3:
         {
             in >> magic >> spacing;
             if ((magic != 0x47494D50))
             {
                 kDebug() << "No valid Gimp Brush file!";
-                file.close();
-                return false;
+                validBrushFile = false;
             }
             kDebug() << "Gimp Brush format: v2/v3";
             break;
         }
         default:
-            kDebug() << "No valid Gimp Brush file!";
-            file.close();
-            return false;
+            validBrushFile = false;
     }
 
     if (colorDepth != 1 && colorDepth != 4)
     {
         kDebug() << "Invalid color depth!";
+        validBrushFile = false;
+    }
+
+    if (!validBrushFile)
+    {
         file.close();
         return false;
     }
@@ -127,19 +132,13 @@ bool GimpBrushCreator::createGBR(QFile& file, int, int, QImage &img)
     unsigned int dataLength = w * h * colorDepth;
     char* data              = new char[dataLength];
     int bytesRead = in.readRawData(data, dataLength);
-
-    // close file
     file.close();
 
     // valid brush data?
     if (bytesRead == -1 || bytesRead != dataLength)
-    {
         return false;
-    }
 
     // generate thumbnail
-    bool success = true;
-
     QImage::Format imageFormat;
     imageFormat = (colorDepth == 1) ? QImage::Format_RGB32 : QImage::Format_ARGB32;
 
@@ -177,23 +176,15 @@ bool GimpBrushCreator::createGBR(QFile& file, int, int, QImage &img)
         }
     }
 
-    if (success)
-    {
-        // load image data into reference
-        img = thumbnail;
-        kDebug() << "Thumbnail for Gimp Brush '" << brushName << "' successfully generated!";
-    }
-    else
-    {
-        kDebug() << "Failed generating Gimp Brush thumbnail...";
-        success = false;
-    }
+    // load image data into reference
+    img = thumbnail;
+    kDebug() << "Thumbnail for Gimp Brush '" << brushName << "' successfully generated!";
 
     // cleanup
     delete[] brushName_c;
     delete[] data;
 
-    return success;
+    return (!img.isNull());
 }
 
 bool GimpBrushCreator::createVBR(QFile& file, int width, int height, QImage &img)
