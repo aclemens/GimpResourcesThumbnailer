@@ -59,6 +59,14 @@ bool GimpBrushCreator::create(const QString &path, int width, int height, QImage
     {
         success = createVBR(file, width, height, img);
     }
+    else if (fi.suffix().toUpper() == QString("GIH"))
+    {
+        // Read ahead two lines and skip the textual information. We don't need it.
+        // The actual GBR data is found at line 3.
+        file.readLine();
+        file.readLine();
+        success = createGBR(file, width, height, img);
+    }
     else
     {
         success = createGBR(file, width, height, img);

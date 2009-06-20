@@ -1,3 +1,6 @@
+2009-06-20 GimpBrushThumbs 1.0.3
+    * Add support for animated Gimp Brushes (.gih)
+
 2009-06-19 GimpBrushThumbs 1.0.2
     * Add support for Gimp Brush v1
 
