@@ -137,9 +137,9 @@ bool GimpBrushCreator::createGBR(QFile& file, int, int, QImage &img)
     brushName = QString(brushName_c);
 
     // read the image data
-    unsigned int dataLength = w * h * colorDepth;
-    char* data              = new char[dataLength];
-    int bytesRead = in.readRawData(data, dataLength);
+    int dataLength = w * h * colorDepth;
+    char* data     = new char[dataLength];
+    int bytesRead  = in.readRawData(data, dataLength);
     file.close();
 
     // valid brush data?
@@ -197,7 +197,11 @@ bool GimpBrushCreator::createGBR(QFile& file, int, int, QImage &img)
 
 bool GimpBrushCreator::createVBR(QFile& file, int width, int height, QImage &img)
 {
-    int imgSize = qMax(width, height);
+    Q_UNUSED(width)
+    Q_UNUSED(height)
+    Q_UNUSED(img)
+
+//    int imgSize = qMax(width, height);
 
     QTextStream in(&file);
     QStringList data;
