@@ -2,6 +2,6 @@
 Type=Service
 Name=Gimp Brush Thumbnailer
 X-KDE-ServiceTypes=ThumbCreator
-MimeType=image/x-gimpgbr;
+MimeType=image/x-gimp-brush-thumbnailer;
 X-KDE-Library=gimpbrushthumbnail
 CacheThumbnail=true
