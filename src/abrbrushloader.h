@@ -58,14 +58,11 @@ public:
     AbrBrushLoader(const QString& path);
     ~AbrBrushLoader();
 
-public:
-
-    AbrHeader*             header;
-    AbrSampledBrushHeader* sampledBrushHeader;
-
-private:
+protected:
 
     virtual bool generateThumbnail(QFile& file);
+
+private:
 
     bool streamIsOk(QDataStream& stream);
 
@@ -76,6 +73,11 @@ private:
     bool validAbrSampledBrushHeader(AbrSampledBrushHeader* header);
 
     void init();
+
+private:
+
+    AbrHeader*             header;
+    AbrSampledBrushHeader* sampledBrushHeader;
 };
 
 #endif /* ABRBRUSHLOADER_H */
