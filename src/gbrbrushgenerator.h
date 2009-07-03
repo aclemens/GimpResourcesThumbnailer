@@ -20,13 +20,24 @@
 #ifndef GBRBRUSHGENERATOR_H
 #define GBRBRUSHGENERATOR_H
 
-class GbrBrushGenerator
+// Local includes
+
+#include "resourceloader.h"
+
+class QFile;
+
+class GbrBrushGenerator : public ResourceLoader
 {
 
 public:
 
     GbrBrushGenerator();
+    GbrBrushGenerator(const QString& path);
     ~GbrBrushGenerator();
+
+private:
+
+    bool generateThumbnail(QFile& file);
 };
 
 #endif /* GBRBRUSHGENERATOR_H */

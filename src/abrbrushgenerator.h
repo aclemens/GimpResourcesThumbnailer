@@ -24,6 +24,10 @@
 
 #include <QtCore/QtGlobal>
 
+// Local includes
+
+#include "resourceloader.h"
+
 class QString;
 class QFile;
 class QDataStream;
@@ -46,15 +50,14 @@ struct AbrSampledBrushHeader
     qint16 depth;
 };
 
-class AbrBrushGenerator
+class AbrBrushGenerator : public ResourceLoader
 {
 public:
 
     AbrBrushGenerator();
     ~AbrBrushGenerator();
 
-    bool load(const QString& filename);
-    bool load(QFile& file);
+    bool generateThumbnail(QFile& file);
 
 public:
 
