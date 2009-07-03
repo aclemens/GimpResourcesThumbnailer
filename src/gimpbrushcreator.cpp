@@ -31,6 +31,10 @@
 
 #include <kdebug.h>
 
+// Local includes
+
+#include "abrbrushgenerator.h"
+
 extern "C"
 {
     KDE_EXPORT ThumbCreator *new_creator()
@@ -55,11 +59,13 @@ bool GimpBrushCreator::create(const QString &path, int width, int height, QImage
     bool success = false;
 
     QFileInfo fi(file);
-    if (fi.suffix().toUpper() == QString("VBR"))
+    QString suffix = fi.suffix().toUpper();
+
+    if (suffix == QString("VBR"))
     {
         success = createVBR(file, width, height, img);
     }
-    else if (fi.suffix().toUpper() == QString("GIH"))
+    else if (suffix == QString("GIH"))
     {
         // Read ahead two lines and skip the textual information. We don't need it.
         // The actual GBR data is found at line 3.
@@ -67,9 +73,18 @@ bool GimpBrushCreator::create(const QString &path, int width, int height, QImage
         file.readLine();
         success = createGBR(file, width, height, img);
     }
-    else
+    else if (suffix == QString("ABR"))
+    {
+        AbrBrushGenerator g;
+        success = g.load(file);
+    }
+    else if (suffix == QString("GBR"))
     {
         success = createGBR(file, width, height, img);
+    }
+    else
+    {
+        success = false;
     }
 
     return success;
