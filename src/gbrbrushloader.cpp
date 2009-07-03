@@ -47,7 +47,10 @@ GbrBrushLoader::~GbrBrushLoader()
 
 bool GbrBrushLoader::generateThumbnail(QFile& file)
 {
-    quint32 headerSize;
+    const int HEADERSIZEv1 = 20;
+    const int HEADERSIZEv2 = 28;
+
+    quint32 header;
     quint32 version;
     quint32 w;
     quint32 h;
@@ -57,7 +60,7 @@ bool GbrBrushLoader::generateThumbnail(QFile& file)
     QString brushName;
 
     QDataStream in(&file);
-    in >> headerSize
+    in >> header
        >> version
        >> w
        >> h
@@ -101,7 +104,7 @@ bool GbrBrushLoader::generateThumbnail(QFile& file)
     }
 
     // read the brush name
-    unsigned int nameLength = headerSize - ((version == 1) ? 20 : 28);
+    unsigned int nameLength = header - ((version == 1) ? HEADERSIZEv1 : HEADERSIZEv2);
     char* brushName_c       = new char[nameLength];
     in.readRawData(brushName_c, nameLength);
     brushName = QString(brushName_c);
