@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#include "gihbrushgenerator.h"
+#include "gihbrushloader.h"
 
 // Qt includes
 

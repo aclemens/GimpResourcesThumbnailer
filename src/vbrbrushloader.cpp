@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#include "vbrbrushgenerator.h"
+#include "vbrbrushloader.h"
 
 // Qt includes
 

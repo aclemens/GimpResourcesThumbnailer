@@ -30,8 +30,10 @@
 
 // Loader includes
 
-#include "gihbrushgenerator.h"
-#include "gbrbrushgenerator.h"
+#include "gihbrushloader.h"
+#include "gbrbrushloader.h"
+#include "abrbrushloader.h"
+#include "vbrbrushloader.h"
 
 ResourceLoader::ResourceLoader()
 {

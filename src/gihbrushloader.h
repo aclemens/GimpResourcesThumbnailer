@@ -20,7 +20,7 @@
 #ifndef GIHBRUSHGENERATOR_H
 #define GIHBRUSHGENERATOR_H
 
-#include "gbrbrushgenerator.h"
+#include "gbrbrushloader.h"
 
 class QFile;
 class QString;

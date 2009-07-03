@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#include "gbrbrushgenerator.h"
+#include "gbrbrushloader.h"
 
 // Qt includes
 

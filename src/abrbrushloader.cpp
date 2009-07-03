@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#include "abrbrushgenerator.h"
+#include "abrbrushloader.h"
 
 // Qt includes
 

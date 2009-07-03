@@ -8,10 +8,10 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../
 SET(gimpbrushloadertest_SRCS gimpbrushloadertest.cpp
                          ../resourceloader.cpp
                          ../thumbnailcreator.cpp
-                         ../gbrbrushgenerator.cpp
-                         ../gihbrushgenerator.cpp
-                         ../vbrbrushgenerator.cpp
-                         ../abrbrushgenerator.cpp
+                         ../gbrbrushloader.cpp
+                         ../gihbrushloader.cpp
+                         ../vbrbrushloader.cpp
+                         ../abrbrushloader.cpp
 )
 KDE4_ADD_UNIT_TEST(gimpbrushloadertest ${gimpbrushloadertest_SRCS})
 TARGET_LINK_LIBRARIES(gimpbrushloadertest
