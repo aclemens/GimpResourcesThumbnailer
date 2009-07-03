@@ -119,6 +119,9 @@ bool VbrBrushLoader::generateThumbnail(QFile& file)
     QString& spikes      = shaped ? data[5] : empty;
     QString& style       = shaped ? data[3] : empty;
 
+    // set resource name
+    m_name = brushName;
+
     kDebug() << "brushName: "   << brushName;
     kDebug() << "spacing: "     << spacing;
     kDebug() << "radius: "      << radius;
