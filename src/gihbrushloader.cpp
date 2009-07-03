@@ -24,28 +24,28 @@
 #include <QFile>
 #include <QString>
 
-GihBrushGenerator::GihBrushGenerator()
-                 : GbrBrushGenerator()
+GihBrushLoader::GihBrushLoader()
+                 : GbrBrushLoader()
 {
     m_type = GIH;
 }
 
-GihBrushGenerator::GihBrushGenerator(const QString& path)
-                 : GbrBrushGenerator(path)
+GihBrushLoader::GihBrushLoader(const QString& path)
+                 : GbrBrushLoader(path)
 {
     m_type = GIH;
 }
 
-GihBrushGenerator::~GihBrushGenerator()
+GihBrushLoader::~GihBrushLoader()
 {
 }
 
-bool GihBrushGenerator::generateThumbnail(QFile& file)
+bool GihBrushLoader::generateThumbnail(QFile& file)
 {
     // Read ahead two lines and skip the textual information. We don't need it.
     // The actual GBR data is found at line 3.
     file.readLine();
     file.readLine();
 
-    return GbrBrushGenerator::generateThumbnail(file);
+    return GbrBrushLoader::generateThumbnail(file);
 }

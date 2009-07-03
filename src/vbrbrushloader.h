@@ -25,14 +25,14 @@
 class QFile;
 class QString;
 
-class VbrBrushGenerator : public ResourceLoader
+class VbrBrushLoader : public ResourceLoader
 {
 
 public:
 
-    VbrBrushGenerator();
-    VbrBrushGenerator(const QString& path);
-    ~VbrBrushGenerator();
+    VbrBrushLoader();
+    VbrBrushLoader(const QString& path);
+    ~VbrBrushLoader();
 
 protected:
 

@@ -50,12 +50,12 @@ struct AbrSampledBrushHeader
     qint16 depth;
 };
 
-class AbrBrushGenerator : public ResourceLoader
+class AbrBrushLoader : public ResourceLoader
 {
 public:
 
-    AbrBrushGenerator();
-    ~AbrBrushGenerator();
+    AbrBrushLoader();
+    ~AbrBrushLoader();
 
     bool generateThumbnail(QFile& file);
 

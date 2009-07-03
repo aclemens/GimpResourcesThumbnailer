@@ -30,14 +30,14 @@
 
 #include <kdebug.h>
 
-AbrBrushGenerator::AbrBrushGenerator()
+AbrBrushLoader::AbrBrushLoader()
                  : ResourceLoader()
 {
     header             = 0;
     sampledBrushHeader = 0;
 }
 
-AbrBrushGenerator::~AbrBrushGenerator()
+AbrBrushLoader::~AbrBrushLoader()
 {
     delete header;
     delete sampledBrushHeader;
@@ -65,7 +65,7 @@ AbrBrushGenerator::~AbrBrushGenerator()
 //    return load(file);
 //}
 
-bool AbrBrushGenerator::generateThumbnail(QFile& file)
+bool AbrBrushLoader::generateThumbnail(QFile& file)
 {
     QDataStream in(&file);
 
@@ -127,7 +127,7 @@ bool AbrBrushGenerator::generateThumbnail(QFile& file)
     return false;
 }
 
-bool AbrBrushGenerator::streamIsOk(QDataStream& stream)
+bool AbrBrushLoader::streamIsOk(QDataStream& stream)
 {
     if (stream.status() != QDataStream::Ok)
     {
@@ -137,7 +137,7 @@ bool AbrBrushGenerator::streamIsOk(QDataStream& stream)
     return true;
 }
 
-bool AbrBrushGenerator::validAbrHeader()
+bool AbrBrushLoader::validAbrHeader()
 {
     if (!header)
         return false;
@@ -145,7 +145,7 @@ bool AbrBrushGenerator::validAbrHeader()
     return validAbrHeader(header);
 }
 
-bool AbrBrushGenerator::validAbrHeader(AbrHeader* header)
+bool AbrBrushLoader::validAbrHeader(AbrHeader* header)
 {
     if (!header)
     {
@@ -170,7 +170,7 @@ bool AbrBrushGenerator::validAbrHeader(AbrHeader* header)
     return valid;
 }
 
-bool AbrBrushGenerator::validAbrSampledBrushHeader()
+bool AbrBrushLoader::validAbrSampledBrushHeader()
 {
     if (!sampledBrushHeader)
         return false;
@@ -178,7 +178,7 @@ bool AbrBrushGenerator::validAbrSampledBrushHeader()
     return validAbrSampledBrushHeader(sampledBrushHeader);
 }
 
-bool AbrBrushGenerator::validAbrSampledBrushHeader(AbrSampledBrushHeader* /*header*/)
+bool AbrBrushLoader::validAbrSampledBrushHeader(AbrSampledBrushHeader* /*header*/)
 {
     return true;
 }

@@ -63,7 +63,7 @@ ResourceLoader* ResourceLoader::getLoader(const QString& path)
     }
     else if (suffix == QString("GIH"))
     {
-        loader = new GihBrushGenerator();
+        loader = new GihBrushLoader();
     }
     else if (suffix == QString("ABR"))
     {
@@ -71,7 +71,7 @@ ResourceLoader* ResourceLoader::getLoader(const QString& path)
     }
     else if (suffix == QString("GBR"))
     {
-        loader = new GbrBrushGenerator();
+        loader = new GbrBrushLoader();
     }
 
     if (loader)

@@ -30,24 +30,24 @@
 
 #include <kdebug.h>
 
-VbrBrushGenerator::VbrBrushGenerator()
+VbrBrushLoader::VbrBrushLoader()
                  : ResourceLoader()
 {
     m_type = VBR;
 }
 
-VbrBrushGenerator::VbrBrushGenerator(const QString& path)
+VbrBrushLoader::VbrBrushLoader(const QString& path)
                  : ResourceLoader()
 {
     m_type = VBR;
     load(path);
 }
 
-VbrBrushGenerator::~VbrBrushGenerator()
+VbrBrushLoader::~VbrBrushLoader()
 {
 }
 
-bool VbrBrushGenerator::generateThumbnail(QFile& file)
+bool VbrBrushLoader::generateThumbnail(QFile& file)
 {
 //    int imgSize = qMax(width, height);
 

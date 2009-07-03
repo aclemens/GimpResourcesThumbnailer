@@ -28,24 +28,24 @@
 
 #include <kdebug.h>
 
-GbrBrushGenerator::GbrBrushGenerator()
+GbrBrushLoader::GbrBrushLoader()
                  : ResourceLoader()
 {
     m_type = GBR;
 }
 
-GbrBrushGenerator::GbrBrushGenerator(const QString& path)
+GbrBrushLoader::GbrBrushLoader(const QString& path)
                  : ResourceLoader()
 {
     m_type = GBR;
     load(path);
 }
 
-GbrBrushGenerator::~GbrBrushGenerator()
+GbrBrushLoader::~GbrBrushLoader()
 {
 }
 
-bool GbrBrushGenerator::generateThumbnail(QFile& file)
+bool GbrBrushLoader::generateThumbnail(QFile& file)
 {
     quint32 headerSize;
     quint32 version;

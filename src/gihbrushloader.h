@@ -25,13 +25,13 @@
 class QFile;
 class QString;
 
-class GihBrushGenerator : public GbrBrushGenerator
+class GihBrushLoader : public GbrBrushLoader
 {
 public:
 
-    GihBrushGenerator();
-    GihBrushGenerator(const QString& path);
-    ~GihBrushGenerator();
+    GihBrushLoader();
+    GihBrushLoader(const QString& path);
+    ~GihBrushLoader();
 
 protected:
 
