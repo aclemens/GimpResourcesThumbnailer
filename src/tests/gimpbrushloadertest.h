@@ -39,6 +39,9 @@ private Q_SLOTS:
     void testLoadGIH_data();
     void testLoadGIH();
 
+    void testLoadPAT_data();
+    void testLoadPAT();
+
 };
 
 #endif /* GIMPBRUSHLOADERTEST_H_ */

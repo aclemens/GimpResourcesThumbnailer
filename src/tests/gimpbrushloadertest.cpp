@@ -136,3 +136,42 @@ void GimpBrushLoaderTest::testLoadGIH()
     QCOMPARE(img.depth(),  example.depth());
     QCOMPARE(img, example);
 }
+
+void GimpBrushLoaderTest::testLoadPAT_data()
+{
+    QTest::addColumn<QString>("patName");
+    QTest::addColumn<QString>("result");
+
+    QTest::newRow("gray")           << QString(KDESRCDIR"/pat/lala_gray.pat")
+                                    << QString(KDESRCDIR"/pat/lala_gray_result.png");
+    QTest::newRow("grayAlpha")      << QString(KDESRCDIR"/pat/lala_gray_alpha.pat")
+                                    << QString(KDESRCDIR"/pat/lala_gray_alpha_result.png");
+    QTest::newRow("rgb")            << QString(KDESRCDIR"/pat/lala_rgb.pat")
+                                    << QString(KDESRCDIR"/pat/lala_rgb_result.png");
+    QTest::newRow("rgba")           << QString(KDESRCDIR"/pat/lala_rgba.pat")
+                                    << QString(KDESRCDIR"/pat/lala_rgba_result.png");
+}
+
+void GimpBrushLoaderTest::testLoadPAT()
+{
+    QFETCH(QString, patName);
+    QFETCH(QString, result);
+
+    QString patfile(patName);
+    QString examplePatFile(result);
+    int width  = 0;
+    int height = 0;
+    QImage img;
+
+    // basic test: does create() work?
+    ThumbnailCreator c;
+    QVERIFY( c.create(patfile, width, height, img) );
+
+    // compare the resulting thumbnail with an example output
+    QImage example = QImage(examplePatFile).convertToFormat(img.format());
+
+    QCOMPARE(img.width(),  example.width());
+    QCOMPARE(img.height(), example.height());
+    QCOMPARE(img.depth(),  example.depth());
+    QCOMPARE(img, example);
+}
