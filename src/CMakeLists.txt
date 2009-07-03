@@ -9,6 +9,7 @@ set(gimpbrushthumbnail_PART_SRCS
     thumbnailcreator.cpp
     abrbrushgenerator.cpp 
     gbrbrushgenerator.cpp 
+    gihbrushgenerator.cpp 
     vbrbrushgenerator.cpp)
 
 kde4_add_plugin(gimpbrushthumbnail ${gimpbrushthumbnail_PART_SRCS})

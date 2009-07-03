@@ -1,7 +1,7 @@
 /* ============================================================
  *
  * Date        : 2009-07-03
- * Description : a generator for gimp brushes
+ * Description : a generator for animated gimp brushes
  *
  * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
  *
@@ -17,27 +17,35 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#ifndef GBRBRUSHGENERATOR_H
-#define GBRBRUSHGENERATOR_H
+#include "gihbrushgenerator.h"
 
-// Local includes
+// Qt includes
 
-#include "resourceloader.h"
+#include <QFile>
+#include <QString>
 
-class QFile;
-
-class GbrBrushGenerator : public ResourceLoader
+GihBrushGenerator::GihBrushGenerator()
+                 : GbrBrushGenerator()
 {
+    m_type = GIH;
+}
 
-public:
+GihBrushGenerator::GihBrushGenerator(const QString& path)
+                 : GbrBrushGenerator(path)
+{
+    m_type = GIH;
+}
 
-    GbrBrushGenerator();
-    GbrBrushGenerator(const QString& path);
-    ~GbrBrushGenerator();
+GihBrushGenerator::~GihBrushGenerator()
+{
+}
 
-protected:
+bool GihBrushGenerator::generateThumbnail(QFile& file)
+{
+    // Read ahead two lines and skip the textual information. We don't need it.
+    // The actual GBR data is found at line 3.
+    file.readLine();
+    file.readLine();
 
-    virtual bool generateThumbnail(QFile& file);
-};
-
-#endif /* GBRBRUSHGENERATOR_H */
+    return GbrBrushGenerator::generateThumbnail(file);
+}

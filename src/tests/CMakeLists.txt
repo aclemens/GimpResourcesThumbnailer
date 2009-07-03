@@ -9,6 +9,7 @@ SET(gimpbrushloadertest_SRCS gimpbrushloadertest.cpp
                          ../resourceloader.cpp
                          ../thumbnailcreator.cpp
                          ../gbrbrushgenerator.cpp
+                         ../gihbrushgenerator.cpp
                          ../abrbrushgenerator.cpp
 )
 KDE4_ADD_UNIT_TEST(gimpbrushloadertest ${gimpbrushloadertest_SRCS})

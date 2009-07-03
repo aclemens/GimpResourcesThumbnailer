@@ -1,7 +1,7 @@
 /* ============================================================
  *
- * Date        : 2009-06-17
- * Description : a thumb creator for gimp resources
+ * Date        : 2009-07-03
+ * Description : a generator for animated gimp brushes
  *
  * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
  *
@@ -17,29 +17,25 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#ifndef THUMBNAILCREATOR_H
-#define THUMBNAILCREATOR_H
+#ifndef GIHBRUSHGENERATOR_H
+#define GIHBRUSHGENERATOR_H
 
-// KDE includes
-
-#include <kio/thumbcreator.h>
+#include "gbrbrushgenerator.h"
 
 class QFile;
-class QImage;
 class QString;
 
-class ThumbnailCreator : public ThumbCreator
+class GihBrushGenerator : public GbrBrushGenerator
 {
 public:
 
-    ThumbnailCreator();
-    virtual bool  create(const QString& path, int, int, QImage& img);
-    virtual Flags flags() const;
+    GihBrushGenerator();
+    GihBrushGenerator(const QString& path);
+    ~GihBrushGenerator();
 
-private:
+protected:
 
-    bool createVBR(QFile& file, int, int, QImage& img);
+    virtual bool generateThumbnail(QFile& file);
 };
 
-#endif /* THUMBNAILCREATOR_H */
-
+#endif /* GIHBRUSHGENERATOR_H */

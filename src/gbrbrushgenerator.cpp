@@ -43,7 +43,6 @@ GbrBrushGenerator::GbrBrushGenerator(const QString& path)
 
 GbrBrushGenerator::~GbrBrushGenerator()
 {
-    resourceType();
 }
 
 bool GbrBrushGenerator::generateThumbnail(QFile& file)
@@ -165,5 +164,5 @@ bool GbrBrushGenerator::generateThumbnail(QFile& file)
     delete[] brushName_c;
     delete[] data;
 
-    return (!m_thumbnail.isNull());
+    return true;
 }

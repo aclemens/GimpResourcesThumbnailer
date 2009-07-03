@@ -33,6 +33,8 @@
 
 // Local includes
 
+#include "resourceloader.h"
+#include "gbrbrushgenerator.h"
 #include "abrbrushgenerator.h"
 
 extern "C"
@@ -49,165 +51,22 @@ ThumbnailCreator::ThumbnailCreator()
 
 bool ThumbnailCreator::create(const QString &path, int width, int height, QImage &img)
 {
-    QFile file(path);
-    if (!file.open(QIODevice::ReadOnly))
-    {
-        kDebug() << "Error loading Gimp Brush file.";
-        return false;
-    }
+    Q_UNUSED(width)
+    Q_UNUSED(height)
 
-    bool success = false;
+    bool success           = false;
+    ResourceLoader* loader = ResourceLoader::getLoader(path);
+    QImage thumbnail;
 
-    QFileInfo fi(file);
-    QString suffix = fi.suffix().toUpper();
+    if (loader && loader->success())
+    {
+        success   = true;
+        thumbnail = loader->thumbnail();
+    }
+    delete loader;
 
-    if (suffix == QString("VBR"))
-    {
-        success = createVBR(file, width, height, img);
-    }
-    else if (suffix == QString("GIH"))
-    {
-        // Read ahead two lines and skip the textual information. We don't need it.
-        // The actual GBR data is found at line 3.
-        file.readLine();
-        file.readLine();
-        success = createGBR(file, width, height, img);
-    }
-    else if (suffix == QString("ABR"))
-    {
-        AbrBrushGenerator g;
-//        success = g.load(file);
-    }
-    else if (suffix == QString("GBR"))
-    {
-        success = createGBR(file, width, height, img);
-    }
-    else
-    {
-        success = false;
-    }
-
+    img = (thumbnail.isNull()) ? QImage() : thumbnail;
     return success;
-}
-
-bool ThumbnailCreator::createGBR(QFile& file, int, int, QImage &img)
-{
-//    quint32 headerSize;
-//    quint32 version;
-//    quint32 w;
-//    quint32 h;
-//    quint32 colorDepth;
-//    quint32 magic;
-//    quint32 spacing;
-//    QString brushName;
-//
-//    QDataStream in(&file);
-//    in >> headerSize
-//       >> version
-//       >> w
-//       >> h
-//       >> colorDepth;
-//
-//    // check if the brush has the right version and magic number
-//    bool validBrushFile = true;
-//    switch (version)
-//    {
-//        case 1:
-//        {
-//            // no magic number and spacing information
-//            kDebug() << "Gimp Brush format: v1";
-//            break;
-//        }
-//        case 2: case 3:
-//        {
-//            in >> magic >> spacing;
-//            if ((magic != 0x47494D50))
-//            {
-//                kDebug() << "No valid Gimp Brush file!";
-//                validBrushFile = false;
-//            }
-//            kDebug() << "Gimp Brush format: v2/v3";
-//            break;
-//        }
-//        default:
-//            validBrushFile = false;
-//    }
-//
-//    if (colorDepth != 1 && colorDepth != 4)
-//    {
-//        kDebug() << "Invalid color depth!";
-//        validBrushFile = false;
-//    }
-//
-//    if (!validBrushFile)
-//    {
-//        file.close();
-//        return false;
-//    }
-//
-//    // read the brush name
-//    unsigned int nameLength = headerSize - ((version == 1) ? 20 : 28);
-//    char* brushName_c       = new char[nameLength];
-//    in.readRawData(brushName_c, nameLength);
-//    brushName = QString(brushName_c);
-//
-//    // read the image data
-//    int dataLength = w * h * colorDepth;
-//    char* data     = new char[dataLength];
-//    int bytesRead  = in.readRawData(data, dataLength);
-//    file.close();
-//
-//    // valid brush data?
-//    if (bytesRead == -1 || bytesRead != dataLength)
-//        return false;
-//
-//    // generate thumbnail
-//    QImage::Format imageFormat;
-//    imageFormat = (colorDepth == 1) ? QImage::Format_RGB32 : QImage::Format_ARGB32;
-//
-//    QImage thumbnail(w, h, imageFormat);
-//    quint32 step = 0;
-//
-//    switch (colorDepth)
-//    {
-//        case 1:
-//        {
-//            // Grayscale
-//            for (quint32 y = 0; y < h; ++y)
-//            {
-//                for (quint32 x = 0; x < w; ++x, ++step)
-//                {
-//                    qint32 val = 255 - static_cast<uchar> (data[step]);
-//                    thumbnail.setPixel(x, y, qRgb(val, val, val));
-//                }
-//            }
-//            break;
-//        }
-//        case 4:
-//        {
-//            // RGBA
-//            for (quint32 y = 0; y < h; ++y)
-//            {
-//                for (quint32 x = 0; x < w; ++x, step += 4)
-//                {
-//                    thumbnail.setPixel(x, y, qRgba(static_cast<uchar>(data[step]),
-//                                                   static_cast<uchar>(data[step+1]),
-//                                                   static_cast<uchar>(data[step+2]),
-//                                                   static_cast<uchar>(data[step+3])));
-//                }
-//            }
-//        }
-//    }
-//
-//    // load image data into reference
-//    img = thumbnail;
-//    kDebug() << "Thumbnail for Gimp Brush '" << brushName << "' successfully generated!";
-//
-//    // cleanup
-//    delete[] brushName_c;
-//    delete[] data;
-//
-//    return (!img.isNull());
 }
 
 bool ThumbnailCreator::createVBR(QFile& file, int width, int height, QImage &img)
