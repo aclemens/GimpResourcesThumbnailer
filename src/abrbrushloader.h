@@ -57,14 +57,14 @@ public:
     AbrBrushLoader();
     ~AbrBrushLoader();
 
-    bool generateThumbnail(QFile& file);
-
 public:
 
     AbrHeader*             header;
     AbrSampledBrushHeader* sampledBrushHeader;
 
 private:
+
+    virtual bool generateThumbnail(QFile& file);
 
     bool streamIsOk(QDataStream& stream);
 
