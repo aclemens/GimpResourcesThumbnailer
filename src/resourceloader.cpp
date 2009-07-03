@@ -57,6 +57,7 @@ ResourceLoader* ResourceLoader::getLoader(const QString& path)
 
     if (suffix == QString("VBR"))
     {
+        // TODO: implement me!
     }
     else if (suffix == QString("GIH"))
     {
@@ -64,6 +65,7 @@ ResourceLoader* ResourceLoader::getLoader(const QString& path)
     }
     else if (suffix == QString("ABR"))
     {
+        // TODO: implement me!
     }
     else if (suffix == QString("GBR"))
     {
