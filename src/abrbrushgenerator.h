@@ -20,16 +20,56 @@
 #ifndef ABRBRUSHGENERATOR_H
 #define ABRBRUSHGENERATOR_H
 
-class QString;
+// Qt includes
 
-class ABRBrushGenerator
+#include <QtCore/QtGlobal>
+
+class QString;
+class QFile;
+class QDataStream;
+
+struct AbrHeader
+{
+    qint16 version;
+    qint16 count;
+};
+
+struct AbrSampledBrushHeader
+{
+    qint16 type;
+    qint32 size;
+    qint32 misc;    // this value is ignored
+    qint16 spacing;
+    qint8  antiAliasing;
+    qint16 bounds[4];
+    qint32 bounds_long[4];
+    qint16 depth;
+};
+
+class AbrBrushGenerator
 {
 public:
 
-    ABRBrushGenerator();
-    ~ABRBrushGenerator();
+    AbrBrushGenerator();
+    ~AbrBrushGenerator();
 
     bool load(const QString& filename);
+    bool load(QFile& file);
+
+public:
+
+    AbrHeader*             header;
+    AbrSampledBrushHeader* sampledBrushHeader;
+
+private:
+
+    bool streamIsOk(QDataStream& stream);
+
+    bool validAbrHeader();
+    bool validAbrHeader(AbrHeader* header);
+
+    bool validAbrSampledBrushHeader();
+    bool validAbrSampledBrushHeader(AbrSampledBrushHeader* header);
 };
 
 #endif /* ABRBRUSHGENERATOR_H */
