@@ -34,8 +34,6 @@
 // Local includes
 
 #include "resourceloader.h"
-#include "gbrbrushgenerator.h"
-#include "abrbrushgenerator.h"
 
 extern "C"
 {
