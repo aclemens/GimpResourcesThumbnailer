@@ -31,7 +31,7 @@
 #include <kdebug.h>
 
 AbrBrushLoader::AbrBrushLoader()
-                 : ResourceLoader()
+              : ResourceLoader()
 {
     header             = 0;
     sampledBrushHeader = 0;
@@ -42,28 +42,6 @@ AbrBrushLoader::~AbrBrushLoader()
     delete header;
     delete sampledBrushHeader;
 }
-
-//bool AbrBrushGenerator::load(const QString& filename)
-//{
-//    if (filename.isEmpty())
-//        return false;
-//
-//    QFile file(filename);
-//    if (!file.open(QIODevice::ReadOnly))
-//    {
-//        kDebug() << "Error loading ABR Brush file.";
-//        return false;
-//    }
-//
-//    QFileInfo fi(file);
-//    if (fi.suffix().toUpper() != QString("ABR"))
-//    {
-//        kDebug() << "Error loading ABR Brush file.";
-//        return false;
-//    }
-//
-//    return load(file);
-//}
 
 bool AbrBrushLoader::generateThumbnail(QFile& file)
 {

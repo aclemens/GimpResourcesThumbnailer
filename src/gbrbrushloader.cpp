@@ -29,13 +29,13 @@
 #include <kdebug.h>
 
 GbrBrushLoader::GbrBrushLoader()
-                 : ResourceLoader()
+              : ResourceLoader()
 {
     m_type = GBR;
 }
 
 GbrBrushLoader::GbrBrushLoader(const QString& path)
-                 : ResourceLoader()
+              : ResourceLoader()
 {
     m_type = GBR;
     load(path);

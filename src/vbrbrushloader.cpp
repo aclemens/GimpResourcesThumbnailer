@@ -31,13 +31,13 @@
 #include <kdebug.h>
 
 VbrBrushLoader::VbrBrushLoader()
-                 : ResourceLoader()
+              : ResourceLoader()
 {
     m_type = VBR;
 }
 
 VbrBrushLoader::VbrBrushLoader(const QString& path)
-                 : ResourceLoader()
+              : ResourceLoader()
 {
     m_type = VBR;
     load(path);

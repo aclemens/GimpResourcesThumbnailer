@@ -25,13 +25,13 @@
 #include <QString>
 
 GihBrushLoader::GihBrushLoader()
-                 : GbrBrushLoader()
+              : GbrBrushLoader()
 {
     m_type = GIH;
 }
 
 GihBrushLoader::GihBrushLoader(const QString& path)
-                 : GbrBrushLoader(path)
+              : GbrBrushLoader(path)
 {
     m_type = GIH;
 }
