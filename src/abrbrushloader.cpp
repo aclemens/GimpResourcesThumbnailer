@@ -33,14 +33,27 @@
 AbrBrushLoader::AbrBrushLoader()
               : ResourceLoader()
 {
-    header             = 0;
-    sampledBrushHeader = 0;
+    init();
+}
+
+AbrBrushLoader::AbrBrushLoader(const QString& path)
+              : ResourceLoader()
+{
+    init();
+    load(path);
 }
 
 AbrBrushLoader::~AbrBrushLoader()
 {
     delete header;
     delete sampledBrushHeader;
+}
+
+void AbrBrushLoader::init()
+{
+    header             = 0;
+    sampledBrushHeader = 0;
+    m_type             = ABR;
 }
 
 bool AbrBrushLoader::generateThumbnail(QFile& file)

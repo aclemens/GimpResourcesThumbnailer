@@ -55,6 +55,7 @@ class AbrBrushLoader : public ResourceLoader
 public:
 
     AbrBrushLoader();
+    AbrBrushLoader(const QString& path);
     ~AbrBrushLoader();
 
 public:
@@ -73,6 +74,8 @@ private:
 
     bool validAbrSampledBrushHeader();
     bool validAbrSampledBrushHeader(AbrSampledBrushHeader* header);
+
+    void init();
 };
 
 #endif /* ABRBRUSHLOADER_H */
