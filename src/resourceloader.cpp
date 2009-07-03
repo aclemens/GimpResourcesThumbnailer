@@ -46,17 +46,17 @@ ResourceLoader::~ResourceLoader()
 
 ResourceLoader* ResourceLoader::getLoader(const QString& path)
 {
+    ResourceLoader* loader = 0;
+
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly))
     {
         kDebug() << "Error loading resource file.";
-        return false;
+        return loader;
     }
 
     QFileInfo fi(file);
     QString suffix = fi.suffix().toUpper();
-
-    ResourceLoader* loader = 0;
 
     if (suffix == QString("GBR"))
     {
