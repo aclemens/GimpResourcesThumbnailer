@@ -17,8 +17,8 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#ifndef GIHBRUSHGENERATOR_H
-#define GIHBRUSHGENERATOR_H
+#ifndef GIHBRUSHLOADER_H
+#define GIHBRUSHLOADER_H
 
 #include "gbrbrushloader.h"
 
@@ -38,4 +38,4 @@ protected:
     virtual bool generateThumbnail(QFile& file);
 };
 
-#endif /* GIHBRUSHGENERATOR_H */
+#endif /* GIHBRUSHLOADER_H */

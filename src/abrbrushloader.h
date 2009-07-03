@@ -17,8 +17,8 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#ifndef ABRBRUSHGENERATOR_H
-#define ABRBRUSHGENERATOR_H
+#ifndef ABRBRUSHLOADER_H
+#define ABRBRUSHLOADER_H
 
 // Qt includes
 
@@ -75,4 +75,4 @@ private:
     bool validAbrSampledBrushHeader(AbrSampledBrushHeader* header);
 };
 
-#endif /* ABRBRUSHGENERATOR_H */
+#endif /* ABRBRUSHLOADER_H */

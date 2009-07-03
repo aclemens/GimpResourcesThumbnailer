@@ -17,8 +17,8 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#ifndef VBRBRUSHGENERATOR_H
-#define VBRBRUSHGENERATOR_H
+#ifndef VBRBRUSHLOADER_H
+#define VBRBRUSHLOADER_H
 
 #include "resourceloader.h"
 
@@ -39,4 +39,4 @@ protected:
     virtual bool generateThumbnail(QFile& file);
 };
 
-#endif /* VBRBRUSHGENERATOR_H */
+#endif /* VBRBRUSHLOADER_H */

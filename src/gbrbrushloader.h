@@ -17,8 +17,8 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#ifndef GBRBRUSHGENERATOR_H
-#define GBRBRUSHGENERATOR_H
+#ifndef GBRBRUSHLOADER_H
+#define GBRBRUSHLOADER_H
 
 // Local includes
 
@@ -40,4 +40,4 @@ protected:
     virtual bool generateThumbnail(QFile& file);
 };
 
-#endif /* GBRBRUSHGENERATOR_H */
+#endif /* GBRBRUSHLOADER_H */
