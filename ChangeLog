@@ -1,3 +1,7 @@
+2009-07-03 GimpBrushThumbs 1.0.4
+    * Add support for Gimp patterns (.pat)
+    * Refactoring of the loader code
+
 2009-06-20 GimpBrushThumbs 1.0.3
     * Add support for animated Gimp Brushes (.gih)
 

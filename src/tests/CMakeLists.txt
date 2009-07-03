@@ -12,6 +12,7 @@ SET(gimpbrushloadertest_SRCS gimpbrushloadertest.cpp
                          ../gihbrushloader.cpp
                          ../vbrbrushloader.cpp
                          ../abrbrushloader.cpp
+                         ../patternloader.cpp
 )
 KDE4_ADD_UNIT_TEST(gimpbrushloadertest ${gimpbrushloadertest_SRCS})
 TARGET_LINK_LIBRARIES(gimpbrushloadertest

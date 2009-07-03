@@ -34,6 +34,7 @@
 #include "gbrbrushloader.h"
 #include "abrbrushloader.h"
 #include "vbrbrushloader.h"
+#include "patternloader.h"
 
 ResourceLoader::ResourceLoader()
 {
@@ -71,7 +72,7 @@ ResourceLoader* ResourceLoader::getLoader(const QString& path)
     }
     else if (suffix == QString("PAT"))
     {
-        // TODO: implement me!
+        loader = new PatternLoader();
     }
     else if (suffix == QString("ABR"))
     {

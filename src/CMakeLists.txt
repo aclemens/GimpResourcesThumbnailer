@@ -10,6 +10,7 @@ set(gimpbrushthumbnail_PART_SRCS
     abrbrushloader.cpp 
     gbrbrushloader.cpp 
     gihbrushloader.cpp 
+    patternloader.cpp 
     vbrbrushloader.cpp)
 
 kde4_add_plugin(gimpbrushthumbnail ${gimpbrushthumbnail_PART_SRCS})
