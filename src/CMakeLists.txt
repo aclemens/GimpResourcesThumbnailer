@@ -7,7 +7,7 @@ find_package(SharedMimeInfo REQUIRED)
 set(gimpbrushthumbnail_PART_SRCS
     gimpbrushcreator.cpp
     abrbrushgenerator.cpp 
-    vbrgenerator.cpp)
+    vbrbrushgenerator.cpp)
 
 kde4_add_plugin(gimpbrushthumbnail ${gimpbrushthumbnail_PART_SRCS})
 

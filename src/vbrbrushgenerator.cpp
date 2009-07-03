@@ -17,12 +17,12 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#include "vbrgenerator.h"
+#include "vbrbrushgenerator.h"
 
-VBRGenerator::VBRGenerator()
+VbrBrushGenerator::VbrBrushGenerator()
 {
 }
 
-VBRGenerator::~VBRGenerator()
+VbrBrushGenerator::~VbrBrushGenerator()
 {
 }

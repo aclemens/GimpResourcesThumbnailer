@@ -17,15 +17,15 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#ifndef VBRGENERATOR_H
-#define VBRGENERATOR_H
+#ifndef VBRBRUSHGENERATOR_H
+#define VBRBRUSHGENERATOR_H
 
-class VBRGenerator
+class VbrBrushGenerator
 {
 public:
 
-    VBRGenerator();
-    ~VBRGenerator();
+    VbrBrushGenerator();
+    ~VbrBrushGenerator();
 };
 
-#endif /* VBRGENERATOR_H */
+#endif /* VBRBRUSHGENERATOR_H */
