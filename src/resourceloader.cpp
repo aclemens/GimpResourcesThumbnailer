@@ -57,7 +57,11 @@ ResourceLoader* ResourceLoader::getLoader(const QString& path)
 
     ResourceLoader* loader = 0;
 
-    if (suffix == QString("VBR"))
+    if (suffix == QString("GBR"))
+    {
+        loader = new GbrBrushLoader();
+    }
+    else if (suffix == QString("VBR"))
     {
         // TODO: implement me!
     }
@@ -68,10 +72,6 @@ ResourceLoader* ResourceLoader::getLoader(const QString& path)
     else if (suffix == QString("ABR"))
     {
         // TODO: implement me!
-    }
-    else if (suffix == QString("GBR"))
-    {
-        loader = new GbrBrushLoader();
     }
 
     if (loader)
