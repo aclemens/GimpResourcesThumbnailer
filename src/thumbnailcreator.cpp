@@ -21,15 +21,8 @@
 
 // Qt includes
 
-#include <QFile>
-#include <QFileInfo>
 #include <QImage>
 #include <QString>
-#include <QStringList>
-
-// KDE includes
-
-#include <kdebug.h>
 
 // Local includes
 

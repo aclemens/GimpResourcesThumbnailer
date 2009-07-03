@@ -24,7 +24,6 @@
 
 #include <kio/thumbcreator.h>
 
-class QFile;
 class QImage;
 class QString;
 
