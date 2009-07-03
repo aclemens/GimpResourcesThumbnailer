@@ -19,10 +19,114 @@
 
 #include "vbrbrushgenerator.h"
 
+// Qt includes
+
+#include <QFile>
+#include <QString>
+#include <QStringList>
+#include <QTextStream>
+
+// KDE includes
+
+#include <kdebug.h>
+
 VbrBrushGenerator::VbrBrushGenerator()
+                 : ResourceLoader()
 {
+    m_type = VBR;
+}
+
+VbrBrushGenerator::VbrBrushGenerator(const QString& path)
+                 : ResourceLoader()
+{
+    m_type = VBR;
+    load(path);
 }
 
 VbrBrushGenerator::~VbrBrushGenerator()
 {
+}
+
+bool VbrBrushGenerator::generateThumbnail(QFile& file)
+{
+//    int imgSize = qMax(width, height);
+
+    QTextStream in(&file);
+    QStringList data;
+
+    while (!in.atEnd())
+    {
+        data << in.readLine();
+    }
+
+    // close the file
+    file.close();
+
+    /*
+     Non-shaped brushes:
+
+     Line 1: Must always contain the magic string "GIMP-VBR".
+     Line 2: Version number, always "1.0".
+     Line 3: The name of the brush.  This is a UTF-8 string, with a maximum length of 255 bytes.
+     Line 4: The brush spacing.
+     Line 5: The brush radius, in pixels.
+     Line 6: The brush hardness.
+     Line 7: The brush aspect ratio.
+     Line 8: The brush angle.
+
+     Shaped brushes:
+
+     Line 1: Must always contain the magic string "GIMP-VBR".
+     Line 2: Version number, always "1.5".
+     Line 3: The name of the brush.  This is a UTF-8 string, with a maximum length of 255 bytes.
+     Line 4: A string giving the shape of the brush.  Currently "Circle",
+             "Square", and "Diamond" are supported.  The possible shapes
+             are defined by the GimpBrushGeneratedShape enum in
+             core-enums.h.
+     Line 5: The brush spacing.
+     Line 6: The number of spikes for the shape.
+     Line 7: The brush radius, in pixels.
+     Line 8: The brush hardness.
+     Line 9: The brush aspect ratio.
+     Line 10: The brush angle.
+     */
+
+    int dataSize     = data.count();
+    QString& magic   = data[0];
+    QString& version = data[1];
+
+    // check basic parameters
+    if (
+            (magic != QString("GIMP-VBR"))                           ||
+            (version != QString("1.0") && version != QString("1.5")) ||
+            (dataSize != 8 && dataSize != 10)
+    )
+    {
+        kDebug() << "Invalid Gimp Brush (VBR) data!";
+        return false;
+    }
+
+    // now load the rest
+    bool shaped = (dataSize == 10) ? true : false;
+    QString empty;
+
+    QString& brushName   = data[2];
+    QString& spacing     = shaped ? data[4] : data[3];
+    QString& radius      = shaped ? data[6] : data[4];
+    QString& hardness    = shaped ? data[7] : data[5];
+    QString& aspectRatio = shaped ? data[8] : data[6];
+    QString& angle       = shaped ? data[9] : data[7];
+    QString& spikes      = shaped ? data[5] : empty;
+    QString& style       = shaped ? data[3] : empty;
+
+    kDebug() << "brushName: "   << brushName;
+    kDebug() << "spacing: "     << spacing;
+    kDebug() << "radius: "      << radius;
+    kDebug() << "hardness: "    << hardness;
+    kDebug() << "aspectRatio: " << aspectRatio;
+    kDebug() << "angle: "       << angle;
+    kDebug() << "spikes: "      << spikes;
+    kDebug() << "style: "       << style;
+
+    return false;
 }

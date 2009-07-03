@@ -20,12 +20,23 @@
 #ifndef VBRBRUSHGENERATOR_H
 #define VBRBRUSHGENERATOR_H
 
-class VbrBrushGenerator
+#include "resourceloader.h"
+
+class QFile;
+class QString;
+
+class VbrBrushGenerator : public ResourceLoader
 {
+
 public:
 
     VbrBrushGenerator();
+    VbrBrushGenerator(const QString& path);
     ~VbrBrushGenerator();
+
+protected:
+
+    virtual bool generateThumbnail(QFile& file);
 };
 
 #endif /* VBRBRUSHGENERATOR_H */

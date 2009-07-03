@@ -35,10 +35,6 @@ public:
     ThumbnailCreator();
     virtual bool  create(const QString& path, int, int, QImage& img);
     virtual Flags flags() const;
-
-private:
-
-    bool createVBR(QFile& file, int, int, QImage& img);
 };
 
 #endif /* THUMBNAILCREATOR_H */
