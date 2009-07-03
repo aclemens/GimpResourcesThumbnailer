@@ -6,5 +6,6 @@
     <glob pattern="*.vbr"/>
     <glob pattern="*.gih"/>
     <glob pattern="*.abr"/>
+    <glob pattern="*.pat"/>
   </mime-type>
 </mime-info>
