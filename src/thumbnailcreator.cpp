@@ -1,7 +1,7 @@
 /* ============================================================
  *
  * Date        : 2009-06-17
- * Description : a thumb creator for gimp brushes
+ * Description : a thumb creator for gimp resources
  *
  * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
  *
@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#include "gimpbrushcreator.h"
+#include "thumbnailcreator.h"
 
 // Qt includes
 
@@ -39,15 +39,15 @@ extern "C"
 {
     KDE_EXPORT ThumbCreator *new_creator()
     {
-        return new GimpBrushCreator;
+        return new ThumbnailCreator;
     }
 }
 
-GimpBrushCreator::GimpBrushCreator()
+ThumbnailCreator::ThumbnailCreator()
 {
 }
 
-bool GimpBrushCreator::create(const QString &path, int width, int height, QImage &img)
+bool ThumbnailCreator::create(const QString &path, int width, int height, QImage &img)
 {
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly))
@@ -90,7 +90,7 @@ bool GimpBrushCreator::create(const QString &path, int width, int height, QImage
     return success;
 }
 
-bool GimpBrushCreator::createGBR(QFile& file, int, int, QImage &img)
+bool ThumbnailCreator::createGBR(QFile& file, int, int, QImage &img)
 {
     quint32 headerSize;
     quint32 version;
@@ -210,7 +210,7 @@ bool GimpBrushCreator::createGBR(QFile& file, int, int, QImage &img)
     return (!img.isNull());
 }
 
-bool GimpBrushCreator::createVBR(QFile& file, int width, int height, QImage &img)
+bool ThumbnailCreator::createVBR(QFile& file, int width, int height, QImage &img)
 {
     Q_UNUSED(width)
     Q_UNUSED(height)
@@ -298,7 +298,7 @@ bool GimpBrushCreator::createVBR(QFile& file, int width, int height, QImage &img
     return false;
 }
 
-ThumbCreator::Flags GimpBrushCreator::flags() const
+ThumbCreator::Flags ThumbnailCreator::flags() const
 {
     return None;
 }

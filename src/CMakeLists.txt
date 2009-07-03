@@ -5,7 +5,7 @@ add_subdirectory(tests)
 find_package(SharedMimeInfo REQUIRED)
 
 set(gimpbrushthumbnail_PART_SRCS
-    gimpbrushcreator.cpp
+    thumbnailcreator.cpp
     abrbrushgenerator.cpp 
     vbrbrushgenerator.cpp)
 

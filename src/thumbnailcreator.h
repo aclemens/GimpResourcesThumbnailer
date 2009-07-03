@@ -1,7 +1,7 @@
 /* ============================================================
  *
  * Date        : 2009-06-17
- * Description : a thumb creator for gimp brushes
+ * Description : a thumb creator for gimp resources
  *
  * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
  *
@@ -17,8 +17,8 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#ifndef GIMPBRUSHCREATOR_H
-#define GIMPBRUSHCREATOR_H
+#ifndef THUMBNAILCREATOR_H
+#define THUMBNAILCREATOR_H
 
 // KDE includes
 
@@ -28,11 +28,11 @@ class QFile;
 class QImage;
 class QString;
 
-class GimpBrushCreator : public ThumbCreator
+class ThumbnailCreator : public ThumbCreator
 {
 public:
 
-    GimpBrushCreator();
+    ThumbnailCreator();
     virtual bool create(const QString& path, int, int, QImage& img);
     virtual Flags flags() const;
 
@@ -42,5 +42,5 @@ private:
     bool createVBR(QFile& file, int, int, QImage& img);
 };
 
-#endif /* GIMPBRUSHCREATOR_H */
+#endif /* THUMBNAILCREATOR_H */
 

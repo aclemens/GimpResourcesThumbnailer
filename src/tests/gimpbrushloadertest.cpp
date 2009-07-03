@@ -26,7 +26,7 @@
 
 // Local includes
 
-#include "gimpbrushcreator.h"
+#include "thumbnailcreator.h"
 
 QTEST_MAIN(GimpBrushLoaderTest)
 
@@ -53,7 +53,7 @@ void GimpBrushLoaderTest::testLoadGBRv1()
     QImage img;
 
     // basic test: does create() work?
-    GimpBrushCreator c;
+    ThumbnailCreator c;
     QVERIFY( c.create(brushfile, width, height, img) );
 
     // compare the resulting thumbnail with an example output
@@ -90,7 +90,7 @@ void GimpBrushLoaderTest::testLoadGBRv2_3()
     QImage img;
 
     // basic test: does create() work?
-    GimpBrushCreator c;
+    ThumbnailCreator c;
     QVERIFY( c.create(brushfile, width, height, img) );
 
     // compare the resulting thumbnail with an example output
@@ -125,7 +125,7 @@ void GimpBrushLoaderTest::testLoadGIH()
     QImage img;
 
     // basic test: does create() work?
-    GimpBrushCreator c;
+    ThumbnailCreator c;
     QVERIFY( c.create(brushfile, width, height, img) );
 
     // compare the resulting thumbnail with an example output
