@@ -21,8 +21,9 @@
 
 // Qt includes
 
-#include <QFile>
 #include <QDataStream>
+#include <QFile>
+#include <QString>
 
 // KDE includes
 

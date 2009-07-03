@@ -25,6 +25,7 @@
 #include "resourceloader.h"
 
 class QFile;
+class QString;
 
 class GbrBrushLoader : public ResourceLoader
 {

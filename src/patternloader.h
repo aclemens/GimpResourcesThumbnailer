@@ -24,6 +24,7 @@
 
 #include "resourceloader.h"
 
+class QString;
 class QFile;
 
 class PatternLoader : public ResourceLoader
