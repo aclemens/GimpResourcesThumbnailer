@@ -38,6 +38,8 @@
 
 ResourceLoader::ResourceLoader()
 {
+    m_success = false;
+    m_type    = NONE;
 }
 
 ResourceLoader::~ResourceLoader()
@@ -60,11 +62,13 @@ ResourceLoader* ResourceLoader::getLoader(const QString& path)
 
     if (suffix == QString("GBR"))
     {
-        loader = new GbrBrushLoader();
+        loader = new GbrBrushLoader(path);
+        loader->m_type = GBR;
     }
     else if (suffix == QString("GIH"))
     {
-        loader = new GihBrushLoader();
+        loader = new GihBrushLoader(path);
+        loader->m_type = GIH;
     }
     else if (suffix == QString("VBR"))
     {
@@ -72,15 +76,13 @@ ResourceLoader* ResourceLoader::getLoader(const QString& path)
     }
     else if (suffix == QString("PAT"))
     {
-        loader = new PatternLoader();
+        loader = new PatternLoader(path);
+        loader->m_type = PAT;
     }
     else if (suffix == QString("ABR"))
     {
         // TODO: implement me!
     }
-
-    if (loader)
-        loader->generateThumbnail(file);
 
     return loader;
 }
@@ -109,10 +111,11 @@ bool ResourceLoader::load(const QString& path)
         return false;
     }
 
-    return generateThumbnail(file);
+    m_success = generateThumbnail(file);
+    return m_success;
 }
 
 bool ResourceLoader::success()
 {
-    return (!m_thumbnail.isNull());
+    return (!m_thumbnail.isNull() && m_success);
 }

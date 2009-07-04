@@ -32,13 +32,11 @@
 PatternLoader::PatternLoader()
               : ResourceLoader()
 {
-    m_type = PAT;
 }
 
 PatternLoader::PatternLoader(const QString& path)
               : ResourceLoader()
 {
-    m_type = PAT;
     load(path);
 }
 

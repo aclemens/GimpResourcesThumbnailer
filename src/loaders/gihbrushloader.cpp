@@ -27,13 +27,12 @@
 GihBrushLoader::GihBrushLoader()
               : GbrBrushLoader()
 {
-    m_type = GIH;
 }
 
 GihBrushLoader::GihBrushLoader(const QString& path)
-              : GbrBrushLoader(path)
+              : GbrBrushLoader()
 {
-    m_type = GIH;
+    load(path);
 }
 
 GihBrushLoader::~GihBrushLoader()

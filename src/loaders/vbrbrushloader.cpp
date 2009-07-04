@@ -33,13 +33,11 @@
 VbrBrushLoader::VbrBrushLoader()
               : ResourceLoader()
 {
-    m_type = VBR;
 }
 
 VbrBrushLoader::VbrBrushLoader(const QString& path)
               : ResourceLoader()
 {
-    m_type = VBR;
     load(path);
 }
 

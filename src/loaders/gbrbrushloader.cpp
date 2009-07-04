@@ -32,13 +32,11 @@
 GbrBrushLoader::GbrBrushLoader()
               : ResourceLoader()
 {
-    m_type = GBR;
 }
 
 GbrBrushLoader::GbrBrushLoader(const QString& path)
               : ResourceLoader()
 {
-    m_type = GBR;
     load(path);
 }
 

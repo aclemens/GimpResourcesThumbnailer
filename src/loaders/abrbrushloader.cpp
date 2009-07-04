@@ -53,7 +53,6 @@ void AbrBrushLoader::init()
 {
     header             = 0;
     sampledBrushHeader = 0;
-    m_type             = ABR;
 }
 
 bool AbrBrushLoader::generateThumbnail(QFile& file)

@@ -31,7 +31,8 @@ public:
 
     enum ResourceType
     {
-        GBR = 0,
+        NONE = -1,
+        GBR  = 0,
         GIH,
         VBR,
         PAT,
@@ -53,6 +54,7 @@ public:
 
 protected:
 
+    bool                   m_success;
     int                    m_type;
     QString                m_name;
     QImage                 m_thumbnail;
