@@ -24,16 +24,10 @@
 
 #include "resourceloader.h"
 
-class QString;
 class QFile;
 
 class PatternLoader : public ResourceLoader
 {
-
-public:
-
-    PatternLoader();
-    ~PatternLoader();
 
 protected:
 

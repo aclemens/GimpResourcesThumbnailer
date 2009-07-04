@@ -23,15 +23,9 @@
 #include "resourceloader.h"
 
 class QFile;
-class QString;
 
 class VbrBrushLoader : public ResourceLoader
 {
-
-public:
-
-    VbrBrushLoader();
-    ~VbrBrushLoader();
 
 protected:
 

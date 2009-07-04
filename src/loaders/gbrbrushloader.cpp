@@ -29,15 +29,6 @@
 
 #include <kdebug.h>
 
-GbrBrushLoader::GbrBrushLoader()
-              : ResourceLoader()
-{
-}
-
-GbrBrushLoader::~GbrBrushLoader()
-{
-}
-
 bool GbrBrushLoader::generateThumbnail(QFile& file)
 {
     const int HEADERSIZEv1 = 20;

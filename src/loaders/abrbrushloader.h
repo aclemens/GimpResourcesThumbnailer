@@ -28,7 +28,6 @@
 
 #include "resourceloader.h"
 
-class QString;
 class QFile;
 class QDataStream;
 

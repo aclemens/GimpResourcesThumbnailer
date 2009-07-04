@@ -30,15 +30,6 @@
 
 #include <kdebug.h>
 
-VbrBrushLoader::VbrBrushLoader()
-              : ResourceLoader()
-{
-}
-
-VbrBrushLoader::~VbrBrushLoader()
-{
-}
-
 bool VbrBrushLoader::generateThumbnail(QFile& file)
 {
 //    int imgSize = qMax(width, height);

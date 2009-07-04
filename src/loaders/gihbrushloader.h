@@ -23,14 +23,9 @@
 #include "gbrbrushloader.h"
 
 class QFile;
-class QString;
 
 class GihBrushLoader : public GbrBrushLoader
 {
-public:
-
-    GihBrushLoader();
-    ~GihBrushLoader();
 
 protected:
 

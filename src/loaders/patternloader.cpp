@@ -29,15 +29,6 @@
 
 #include <kdebug.h>
 
-PatternLoader::PatternLoader()
-              : ResourceLoader()
-{
-}
-
-PatternLoader::~PatternLoader()
-{
-}
-
 bool PatternLoader::generateThumbnail(QFile& file)
 {
     const int HEADERSIZE = 24;

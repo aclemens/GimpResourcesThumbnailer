@@ -24,15 +24,6 @@
 #include <QFile>
 #include <QString>
 
-GihBrushLoader::GihBrushLoader()
-              : GbrBrushLoader()
-{
-}
-
-GihBrushLoader::~GihBrushLoader()
-{
-}
-
 bool GihBrushLoader::generateThumbnail(QFile& file)
 {
     // Read ahead the first two lines and skip the textual information. We don't need it.
