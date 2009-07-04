@@ -32,7 +32,7 @@ public:
     enum ResourceType
     {
         NONE = -1,
-        GBR  = 0,
+        GBR  =  0,
         GIH,
         VBR,
         PAT,
@@ -43,25 +43,21 @@ public:
     virtual ~ResourceLoader();
 
     bool                   success();
-
     int                    resourceType();
-
     QImage&                thumbnail();
-    QString&               name();
 
     static ResourceLoader* getLoader(const QString& path);
 
 protected:
 
     bool                   m_success;
-    int                    m_type;
-    QString                m_name;
     QImage                 m_thumbnail;
 
     virtual bool           generateThumbnail(QFile& file) = 0;
 
 private:
 
+    int                    m_type;
     bool                   load(const QString& path);
 };
 

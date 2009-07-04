@@ -94,9 +94,6 @@ bool PatternLoader::generateThumbnail(QFile& file)
     if (bytesRead == -1 || bytesRead != dataLength)
         return false;
 
-    // set resource name
-    m_name = brushName;
-
     // generate thumbnail
     QImage::Format imageFormat;
     imageFormat = (colorDepth == 1 || colorDepth == 3) ? QImage::Format_RGB32 : QImage::Format_ARGB32;
@@ -159,7 +156,7 @@ bool PatternLoader::generateThumbnail(QFile& file)
         }
     }
 
-    kDebug() << "Thumbnail for Gimp Pattern '" << m_name << "' successfully generated!";
+    kDebug() << "Thumbnail for Gimp Pattern '" << brushName << "' successfully generated!";
 
     // cleanup
     delete[] brushName_c;

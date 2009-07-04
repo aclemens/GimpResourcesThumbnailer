@@ -100,11 +100,6 @@ int ResourceLoader::resourceType()
     return m_type;
 }
 
-QString& ResourceLoader::name()
-{
-    return m_name;
-}
-
 bool ResourceLoader::load(const QString& path)
 {
     QFile file(path);

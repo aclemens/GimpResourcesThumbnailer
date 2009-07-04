@@ -103,9 +103,6 @@ bool GbrBrushLoader::generateThumbnail(QFile& file)
     if (bytesRead == -1 || bytesRead != dataLength)
         return false;
 
-    // set resource name
-    m_name = brushName;
-
     // generate thumbnail
     QImage::Format imageFormat;
     imageFormat = (colorDepth == 1) ? QImage::Format_RGB32 : QImage::Format_ARGB32;
@@ -142,7 +139,7 @@ bool GbrBrushLoader::generateThumbnail(QFile& file)
         }
     }
 
-    kDebug() << "Thumbnail for Gimp Brush '" << m_name << "' successfully generated!";
+    kDebug() << "Thumbnail for Gimp Brush '" << brushName << "' successfully generated!";
 
     // cleanup
     delete[] brushName_c;
