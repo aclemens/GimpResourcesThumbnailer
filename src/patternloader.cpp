@@ -176,7 +176,6 @@ bool PatternLoader::generateThumbnail(QFile& file)
         }
     }
 
-    // load image data into reference
     kDebug() << "Thumbnail for Gimp Pattern '" << m_name << "' successfully generated!";
 
     // cleanup

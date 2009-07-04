@@ -132,9 +132,8 @@ bool GbrBrushLoader::generateThumbnail(QFile& file)
 
     switch (colorDepth)
     {
-        case 1:
+        case 1: // Grayscale
         {
-            // Grayscale
             for (quint32 y = 0; y < h; ++y)
             {
                 for (quint32 x = 0; x < w; ++x, ++step)
@@ -145,9 +144,8 @@ bool GbrBrushLoader::generateThumbnail(QFile& file)
             }
             break;
         }
-        case 4:
+        case 4: // RGBA
         {
-            // RGBA
             for (quint32 y = 0; y < h; ++y)
             {
                 for (quint32 x = 0; x < w; ++x, step += 4)
@@ -161,7 +159,6 @@ bool GbrBrushLoader::generateThumbnail(QFile& file)
         }
     }
 
-    // load image data into reference
     kDebug() << "Thumbnail for Gimp Brush '" << m_name << "' successfully generated!";
 
     // cleanup
