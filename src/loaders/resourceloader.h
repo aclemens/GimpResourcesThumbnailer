@@ -31,8 +31,8 @@ public:
 
     enum ResourceType
     {
-        NONE = -1,
-        GBR  =  0,
+        INVALID = -1,
+        GBR     =  0,
         GIH,
         VBR,
         PAT,

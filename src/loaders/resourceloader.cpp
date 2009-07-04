@@ -39,7 +39,7 @@
 ResourceLoader::ResourceLoader()
 {
     m_success = false;
-    m_type    = NONE;
+    m_type    = INVALID;
 }
 
 ResourceLoader::~ResourceLoader()
