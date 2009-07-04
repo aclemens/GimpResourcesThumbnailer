@@ -118,14 +118,13 @@ bool PatternLoader::generateThumbnail(QFile& file)
     QImage::Format imageFormat;
     imageFormat = (colorDepth == 1 || colorDepth == 3) ? QImage::Format_RGB32 : QImage::Format_ARGB32;
 
-    m_thumbnail = QImage(w, h, imageFormat);
+    m_thumbnail  = QImage(w, h, imageFormat);
     quint32 step = 0;
 
     switch (colorDepth)
     {
-        case 1:
+        case 1: // Grayscale
         {
-            // Grayscale
             for (quint32 y = 0; y < h; ++y)
             {
                 for (quint32 x = 0; x < w; ++x, ++step)
@@ -136,9 +135,8 @@ bool PatternLoader::generateThumbnail(QFile& file)
             }
             break;
         }
-        case 2:
+        case 2: // Grayscale with alpha
         {
-            // Grayscale Alpha
             for (quint32 y = 0; y < h; ++y)
             {
                 for (quint32 x = 0; x < w; ++x, step += 2)
@@ -150,9 +148,8 @@ bool PatternLoader::generateThumbnail(QFile& file)
             }
             break;
         }
-        case 3:
+        case 3: // RGB
         {
-            // RGB
             for (quint32 y = 0; y < h; ++y)
             {
                 for (quint32 x = 0; x < w; ++x, step += 3)
@@ -164,9 +161,8 @@ bool PatternLoader::generateThumbnail(QFile& file)
             }
             break;
         }
-        case 4:
+        case 4: // RGBA
         {
-            // RGBA
             for (quint32 y = 0; y < h; ++y)
             {
                 for (quint32 x = 0; x < w; ++x, step += 4)
