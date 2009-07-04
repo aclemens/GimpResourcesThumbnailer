@@ -62,12 +62,12 @@ ResourceLoader* ResourceLoader::getLoader(const QString& path)
 
     if (suffix == QString("GBR"))
     {
-        loader = new GbrBrushLoader(path);
+        loader = new GbrBrushLoader();
         loader->m_type = GBR;
     }
     else if (suffix == QString("GIH"))
     {
-        loader = new GihBrushLoader(path);
+        loader = new GihBrushLoader();
         loader->m_type = GIH;
     }
     else if (suffix == QString("VBR"))
@@ -76,13 +76,16 @@ ResourceLoader* ResourceLoader::getLoader(const QString& path)
     }
     else if (suffix == QString("PAT"))
     {
-        loader = new PatternLoader(path);
+        loader = new PatternLoader();
         loader->m_type = PAT;
     }
     else if (suffix == QString("ABR"))
     {
         // TODO: implement me!
     }
+
+    if (loader)
+        loader->load(path);
 
     return loader;
 }

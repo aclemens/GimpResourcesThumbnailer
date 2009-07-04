@@ -31,7 +31,6 @@ class VbrBrushLoader : public ResourceLoader
 public:
 
     VbrBrushLoader();
-    VbrBrushLoader(const QString& path);
     ~VbrBrushLoader();
 
 protected:

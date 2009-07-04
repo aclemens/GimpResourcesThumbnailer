@@ -42,7 +42,6 @@ public:
     ResourceLoader();
     virtual ~ResourceLoader();
 
-    bool                   load(const QString& path);
     bool                   success();
 
     int                    resourceType();
@@ -60,6 +59,10 @@ protected:
     QImage                 m_thumbnail;
 
     virtual bool           generateThumbnail(QFile& file) = 0;
+
+private:
+
+    bool                   load(const QString& path);
 };
 
 #endif /* RESOURCELOADER_H */

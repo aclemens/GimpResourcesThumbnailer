@@ -35,12 +35,6 @@ VbrBrushLoader::VbrBrushLoader()
 {
 }
 
-VbrBrushLoader::VbrBrushLoader(const QString& path)
-              : ResourceLoader()
-{
-    load(path);
-}
-
 VbrBrushLoader::~VbrBrushLoader()
 {
 }

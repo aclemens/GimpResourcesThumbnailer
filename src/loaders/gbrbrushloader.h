@@ -33,7 +33,6 @@ class GbrBrushLoader : public ResourceLoader
 public:
 
     GbrBrushLoader();
-    GbrBrushLoader(const QString& path);
     ~GbrBrushLoader();
 
 protected:

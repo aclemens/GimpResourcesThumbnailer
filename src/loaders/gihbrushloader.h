@@ -30,7 +30,6 @@ class GihBrushLoader : public GbrBrushLoader
 public:
 
     GihBrushLoader();
-    GihBrushLoader(const QString& path);
     ~GihBrushLoader();
 
 protected:

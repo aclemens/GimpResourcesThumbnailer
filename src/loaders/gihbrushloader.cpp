@@ -29,12 +29,6 @@ GihBrushLoader::GihBrushLoader()
 {
 }
 
-GihBrushLoader::GihBrushLoader(const QString& path)
-              : GbrBrushLoader()
-{
-    load(path);
-}
-
 GihBrushLoader::~GihBrushLoader()
 {
 }

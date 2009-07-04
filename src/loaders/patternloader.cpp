@@ -34,12 +34,6 @@ PatternLoader::PatternLoader()
 {
 }
 
-PatternLoader::PatternLoader(const QString& path)
-              : ResourceLoader()
-{
-    load(path);
-}
-
 PatternLoader::~PatternLoader()
 {
 }

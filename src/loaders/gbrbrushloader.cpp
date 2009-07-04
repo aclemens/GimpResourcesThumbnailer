@@ -34,12 +34,6 @@ GbrBrushLoader::GbrBrushLoader()
 {
 }
 
-GbrBrushLoader::GbrBrushLoader(const QString& path)
-              : ResourceLoader()
-{
-    load(path);
-}
-
 GbrBrushLoader::~GbrBrushLoader()
 {
 }

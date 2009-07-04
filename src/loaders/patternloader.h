@@ -33,7 +33,6 @@ class PatternLoader : public ResourceLoader
 public:
 
     PatternLoader();
-    PatternLoader(const QString& path);
     ~PatternLoader();
 
 protected:
