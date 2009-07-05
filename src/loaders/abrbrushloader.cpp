@@ -52,12 +52,10 @@ bool AbrBrushLoader::generateThumbnail(QFile& file)
     {
         case 1:
         case 2:
-            if (loadv1_2_data(in, header, m_thumbnail))
-                success = true;
+            success = loadv1_2_data(in, header, m_thumbnail);
             break;
         case 6:
-            if (loadv6_data(in, header, m_thumbnail))
-                success = true;
+            success = loadv6_data(in, header, m_thumbnail);
             break;
         default:
             success = false;
@@ -93,10 +91,6 @@ bool AbrBrushLoader::readHeader(QDataStream& stream, AbrHeader& header)
             header.subversion = 0;
             header.count = 0;
     }
-
-    kDebug() << "version: "     << header.version;
-    kDebug() << "subversion: "  << header.subversion;
-    kDebug() << "count: "       << header.count;
 
     return validHeader(header);
 }
@@ -302,30 +296,12 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
         }
     }
 
-//    for (qint32 y = 0; y < height; ++y)
-//    {
-//        for (qint32 x = 0; x < width; ++x, step += 3)
-//        {
-//            tmpImage.setPixel(x, y, qRgb(static_cast<uchar>(buffer[step]),
-//                                         static_cast<uchar>(buffer[step+1]),
-//                                         static_cast<uchar>(buffer[step+2])));
-////                                          static_cast<uchar>(buffer[step+3])));
-//        }
-//    }
     img = tmpImage;
 
     delete buffer;
 
     if (!streamIsOk(stream) || img.isNull())
-    {
-        kDebug() << "HAAAAAAAAAAAAAAAA";
         return false;
-    }
-
-//    stream.device()->seek(next_brush);
-//
-//    if (!streamIsOk(stream))
-//        return false;
 
     return true;
 }
