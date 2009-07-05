@@ -73,8 +73,12 @@ bool AbrBrushLoader::readHeader(QDataStream& stream, AbrHeader& header)
             break;
         default:
             header.subversion = 0;
-            header.count      = 0;
+            header.count = 0;
     }
+
+    kDebug() << "version: " << header.version;
+    kDebug() << "subversion: " << header.subversion;
+    kDebug() << "count: " << header.count;
 
     return validHeader(header);
 }
@@ -111,18 +115,19 @@ bool AbrBrushLoader::validHeader(AbrHeader& header)
 
 bool AbrBrushLoader::seachFor8BIM(QDataStream& stream)
 {
-    const qint32 MAGIC = 0x3842494D;    // 8BIM
-    const qint32 TAG   = 0x73616D70;    // samp
+    const qint32 MAGIC = 0x3842494D; // 8BIM
+    const qint32 TAG   = 0x73616D70; // samp
 
     qint32 magic;
     qint32 tag;
     qint32 sectionSize;
 
+    if (!streamIsOk(stream))
+        return false;
+
     while (!stream.device()->atEnd())
     {
-        stream >> magic
-               >> tag;
-
+        stream >> magic >> tag;
         if (magic != MAGIC)
         {
             kDebug() << "invalid magic number: " << QByteArray::fromHex(QString::number(magic, 16).toAscii());;
@@ -132,20 +137,64 @@ bool AbrBrushLoader::seachFor8BIM(QDataStream& stream)
         if (tag == TAG)
             return true;
 
+        if (!streamIsOk(stream))
+            return false;
+
         stream >> sectionSize;
+        kDebug() << "section size: " << sectionSize;
+
         qint64 pos = stream.device()->pos() + sectionSize;
-        stream.device()->seek(pos);
+        kDebug() << "new pos: " << pos;
+
+        if (!stream.device()->seek(pos))
+            kDebug() << "seek failed!";
+
+        if (!streamIsOk(stream))
+            return false;
     }
     return false;
 }
 
 qint16 AbrBrushLoader::getSamplesCount(QDataStream& stream)
 {
-    // save current stream position
-    qint64 oldpos = stream.device()->pos();
+    if (!streamIsOk(stream))
+        return 0;
 
-    // restore previous stream position
-    stream.device()->seek(oldpos);
+    qint64 oldPos;
+    qint32 sectionSize;
+    qint32 sectionEnd;
+    qint32 samples = 0;
+    qint32 dataStart;
 
-    return 0;
+    qint32 brushSize;
+    qint32 brushEnd;
+
+    oldPos = stream.device()->pos();
+
+    if (!seachFor8BIM(stream))
+    {
+        stream.device()->seek(oldPos);
+        return 0;
+    }
+
+    stream >> sectionSize;
+    dataStart  = stream.device()->pos();
+    sectionEnd = sectionSize + dataStart;
+
+    while (!stream.device()->atEnd() && stream.device()->pos() < sectionEnd)
+    {
+        stream >> brushSize;
+        brushEnd = brushSize;
+        /* complement to 4 */
+        while (brushEnd % 4 != 0)
+            brushEnd++;
+
+        qint64 newPos = brushEnd + stream.device()->pos();
+        stream.device()->seek(newPos);
+        samples++;
+    }
+
+    stream.device()->seek(dataStart);
+
+    return samples;
 }
