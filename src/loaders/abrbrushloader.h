@@ -53,12 +53,13 @@ protected:
 
 private:
 
-    bool streamIsOk(QDataStream& stream);
+    bool   streamIsOk(QDataStream& stream);
 
-    bool readHeader(QDataStream& stream, AbrHeader& header);
-    bool validHeader(AbrHeader& header);
+    bool   readHeader(QDataStream& stream, AbrHeader& header);
+    bool   validHeader(AbrHeader& header);
 
-    bool seachFor8BIM(QDataStream& stream);
+    bool   seachFor8BIM(QDataStream& stream);
+    qint16 get_v6_count(QDataStream& stream);
 };
 
 #endif /* ABRBRUSHLOADER_H */
