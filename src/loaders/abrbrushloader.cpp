@@ -60,9 +60,6 @@ bool AbrBrushLoader::streamIsOk(QDataStream& stream)
 
 bool AbrBrushLoader::readHeader(QDataStream& stream, AbrHeader& header)
 {
-    // save current stream position
-    qint64 oldpos = stream.device()->pos();
-
     stream >> header.version;
     switch (header.version)
     {
@@ -78,9 +75,6 @@ bool AbrBrushLoader::readHeader(QDataStream& stream, AbrHeader& header)
             header.subversion = 0;
             header.count      = 0;
     }
-
-    // restore previous stream position
-    stream.device()->seek(oldpos);
 
     return validHeader(header);
 }
@@ -147,5 +141,11 @@ bool AbrBrushLoader::seachFor8BIM(QDataStream& stream)
 
 qint16 AbrBrushLoader::getSamplesCount(QDataStream& stream)
 {
+    // save current stream position
+    qint64 oldpos = stream.device()->pos();
+
+    // restore previous stream position
+    stream.device()->seek(oldpos);
+
     return 0;
 }

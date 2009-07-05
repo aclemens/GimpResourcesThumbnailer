@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="image/x-gimp-brush-thumbnailer">
-    <comment>Gimp Brush Thumbnailer</comment>
+    <comment>Gimp Resource</comment>
     <glob pattern="*.gbr"/>
     <glob pattern="*.vbr"/>
     <glob pattern="*.gih"/>
