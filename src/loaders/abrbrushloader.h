@@ -44,18 +44,6 @@ struct AbrHeader
     qint16 count;
 };
 
-//struct AbrSampledBrushHeader
-//{
-//    qint16 type;
-//    qint32 size;
-//    qint32 misc;    // this value is ignored
-//    qint16 spacing;
-//    qint8  antiAliasing;
-//    qint16 bounds[4];
-//    qint32 bounds_long[4];
-//    qint16 depth;
-//};
-
 class AbrBrushLoader : public ResourceLoader
 {
 
@@ -70,8 +58,7 @@ private:
     bool readHeader(QDataStream& stream, AbrHeader& header);
     bool validHeader(AbrHeader& header);
 
-//    bool validAbrSampledBrushHeader();
-//    bool validAbrSampledBrushHeader(AbrSampledBrushHeader& header);
+    bool seachFor8BIM(QDataStream& stream);
 };
 
 #endif /* ABRBRUSHLOADER_H */

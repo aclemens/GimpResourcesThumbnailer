@@ -114,15 +114,32 @@ bool AbrBrushLoader::validHeader(AbrHeader& header)
     return valid;
 }
 
-//bool AbrBrushLoader::validAbrSampledBrushHeader()
-//{
-//    if (!m_sampledBrushHeader)
-//        return false;
-//
-//    return validAbrSampledBrushHeader(m_sampledBrushHeader);
-//}
-//
-//bool AbrBrushLoader::validAbrSampledBrushHeader(AbrSampledBrushHeader* /*header*/)
-//{
-//    return true;
-//}
+bool AbrBrushLoader::seachFor8BIM(QDataStream& stream)
+{
+    const qint32 MAGIC = 0x3842494D;    // 8BIM
+    const qint32 TAG   = 0x73616D70;    // samp
+
+    qint32 magic;
+    qint32 tag;
+    qint32 sectionSize;
+
+    while (!stream.device()->atEnd())
+    {
+        stream >> magic
+               >> tag;
+
+        if (magic != MAGIC)
+        {
+            kDebug() << "invalid magic number: " << QByteArray::fromHex(QString::number(magic, 16).toAscii());;
+            return false;
+        }
+
+        if (tag == TAG)
+            return true;
+
+        stream >> sectionSize;
+        qint64 pos = stream.device()->pos() + sectionSize;
+        stream.device()->seek(pos);
+    }
+    return false;
+}

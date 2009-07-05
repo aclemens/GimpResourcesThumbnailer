@@ -81,7 +81,8 @@ ResourceLoader* ResourceLoader::getLoader(const QString& path)
     }
     else if (suffix == QString("ABR"))
     {
-        // TODO: implement me!
+        loader = new AbrBrushLoader();
+        loader->m_type = ABR;
     }
 
     if (loader)
