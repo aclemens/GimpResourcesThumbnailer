@@ -34,6 +34,7 @@
 
 #include "resourceloader.h"
 
+class QImage;
 class QFile;
 class QDataStream;
 
@@ -61,8 +62,10 @@ private:
     bool   seachFor8BIM(QDataStream& stream);
     qint16 getSamplesCount(QDataStream& stream);
 
-    bool   loadv1_2_data(QDataStream& stream, AbrHeader& header);
-    bool   loadv6_data(QDataStream& stream, AbrHeader& header);
+    bool   loadv1_2_data(QDataStream& stream, AbrHeader& header, QImage& img);
+    bool   loadv6_data(QDataStream& stream, AbrHeader& header, QImage& img);
+
+    int    rle_decode(QDataStream& stream, char* buffer, qint32 height);
 };
 
 #endif /* ABRBRUSHLOADER_H */

@@ -28,6 +28,7 @@
 // Qt includes
 
 #include <QString>
+#include <QImage>
 #include <QFile>
 #include <QFileInfo>
 #include <QDataStream>
@@ -51,15 +52,15 @@ bool AbrBrushLoader::generateThumbnail(QFile& file)
     {
         case 1:
         case 2:
-            if (loadv1_2_data(in, header))
+            if (loadv1_2_data(in, header, m_thumbnail))
                 success = true;
             break;
         case 6:
-            if (loadv6_data(in, header))
-                success = false;
+            if (loadv6_data(in, header, m_thumbnail))
+                success = true;
             break;
         default:
-            success = true;
+            success = false;
     }
 
     return success;
@@ -211,12 +212,178 @@ qint16 AbrBrushLoader::getSamplesCount(QDataStream& stream)
     return samples;
 }
 
-bool AbrBrushLoader::loadv1_2_data(QDataStream& stream, AbrHeader& header)
+bool AbrBrushLoader::loadv1_2_data(QDataStream& stream, AbrHeader& header, QImage& img)
 {
     return false;
 }
 
-bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header)
+bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage& img)
 {
-    return false;
+    qint32 brush_size;
+    qint32 brush_end;
+    qint32 complement_to_4;
+    qint64 next_brush;
+
+    qint32 top, left, bottom, right;
+    qint16 depth;
+    qint8  compression;
+
+    qint32 width, height;
+    qint32 size;
+
+    char* buffer;
+
+    stream >> brush_size;
+    brush_end = brush_size;
+    /* complement to 4 */
+    while (brush_end % 4 != 0)
+        brush_end++;
+    complement_to_4 = brush_end - brush_size;
+    next_brush = stream.device()->pos() + brush_end;
+
+    // discard key
+    stream.device()->seek(stream.device()->pos() + 37);
+    if (header.subversion == 1)
+    {
+        /* discard short coordinates and unknown short */
+        stream.device()->seek(stream.device()->pos() + 10);
+    }
+    else
+    {
+        /* discard unknown bytes */
+        stream.device()->seek(stream.device()->pos() + 264);
+    }
+
+    if (!streamIsOk(stream))
+        return false;
+
+    stream >> top
+           >> left
+           >> bottom
+           >> right
+           >> depth
+           >> compression;
+
+    width  = right - left;
+    height = bottom - top;
+    size   = width * (depth >> 3) * height;
+
+
+    buffer = new char[size];
+    int r  = -1;
+
+    if (!compression)
+    {
+        kDebug() << "trying to read uncompressed data...";
+        r = stream.readRawData(buffer, size);
+    }
+    else
+    {
+        kDebug() << "trying to read compressed data...";
+        r = rle_decode(stream, buffer, height);
+    }
+
+    if (r == -1)
+    {
+        kDebug() << "failed while reading data...";
+        delete buffer;
+        return false;
+    }
+
+    // set image data
+    QImage tmpImage(width, height, QImage::Format_ARGB32);
+    qint32 step = 0;
+
+//    for (qint32 y = 0; y < height; ++y)
+//    {
+//        for (qint32 x = 0; x < width; ++x, step += 2)
+//        {
+//            qint32 val = static_cast<uchar> (buffer[step]);
+//            qint32 alpha = static_cast<uchar> (buffer[step + 1]);
+//            tmpImage.setPixel(x, y, qRgba(val, val, val, alpha));
+//        }
+//    }
+
+    for (qint32 y = 0; y < height; ++y)
+    {
+        for (qint32 x = 0; x < width; ++x, step += 4)
+        {
+            tmpImage.setPixel(x, y, qRgba(static_cast<uchar>(buffer[step]),
+                                          static_cast<uchar>(buffer[step+1]),
+                                          static_cast<uchar>(buffer[step+2]),
+                                          static_cast<uchar>(buffer[step+3])));
+        }
+    }
+    img = tmpImage;
+
+    delete buffer;
+
+    if (!streamIsOk(stream) || img.isNull())
+    {
+        kDebug() << "HAAAAAAAAAAAAAAAA";
+        return false;
+    }
+
+//    stream.device()->seek(next_brush);
+//
+//    if (!streamIsOk(stream))
+//        return false;
+
+    return true;
+}
+
+int AbrBrushLoader::rle_decode(QDataStream& stream, char* buffer, qint32 height)
+{
+    qint32  n;
+    qint8   n_tmp;
+    qint8   ch;
+    qint8   ch_tmp;
+    qint32  i, j, c;
+    qint16* cscanline_len;
+    qint16  tmp;
+
+    /* read compressed size foreach scanline */
+    cscanline_len = new qint16[height];
+    for (i = 0; i < height; i++)
+    {
+        stream >> tmp;
+        cscanline_len[i] = tmp;
+    }
+
+    /* unpack each scanline data */
+    for (i = 0; i < height; i++)
+    {
+        for (j = 0; j < cscanline_len[i];)
+        {
+            stream >> n_tmp;
+            n = n_tmp;
+            j++;
+            if (n >= 128) /* force sign */
+                n -= 256;
+            if (n < 0)
+            { /* copy the following char -n + 1 times */
+                if (n == -128) /* it's a nop */
+                    continue;
+                n = -n + 1;
+                stream >> ch;
+                j++;
+                for (c = 0; c < n; c++, buffer++)
+                    *buffer = ch;
+            }
+            else
+            { /* read the following n + 1 chars (no compr) */
+                for (c = 0; c < n + 1; c++, j++, buffer++)
+                {
+                    stream >> ch_tmp;
+                    *buffer = ch_tmp;
+                }
+            }
+        }
+    }
+
+    delete cscanline_len;
+
+    if (!streamIsOk(stream))
+        return -1;
+    return 0;
 }
