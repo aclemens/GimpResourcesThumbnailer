@@ -1,3 +1,6 @@
+2009-07-05 GimpBrushThumbs 1.0.5
+    * Add support for Photoshop brushes (v6) (.pat)
+
 2009-07-03 GimpBrushThumbs 1.0.4
     * Add support for Gimp patterns (.pat)
     * Refactoring of the loader code

@@ -52,9 +52,12 @@ bool AbrBrushLoader::generateThumbnail(QFile& file)
     {
         case 1:
         case 2:
+            // TODO: implement me
             success = loadv1_2_data(in, header, m_thumbnail);
             break;
         case 6:
+            // TODO: display 2 or 4 brushes in one thumbnail, if the
+            //       requested size is big enough
             success = loadv6_data(in, header, m_thumbnail);
             break;
         default:
@@ -315,14 +318,14 @@ int AbrBrushLoader::rle_decode(QDataStream& stream, char* buffer, qint32 height)
     qint32  i, j, c;
     qint16* cscanline_len;
 
-    /* read compressed size foreach scanline */
+    // read compressed sizes for the scanlines
     cscanline_len = new qint16[height];
     for (i = 0; i < height; i++)
     {
         stream >> cscanline_len[i];
     }
 
-    /* unpack each scanline data */
+    // unpack scanline data
     for (i = 0; i < height; i++)
     {
         for (j = 0; j < cscanline_len[i];)
@@ -357,5 +360,6 @@ int AbrBrushLoader::rle_decode(QDataStream& stream, char* buffer, qint32 height)
 
     if (!streamIsOk(stream))
         return -1;
+
     return 0;
 }
