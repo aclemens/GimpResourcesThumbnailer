@@ -72,7 +72,7 @@ bool AbrBrushLoader::readHeader(QDataStream& stream, AbrHeader& header)
             break;
         case 6:
             stream >> header.subversion;
-            header.count = get_v6_count(stream);
+            header.count = getSamplesCount(stream);
             break;
         default:
             header.subversion = 0;
@@ -145,7 +145,7 @@ bool AbrBrushLoader::seachFor8BIM(QDataStream& stream)
     return false;
 }
 
-qint16 AbrBrushLoader::get_v6_count(QDataStream& stream)
+qint16 AbrBrushLoader::getSamplesCount(QDataStream& stream)
 {
     return 0;
 }

@@ -59,7 +59,7 @@ private:
     bool   validHeader(AbrHeader& header);
 
     bool   seachFor8BIM(QDataStream& stream);
-    qint16 get_v6_count(QDataStream& stream);
+    qint16 getSamplesCount(QDataStream& stream);
 };
 
 #endif /* ABRBRUSHLOADER_H */
