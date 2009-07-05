@@ -45,7 +45,24 @@ bool AbrBrushLoader::generateThumbnail(QFile& file)
     if (!readHeader(in, header) || !streamIsOk(in))
         return false;
 
-    return true;
+    bool success = false;
+
+    switch (header.version)
+    {
+        case 1:
+        case 2:
+            if (loadv1_2_data(in, header))
+                success = true;
+            break;
+        case 6:
+            if (loadv6_data(in, header))
+                success = false;
+            break;
+        default:
+            success = true;
+    }
+
+    return success;
 }
 
 bool AbrBrushLoader::streamIsOk(QDataStream& stream)
@@ -76,9 +93,9 @@ bool AbrBrushLoader::readHeader(QDataStream& stream, AbrHeader& header)
             header.count = 0;
     }
 
-    kDebug() << "version: " << header.version;
-    kDebug() << "subversion: " << header.subversion;
-    kDebug() << "count: " << header.count;
+    kDebug() << "version: "     << header.version;
+    kDebug() << "subversion: "  << header.subversion;
+    kDebug() << "count: "       << header.count;
 
     return validHeader(header);
 }
@@ -192,4 +209,14 @@ qint16 AbrBrushLoader::getSamplesCount(QDataStream& stream)
     stream.device()->seek(dataStart);
 
     return samples;
+}
+
+bool AbrBrushLoader::loadv1_2_data(QDataStream& stream, AbrHeader& header)
+{
+    return false;
+}
+
+bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header)
+{
+    return false;
 }

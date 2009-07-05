@@ -60,6 +60,9 @@ private:
 
     bool   seachFor8BIM(QDataStream& stream);
     qint16 getSamplesCount(QDataStream& stream);
+
+    bool   loadv1_2_data(QDataStream& stream, AbrHeader& header);
+    bool   loadv6_data(QDataStream& stream, AbrHeader& header);
 };
 
 #endif /* ABRBRUSHLOADER_H */
