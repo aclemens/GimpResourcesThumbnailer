@@ -266,8 +266,7 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
 
     width  = right - left;
     height = bottom - top;
-    size   = width * (depth >> 3) * height;
-
+    size   = width * height;
 
     buffer = new char[size];
     int r  = -1;
@@ -291,29 +290,28 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
     }
 
     // set image data
-    QImage tmpImage(width, height, QImage::Format_ARGB32);
+    QImage tmpImage(width, height, QImage::Format_RGB32);
     qint32 step = 0;
-
-//    for (qint32 y = 0; y < height; ++y)
-//    {
-//        for (qint32 x = 0; x < width; ++x, step += 2)
-//        {
-//            qint32 val = static_cast<uchar> (buffer[step]);
-//            qint32 alpha = static_cast<uchar> (buffer[step + 1]);
-//            tmpImage.setPixel(x, y, qRgba(val, val, val, alpha));
-//        }
-//    }
 
     for (qint32 y = 0; y < height; ++y)
     {
-        for (qint32 x = 0; x < width; ++x, step += 4)
+        for (qint32 x = 0; x < width; ++x, ++step)
         {
-            tmpImage.setPixel(x, y, qRgba(static_cast<uchar>(buffer[step]),
-                                          static_cast<uchar>(buffer[step+1]),
-                                          static_cast<uchar>(buffer[step+2]),
-                                          static_cast<uchar>(buffer[step+3])));
+            qint32 val = 255 - static_cast<uchar>(buffer[step]);
+            tmpImage.setPixel(x, y, qRgb(val, val, val));
         }
     }
+
+//    for (qint32 y = 0; y < height; ++y)
+//    {
+//        for (qint32 x = 0; x < width; ++x, step += 3)
+//        {
+//            tmpImage.setPixel(x, y, qRgb(static_cast<uchar>(buffer[step]),
+//                                         static_cast<uchar>(buffer[step+1]),
+//                                         static_cast<uchar>(buffer[step+2])));
+////                                          static_cast<uchar>(buffer[step+3])));
+//        }
+//    }
     img = tmpImage;
 
     delete buffer;
@@ -340,14 +338,12 @@ int AbrBrushLoader::rle_decode(QDataStream& stream, char* buffer, qint32 height)
     qint8   ch_tmp;
     qint32  i, j, c;
     qint16* cscanline_len;
-    qint16  tmp;
 
     /* read compressed size foreach scanline */
     cscanline_len = new qint16[height];
     for (i = 0; i < height; i++)
     {
-        stream >> tmp;
-        cscanline_len[i] = tmp;
+        stream >> cscanline_len[i];
     }
 
     /* unpack each scanline data */
