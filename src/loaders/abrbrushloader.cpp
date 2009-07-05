@@ -141,13 +141,8 @@ bool AbrBrushLoader::seachFor8BIM(QDataStream& stream)
             return false;
 
         stream >> sectionSize;
-        kDebug() << "section size: " << sectionSize;
-
         qint64 pos = stream.device()->pos() + sectionSize;
-        kDebug() << "new pos: " << pos;
-
-        if (!stream.device()->seek(pos))
-            kDebug() << "seek failed!";
+        stream.device()->seek(pos);
 
         if (!streamIsOk(stream))
             return false;
