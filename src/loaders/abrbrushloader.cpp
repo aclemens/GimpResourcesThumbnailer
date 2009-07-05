@@ -5,6 +5,12 @@
  *
  * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
  *
+ * Code was inspired by Eric Lamarque <eric.lamarque@free.fr>
+ *      (ABR plugin, http://registry.gimp.org/node/126)
+ *
+ * Adobe and Adobe Photoshop are trademarks of Adobe Systems
+ * Incorporated that may be registered in certain jurisdictions.
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -30,79 +36,16 @@
 
 #include <kdebug.h>
 
-AbrBrushLoader::AbrBrushLoader()
-              : ResourceLoader()
-{
-    header             = 0;
-    sampledBrushHeader = 0;
-}
-
-AbrBrushLoader::~AbrBrushLoader()
-{
-    delete header;
-    delete sampledBrushHeader;
-}
-
 bool AbrBrushLoader::generateThumbnail(QFile& file)
 {
     QDataStream in(&file);
 
-    // check stream status
-    if (!streamIsOk(in))
+    // read header
+    AbrHeader header;
+    if (!readHeader(in, header) || !streamIsOk(in))
         return false;
 
-    // header already set? If so, delete it
-    if (header)
-        delete header;
-    header = new AbrHeader;
-
-    // read stream
-    in >> header->version
-       >> header->count;
-
-    // check stream and header
-    if (!streamIsOk(in) || !validAbrHeader())
-        return false;
-
-    kDebug() << "version: " << header->version;
-    kDebug() << "count: "   << header->count;
-
-    // continue reading the AbrSampledBrushHeader
-    if (sampledBrushHeader)
-        delete sampledBrushHeader;
-    sampledBrushHeader = new AbrSampledBrushHeader;
-
-    in >> sampledBrushHeader->misc
-       >> sampledBrushHeader->spacing
-       >> sampledBrushHeader->antiAliasing;
-
-    for (int i = 0; i < 4; ++i)
-    {
-        qint16 tmp;
-        in >> tmp;
-        sampledBrushHeader->bounds[i] = tmp;
-    }
-
-    for (int i = 0; i < 4; ++i)
-    {
-        qint32 tmp;
-        in >> tmp;
-        sampledBrushHeader->bounds_long[i] = tmp;
-    }
-
-    in >> sampledBrushHeader->depth;
-
-    // check stream and sampled brush header
-    if (!streamIsOk(in) || !validAbrSampledBrushHeader())
-        return false;
-
-    kDebug() << "spacing: "      << sampledBrushHeader->spacing;
-    kDebug() << "antiAliasing: " << sampledBrushHeader->antiAliasing;
-    kDebug() << "bounds: "       << sampledBrushHeader->bounds;
-    kDebug() << "bounds_long: "  << sampledBrushHeader->bounds_long;
-    kDebug() << "depth: "        << sampledBrushHeader->depth;
-
-    return false;
+    return true;
 }
 
 bool AbrBrushLoader::streamIsOk(QDataStream& stream)
@@ -115,48 +58,71 @@ bool AbrBrushLoader::streamIsOk(QDataStream& stream)
     return true;
 }
 
-bool AbrBrushLoader::validAbrHeader()
+bool AbrBrushLoader::readHeader(QDataStream& stream, AbrHeader& header)
 {
-    if (!header)
-        return false;
+    // save current stream position
+    qint64 oldpos = stream.device()->pos();
 
-    return validAbrHeader(header);
+    stream >> header.version;
+    switch (header.version)
+    {
+        case 1:
+        case 2:
+            stream >> header.count;
+            break;
+        case 6:
+            stream >> header.subversion;
+            break;
+        default:
+            header.subversion = 0;
+            header.count      = 0;
+    }
+
+    // restore previous stream position
+    stream.device()->seek(oldpos);
+
+    return validHeader(header);
 }
 
-bool AbrBrushLoader::validAbrHeader(AbrHeader* header)
+bool AbrBrushLoader::validHeader(AbrHeader& header)
 {
-    if (!header)
+    // assume that everything went wrong
+    bool valid = false;
+
+    // check for valid header values
+    switch (header.version)
     {
-        kDebug() << "No valid ABR header found.";
-        return false;
+        case 1:
+        case 2:
+            valid = true;
+            break;
+        case 6:
+            if (header.subversion == 1 || header.subversion == 2)
+                valid = true;
+            break;
+        default:
+            valid = false;
+            kDebug() << "Invalid ABR header version: " << header.version;
     }
 
-    bool valid = true;
-
-    if (header->version != 6 && header->version != 12)
+    if (header.count <= 0)
     {
-        kDebug() << "Invalid ABR header version: " << header->version;
-        valid = false;
-    }
-
-    if (header->count <= 0)
-    {
-        kDebug() << "Invalid count in ABR header: " << header->count;
+        kDebug() << "Invalid count in ABR header: " << header.count;
         valid = false;
     }
 
     return valid;
 }
 
-bool AbrBrushLoader::validAbrSampledBrushHeader()
-{
-    if (!sampledBrushHeader)
-        return false;
-
-    return validAbrSampledBrushHeader(sampledBrushHeader);
-}
-
-bool AbrBrushLoader::validAbrSampledBrushHeader(AbrSampledBrushHeader* /*header*/)
-{
-    return true;
-}
+//bool AbrBrushLoader::validAbrSampledBrushHeader()
+//{
+//    if (!m_sampledBrushHeader)
+//        return false;
+//
+//    return validAbrSampledBrushHeader(m_sampledBrushHeader);
+//}
+//
+//bool AbrBrushLoader::validAbrSampledBrushHeader(AbrSampledBrushHeader* /*header*/)
+//{
+//    return true;
+//}

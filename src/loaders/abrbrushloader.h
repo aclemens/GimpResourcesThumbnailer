@@ -5,6 +5,12 @@
  *
  * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
  *
+ * Code was inspired by Eric Lamarque <eric.lamarque@free.fr>
+ *      (ABR plugin, http://registry.gimp.org/node/126)
+ *
+ * Adobe and Adobe Photoshop are trademarks of Adobe Systems
+ * Incorporated that may be registered in certain jurisdictions.
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -34,27 +40,24 @@ class QDataStream;
 struct AbrHeader
 {
     qint16 version;
+    qint16 subversion;
     qint16 count;
 };
 
-struct AbrSampledBrushHeader
-{
-    qint16 type;
-    qint32 size;
-    qint32 misc;    // this value is ignored
-    qint16 spacing;
-    qint8  antiAliasing;
-    qint16 bounds[4];
-    qint32 bounds_long[4];
-    qint16 depth;
-};
+//struct AbrSampledBrushHeader
+//{
+//    qint16 type;
+//    qint32 size;
+//    qint32 misc;    // this value is ignored
+//    qint16 spacing;
+//    qint8  antiAliasing;
+//    qint16 bounds[4];
+//    qint32 bounds_long[4];
+//    qint16 depth;
+//};
 
 class AbrBrushLoader : public ResourceLoader
 {
-public:
-
-    AbrBrushLoader();
-    ~AbrBrushLoader();
 
 protected:
 
@@ -64,16 +67,11 @@ private:
 
     bool streamIsOk(QDataStream& stream);
 
-    bool validAbrHeader();
-    bool validAbrHeader(AbrHeader* header);
+    bool readHeader(QDataStream& stream, AbrHeader& header);
+    bool validHeader(AbrHeader& header);
 
-    bool validAbrSampledBrushHeader();
-    bool validAbrSampledBrushHeader(AbrSampledBrushHeader* header);
-
-private:
-
-    AbrHeader*             header;
-    AbrSampledBrushHeader* sampledBrushHeader;
+//    bool validAbrSampledBrushHeader();
+//    bool validAbrSampledBrushHeader(AbrSampledBrushHeader& header);
 };
 
 #endif /* ABRBRUSHLOADER_H */
