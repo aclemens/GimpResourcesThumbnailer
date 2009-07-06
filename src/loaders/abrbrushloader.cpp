@@ -52,7 +52,7 @@ bool AbrBrushLoader::generateThumbnail(QFile& file)
     {
         case 1:
         case 2:
-            // TODO: implement me
+            // TODO: implement me (loadv1_2_data)
             success = loadv1_2_data(in, header, m_thumbnail);
             break;
         case 6:
