@@ -46,7 +46,7 @@ bool ThumbnailCreator::create(const QString &path, int width, int height, QImage
     Q_UNUSED(height)
 
     bool success           = false;
-    ResourceLoader* loader = ResourceLoader::getLoader(path);
+    ResourceLoader* loader = ResourceLoader::create(path);
 
     if (loader && loader->success())
     {

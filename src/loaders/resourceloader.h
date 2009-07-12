@@ -46,7 +46,7 @@ public:
     int                    resourceType();
     QImage&                thumbnail();
 
-    static ResourceLoader* getLoader(const QString& path);
+    static ResourceLoader* create(const QString& path);
 
 protected:
 

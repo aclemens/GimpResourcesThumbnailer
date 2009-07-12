@@ -44,7 +44,7 @@ void ResourceLoaderTest::testKnownResourcesShouldNotReturnInvalidType()
     QFETCH(QString, filename);
     QFETCH(int,     result);
 
-    ResourceLoader* loader = ResourceLoader::getLoader(filename);
+    ResourceLoader* loader = ResourceLoader::create(filename);
 
     // resource type should not be INVALID...
     QVERIFY(loader->resourceType() != ResourceLoader::INVALID);
@@ -66,7 +66,7 @@ void ResourceLoaderTest::testUnknownResourcesShouldReturnNullPointer()
 {
     QFETCH(QString, filename);
 
-    ResourceLoader* loader = ResourceLoader::getLoader(filename);
+    ResourceLoader* loader = ResourceLoader::create(filename);
     QVERIFY(!loader);
     delete loader;
 }

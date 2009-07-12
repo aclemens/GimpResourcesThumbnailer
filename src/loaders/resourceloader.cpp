@@ -46,7 +46,7 @@ ResourceLoader::~ResourceLoader()
 {
 }
 
-ResourceLoader* ResourceLoader::getLoader(const QString& path)
+ResourceLoader* ResourceLoader::create(const QString& path)
 {
     ResourceLoader* loader = 0;
 
