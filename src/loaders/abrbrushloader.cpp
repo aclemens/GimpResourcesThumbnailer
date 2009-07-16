@@ -211,6 +211,10 @@ qint16 AbrBrushLoader::getSamplesCount(QDataStream& stream)
 
 bool AbrBrushLoader::loadv1_2_data(QDataStream& stream, AbrHeader& header, QImage& img)
 {
+    Q_UNUSED(stream)
+    Q_UNUSED(header)
+    Q_UNUSED(img)
+
     return false;
 }
 
