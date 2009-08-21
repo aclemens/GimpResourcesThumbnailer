@@ -1,3 +1,6 @@
+2009-07-18 GimpBrushThumbs 1.0.6
+    * split mime-types into several files
+
 2009-07-05 GimpBrushThumbs 1.0.5
     * Add support for Photoshop brushes (v6) (.pat)
 

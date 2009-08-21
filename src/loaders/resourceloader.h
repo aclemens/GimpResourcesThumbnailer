@@ -45,20 +45,18 @@ public:
     bool                   success();
     int                    resourceType();
     QImage&                thumbnail();
-
     static ResourceLoader* create(const QString& path);
 
 protected:
 
-    bool                   m_success;
-    QImage                 m_thumbnail;
-
-    virtual bool           generateThumbnail(QFile& file) = 0;
+    bool         m_success;
+    QImage       m_thumbnail;
+    virtual bool generateThumbnail(QFile& file) = 0;
 
 private:
 
-    int                    m_type;
-    bool                   load(const QString& path);
+    int  m_type;
+    bool load(const QString& path);
 };
 
 #endif /* RESOURCELOADER_H */
