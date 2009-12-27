@@ -14,7 +14,7 @@ set(loaders_PART_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/loaders/vbrbrushloader.cpp
 )
 
-set(gimpbrushthumbnail_PART_SRCS
+set(gimpresourcesthumbnail_PART_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/thumbnailcreator.cpp
     ${loaders_PART_SRCS}
 )
@@ -33,10 +33,10 @@ set(mime_types_SRCS
     x-adobe-photoshop-brush.xml
 )
 
-kde4_add_plugin(gimpbrushthumbnail ${gimpbrushthumbnail_PART_SRCS})
-target_link_libraries(gimpbrushthumbnail ${KDE4_KIO_LIBS})
+kde4_add_plugin(gimpresourcesthumbnail ${gimpresourcesthumbnail_PART_SRCS})
+target_link_libraries(gimpresourcesthumbnail ${KDE4_KIO_LIBS})
 
-install(TARGETS gimpbrushthumbnail DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES gimpbrushthumbnail.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS gimpresourcesthumbnail DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES gimpresourcesthumbnail.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(FILES ${mime_types_SRCS} DESTINATION ${XDG_MIME_INSTALL_DIR})
 update_xdg_mimetypes(${XDG_MIME_INSTALL_DIR})

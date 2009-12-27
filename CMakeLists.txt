@@ -1,4 +1,4 @@
-project(PLAYGROUND_GIMPBRUSHTHUMBS)
+project(PLAYGROUND_GIMPRESOURCESTHUMBNAIL)
 find_package(KDE4 REQUIRED)
 include (KDE4Defaults)
 include(MacroOptionalAddSubdirectory)
