@@ -92,7 +92,11 @@ bool PatternLoader::generateThumbnail(QFile& file)
 
     // valid brush data?
     if (bytesRead == -1 || bytesRead != dataLength)
+    {
+        delete[] brushName_c;
+        delete[] data;
         return false;
+    }
 
     // generate thumbnail
     QImage::Format imageFormat;
@@ -158,7 +162,6 @@ bool PatternLoader::generateThumbnail(QFile& file)
 
     kDebug() << "Thumbnail for Gimp Pattern '" << brushName << "' successfully generated!";
 
-    // cleanup
     delete[] brushName_c;
     delete[] data;
 

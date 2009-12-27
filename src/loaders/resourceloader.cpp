@@ -86,7 +86,9 @@ ResourceLoader* ResourceLoader::create(const QString& path)
     }
 
     if (loader)
+    {
         loader->load(path);
+    }
 
     return loader;
 }

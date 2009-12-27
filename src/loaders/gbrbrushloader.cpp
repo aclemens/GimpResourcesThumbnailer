@@ -101,7 +101,11 @@ bool GbrBrushLoader::generateThumbnail(QFile& file)
 
     // valid brush data?
     if (bytesRead == -1 || bytesRead != dataLength)
+    {
+        delete[] brushName_c;
+        delete[] data;
         return false;
+    }
 
     // generate thumbnail
     QImage::Format imageFormat;
@@ -141,7 +145,6 @@ bool GbrBrushLoader::generateThumbnail(QFile& file)
 
     kDebug() << "Thumbnail for Gimp Brush '" << brushName << "' successfully generated!";
 
-    // cleanup
     delete[] brushName_c;
     delete[] data;
 
