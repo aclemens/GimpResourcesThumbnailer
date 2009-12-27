@@ -7,10 +7,10 @@ find_package(SharedMimeInfo REQUIRED)
 
 set(loaders_PART_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/loaders/resourceloader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/abrbrushloader.cpp 
-    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/gbrbrushloader.cpp 
-    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/gihbrushloader.cpp 
-    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/patternloader.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/abrbrushloader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/gbrbrushloader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/gihbrushloader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/patternloader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/loaders/vbrbrushloader.cpp
 )
 
@@ -19,7 +19,10 @@ set(gimpbrushthumbnail_PART_SRCS
     ${loaders_PART_SRCS}
 )
 
-add_subdirectory(tests)
+IF(KDE4_BUILD_TESTS)
+    macro_optional_add_subdirectory(tests)
+ENDIF(KDE4_BUILD_TESTS)
+
 
 ####################################################
 
