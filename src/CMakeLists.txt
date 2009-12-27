@@ -20,7 +20,7 @@ set(gimpbrushthumbnail_PART_SRCS
 )
 
 IF(KDE4_BUILD_TESTS)
-    macro_optional_add_subdirectory(tests)
+    add_subdirectory(tests)
 ENDIF(KDE4_BUILD_TESTS)
 
 
