@@ -52,12 +52,9 @@ bool AbrBrushLoader::generateThumbnail(QFile& file)
     {
         case 1:
         case 2:
-            // TODO: implement me (loadv1_2_data)
             success = loadv1_2_data(in, header, m_thumbnail);
             break;
         case 6:
-            // TODO: display 2 or 4 brushes in one thumbnail, if the
-            //       requested size is big enough
             success = loadv6_data(in, header, m_thumbnail);
             break;
         default:
@@ -211,6 +208,9 @@ qint16 AbrBrushLoader::getSamplesCount(QDataStream& stream)
 
 bool AbrBrushLoader::loadv1_2_data(QDataStream& stream, AbrHeader& header, QImage& img)
 {
+    /**
+     * @todo implement me (loadv1_2_data)
+     */
     Q_UNUSED(stream)
     Q_UNUSED(header)
     Q_UNUSED(img)
@@ -220,6 +220,10 @@ bool AbrBrushLoader::loadv1_2_data(QDataStream& stream, AbrHeader& header, QImag
 
 bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage& img)
 {
+    /**
+    * @todo display 2 or 4 brushes in one thumbnail, if the equested size is big enough
+    */
+
     qint32 brush_size;
     qint32 brush_end;
     qint32 complement_to_4;

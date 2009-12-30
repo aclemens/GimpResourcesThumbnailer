@@ -72,7 +72,9 @@ ResourceLoader* ResourceLoader::create(const QString& path)
     }
     else if (suffix == QString("VBR"))
     {
-        // TODO: implement me (VbrBrushLoader)
+        /**
+         * @todo implement me (VbrBrushLoader)
+         */
     }
     else if (suffix == QString("PAT"))
     {
