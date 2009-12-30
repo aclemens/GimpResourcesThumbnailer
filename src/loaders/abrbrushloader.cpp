@@ -286,7 +286,7 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
     if (r == -1)
     {
         kDebug() << "failed while reading data...";
-        delete buffer;
+        delete[] buffer;
         return false;
     }
 
@@ -305,7 +305,7 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
 
     img = tmpImage;
 
-    delete buffer;
+    delete[] buffer;
 
     if (!streamIsOk(stream) || img.isNull())
         return false;
