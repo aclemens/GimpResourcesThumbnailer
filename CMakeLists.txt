@@ -15,7 +15,6 @@ SET(GRT_PATCH_VERSION "8")
 # "-svn"
 # "-beta1"
 # "-beta2"
-# "-beta3"
 # "-rc"
 # "" : final release. Can be used in production.
 SET(GRT_SUFFIX_VERSION "-svn")
@@ -28,17 +27,22 @@ SET(GRT_VERSION_STRING
     "${GRT_VERSION_SHORT}${GRT_SUFFIX_VERSION}"
 )
 
+MESSAGE(STATUS "")
+
 # ==================================================================================================
 # API documentation generation
 
 MACRO_OPTIONAL_FIND_PACKAGE(Doxygen)
 
 IF(DOXYGEN_FOUND)
-    MESSAGE(STATUS " Doxygen found............................ YES (optional)")
-ELSE(DOXYGEN_FOUND)
-    MESSAGE(STATUS " Doxygen found............................ NO  (optional)")
+    MESSAGE(STATUS "Doxygen found... YES (optional)")
     MESSAGE(STATUS "")
-    MESSAGE(STATUS " You will not be able to to generate the API documentation.")
+    MESSAGE(STATUS " * API documentation can be build with the 'doc' make target ")
+    MESSAGE(STATUS "")
+ELSE(DOXYGEN_FOUND)
+    MESSAGE(STATUS "Doxygen found... NO (optional)")
+    MESSAGE(STATUS "")
+    MESSAGE(STATUS " * You will not be able to to generate the API documentation.")
     MESSAGE(STATUS "")
 ENDIF(DOXYGEN_FOUND)
 
