@@ -194,11 +194,11 @@ qint16 AbrBrushLoader::getSamplesCount(QDataStream& stream)
         brushEnd = brushSize;
         /* complement to 4 */
         while (brushEnd % 4 != 0)
-            brushEnd++;
+            ++brushEnd;
 
         qint64 newPos = brushEnd + stream.device()->pos();
         stream.device()->seek(newPos);
-        samples++;
+        ++samples;
     }
 
     stream.device()->seek(dataStart);
@@ -242,7 +242,7 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
     brush_end = brush_size;
     /* complement to 4 */
     while (brush_end % 4 != 0)
-        brush_end++;
+        ++brush_end;
     complement_to_4 = brush_end - brush_size;
     next_brush = stream.device()->pos() + brush_end;
 
@@ -328,19 +328,19 @@ int AbrBrushLoader::rle_decode(QDataStream& stream, char* buffer, qint32 height)
 
     // read compressed sizes for the scanlines
     cscanline_len = new qint16[height];
-    for (i = 0; i < height; i++)
+    for (i = 0; i < height; ++i)
     {
         stream >> cscanline_len[i];
     }
 
     // unpack scanline data
-    for (i = 0; i < height; i++)
+    for (i = 0; i < height; ++i)
     {
         for (j = 0; j < cscanline_len[i];)
         {
             stream >> n_tmp;
             n = n_tmp;
-            j++;
+            ++j;
             if (n >= 128) /* force sign */
                 n -= 256;
             if (n < 0)
@@ -349,13 +349,13 @@ int AbrBrushLoader::rle_decode(QDataStream& stream, char* buffer, qint32 height)
                     continue;
                 n = -n + 1;
                 stream >> ch;
-                j++;
-                for (c = 0; c < n; c++, buffer++)
+                ++j;
+                for (c = 0; c < n; ++c, ++buffer)
                     *buffer = ch;
             }
             else
             { /* read the following n + 1 chars (no compr) */
-                for (c = 0; c < n + 1; c++, j++, buffer++)
+                for (c = 0; c < n + 1; ++c, ++j, ++buffer)
                 {
                     stream >> ch_tmp;
                     *buffer = ch_tmp;
