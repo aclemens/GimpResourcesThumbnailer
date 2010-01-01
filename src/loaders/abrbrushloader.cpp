@@ -27,11 +27,11 @@
 
 // Qt includes
 
-#include <QString>
-#include <QImage>
+#include <QDataStream>
 #include <QFile>
 #include <QFileInfo>
-#include <QDataStream>
+#include <QImage>
+#include <QString>
 
 // KDE includes
 
@@ -209,7 +209,7 @@ qint16 AbrBrushLoader::getSamplesCount(QDataStream& stream)
 bool AbrBrushLoader::loadv1_2_data(QDataStream& stream, AbrHeader& header, QImage& img)
 {
     /**
-     * @todo implement me (loadv1_2_data)
+     * @todo implement me!
      */
     Q_UNUSED(stream)
     Q_UNUSED(header)

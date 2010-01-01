@@ -41,7 +41,6 @@ bool PatternLoader::generateThumbnail(QFile& file)
     quint32 magic;
     QString brushName;
 
-
     QDataStream in(&file);
     in >> header
        >> version
@@ -64,7 +63,6 @@ bool PatternLoader::generateThumbnail(QFile& file)
         kDebug() << "Invalid magic number!";
         validPatternFile = false;
     }
-
 
     if (colorDepth < 1 || colorDepth > 4)
     {

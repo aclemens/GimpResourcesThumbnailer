@@ -21,7 +21,7 @@
  * @mainpage
  * @author Andi Clemens
  *
- * GimpResourcesThumbnailer is a thumbnailer service for KDE file managers like dolphin and konqueror.
+ * GimpResourcesThumbnailer is a thumbnail service for KDE file managers like dolphin and konqueror.
  * You can preview all of your Gimp resources like brushes and patterns, to easily manage them into folders,
  * without the need to open Gimp.
  *

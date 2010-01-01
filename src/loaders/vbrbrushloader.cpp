@@ -32,6 +32,9 @@
 
 bool VbrBrushLoader::generateThumbnail(QFile& file)
 {
+    /**
+     * @todo finish me!
+     */
 //    int imgSize = qMax(width, height);
 
     QTextStream in(&file);
