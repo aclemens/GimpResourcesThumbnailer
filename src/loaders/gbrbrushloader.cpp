@@ -102,6 +102,10 @@ bool GbrBrushLoader::generateThumbnail(QFile& file)
     // valid brush data?
     if (bytesRead == -1 || bytesRead != dataLength)
     {
+        kDebug() << "Error while reading brush data ("
+                 <<     "expected: " << dataLength << " bytes, "
+                 <<     "read: "     << bytesRead  << " bytes"
+                 << ")";
         delete[] brushName_c;
         delete[] data;
         return false;
