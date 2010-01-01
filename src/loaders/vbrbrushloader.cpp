@@ -25,18 +25,17 @@
 #include <QString>
 #include <QStringList>
 #include <QTextStream>
+#include <QPixmap>
+#include <QPainter>
 
 // KDE includes
 
 #include <kdebug.h>
 
+const int MAX_SIZE = 256;
+
 bool VbrBrushLoader::generateThumbnail(QFile& file)
 {
-    /**
-     * @todo finish me!
-     */
-//    int imgSize = qMax(width, height);
-
     QTextStream in(&file);
     QStringList data;
 
@@ -70,8 +69,8 @@ bool VbrBrushLoader::generateThumbnail(QFile& file)
              are defined by the GimpBrushGeneratedShape enum in
              core-enums.h.
      Line 5: The brush spacing.
-     Line 6: The number of spikes for the shape.
-     Line 7: The brush radius, in pixels.
+     Line 6: The brush radius, in pixels.
+     Line 7: The number of spikes for the shape.
      Line 8: The brush hardness.
      Line 9: The brush aspect ratio.
      Line 10: The brush angle.
@@ -93,17 +92,17 @@ bool VbrBrushLoader::generateThumbnail(QFile& file)
     }
 
     // now load the rest
-    bool shaped = (dataSize == 10) ? true : false;
+    bool shaped = (dataSize == 10);
     QString empty;
 
-    QString& brushName   = data[2];
-    QString& spacing     = shaped ? data[4] : data[3];
-    QString& radius      = shaped ? data[6] : data[4];
-    QString& hardness    = shaped ? data[7] : data[5];
-    QString& aspectRatio = shaped ? data[8] : data[6];
-    QString& angle       = shaped ? data[9] : data[7];
-    QString& spikes      = shaped ? data[5] : empty;
-    QString& style       = shaped ? data[3] : empty;
+    QString brushName   = data[2];
+    QString spacing     = shaped ? data[4] : data[3];
+    QString radius      = shaped ? data[5] : data[4];
+    QString hardness    = shaped ? data[7] : data[5];
+    QString aspectRatio = shaped ? data[8] : data[6];
+    QString angle       = shaped ? data[9] : data[7];
+    QString spikes      = shaped ? data[6] : empty;
+    QString style       = shaped ? data[3] : empty;
 
     kDebug() << "brushName: "   << brushName;
     kDebug() << "spacing: "     << spacing;
@@ -114,5 +113,79 @@ bool VbrBrushLoader::generateThumbnail(QFile& file)
     kDebug() << "spikes: "      << spikes;
     kDebug() << "style: "       << style;
 
+    // --------------------------------------------------------
+
+    qreal r_radius      = radius.toDouble();
+    qreal r_hardness    = hardness.toDouble();
+    qreal r_aspectRatio = aspectRatio.toDouble();
+    qreal r_angle       = angle.toDouble();
+    int r_spikes        = angle.toInt();
+
+    QImage img = generateShapedBrush(style, r_radius, r_hardness, r_aspectRatio, r_angle, r_spikes);
+
+    if (!img.isNull())
+    {
+        m_thumbnail = img;
+        return true;
+    }
+
     return false;
+}
+
+QImage VbrBrushLoader::generateShapedBrush(QString shape, qreal radius, qreal hardness, qreal aspect, qreal angle, int spikes)
+{
+    /**
+     * @todo Implement hardness
+     */
+    Q_UNUSED(hardness)
+
+    /**
+     * @todo Implement spikes
+     */
+    Q_UNUSED(spikes)
+
+    QPixmap pix(MAX_SIZE, MAX_SIZE);
+    pix.fill(Qt::white);
+
+    QPainter p(&pix);
+    p.setRenderHint(QPainter::Antialiasing, true);
+    p.setBrush(QBrush(Qt::black));
+    p.setPen(QPen());
+
+    // center point of thumbnail
+    p.save();
+    QPointF centerP = QRect(0, 0, MAX_SIZE, MAX_SIZE).center();
+    p.translate(centerP);
+
+    // rotate world matrix
+    p.rotate(-angle);
+
+    // radius of the brush
+    qreal t_radius  = (radius > MAX_SIZE) ? (qreal)MAX_SIZE : radius;
+
+    // brush rectangle
+    QRectF b_rect(0, 0, t_radius, t_radius / aspect);
+
+    QString _shape = shape.toLower();
+    if (_shape == "square")
+    {
+        int w = b_rect.width();
+        int h = b_rect.height();
+        p.drawRect(0 - (w / 2.0), 0 - (h / 2.0), w, h);
+    }
+    else if (_shape == "diamond")
+    {
+        /**
+         * @todo implement diamond shape
+         */
+    }
+    else
+    {
+        int w = b_rect.width();
+        int h = b_rect.height();
+        p.drawEllipse(QPoint(0, 0), w, h);
+    }
+
+    p.end();
+    return pix.toImage();
 }

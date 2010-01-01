@@ -26,7 +26,7 @@
  * without the need to open Gimp.
  *
  * Currently the following resource types are supported:
- * @li <b>Gimp Brushes</b> (.GBR, .GIH)
+ * @li <b>Gimp Brushes</b> (.GBR, .GIH, .VBR)
  * @li <b>Gimp Patterns</b> (.PAT)
  * @li <b>Adobe Photoshop Brushes</b> (.ABR (v6))
  *

@@ -20,16 +20,27 @@
 #ifndef VBRBRUSHLOADER_H
 #define VBRBRUSHLOADER_H
 
+// Qt includes
+
+#include <QImage>
+#include <QString>
+
+// Local includes
+
 #include "resourceloader.h"
 
 class QFile;
 
 class VbrBrushLoader : public ResourceLoader
 {
-
 protected:
 
     virtual bool generateThumbnail(QFile& file);
+
+private:
+
+    QImage generateShapedBrush(QString shape, qreal radius, qreal hardness, qreal aspect, qreal angle, int spikes);
+
 };
 
 #endif /* VBRBRUSHLOADER_H */
