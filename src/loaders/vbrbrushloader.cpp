@@ -22,11 +22,12 @@
 // Qt includes
 
 #include <QFile>
+#include <QPainter>
+#include <QPixmap>
+#include <QRadialGradient>
 #include <QString>
 #include <QStringList>
 #include <QTextStream>
-#include <QPixmap>
-#include <QPainter>
 
 // KDE includes
 
@@ -135,43 +136,41 @@ bool VbrBrushLoader::generateThumbnail(QFile& file)
 QImage VbrBrushLoader::generateShapedBrush(QString shape, qreal radius, qreal hardness, qreal aspect, qreal angle, int spikes)
 {
     /**
-     * @todo Implement hardness
-     */
-    Q_UNUSED(hardness)
-
-    /**
      * @todo Implement spikes
      */
     Q_UNUSED(spikes)
 
-    QPixmap pix(MAX_SIZE, MAX_SIZE);
-    pix.fill(Qt::white);
+    // create a pixmap with MAX_SIZE, fill it with white
+    QPixmap brushPixmap(MAX_SIZE, MAX_SIZE);
+    brushPixmap.fill(Qt::white);
 
-    QPainter p(&pix);
-    p.setRenderHint(QPainter::Antialiasing, true);
-    p.setBrush(QBrush(Qt::black));
-    p.setPen(QPen());
+    QPainter brushPainter(&brushPixmap);
+    brushPainter.setRenderHint(QPainter::Antialiasing, true);
+    brushPainter.setPen(QPen(Qt::transparent));
 
-    // center point of thumbnail
-    p.save();
-    QPointF centerP = QRect(0, 0, MAX_SIZE, MAX_SIZE).center();
-    p.translate(centerP);
-
-    // rotate world matrix
-    p.rotate(-angle);
+    // center the coord system in the image
+    brushPainter.translate(brushPixmap.rect().center());
+    brushPainter.save();
 
     // radius of the brush
-    qreal t_radius  = (radius > MAX_SIZE) ? (qreal)MAX_SIZE : radius;
+    qreal brushRadius  = (radius > MAX_SIZE) ? (qreal)MAX_SIZE : radius;
 
     // brush rectangle
-    QRectF b_rect(0, 0, t_radius, t_radius / aspect);
+    QRectF brushRect(0, 0, brushRadius, brushRadius / aspect);
 
     QString _shape = shape.toLower();
     if (_shape == "square")
     {
-        int w = b_rect.width();
-        int h = b_rect.height();
-        p.drawRect(0 - (w / 2.0), 0 - (h / 2.0), w, h);
+        // hardness of the brush
+        QRadialGradient gradient(QPoint(0, 0), brushRadius);
+        gradient.setColorAt(0.0,      Qt::black);
+        gradient.setColorAt(hardness, Qt::black);
+        gradient.setColorAt(1.0,      Qt::white);
+        brushPainter.setBrush(QBrush(gradient));
+
+        int w = brushRect.width();
+        int h = brushRect.height();
+        brushPainter.drawRect(0 - (w / 2.0), 0 - (h / 2.0), w, h);
     }
     else if (_shape == "diamond")
     {
@@ -181,11 +180,32 @@ QImage VbrBrushLoader::generateShapedBrush(QString shape, qreal radius, qreal ha
     }
     else
     {
-        int w = b_rect.width();
-        int h = b_rect.height();
-        p.drawEllipse(QPoint(0, 0), w, h);
+        // hardness of the brush
+        QRadialGradient gradient(QPoint(0, 0), brushRadius);
+        gradient.setColorAt(0.0,      Qt::black);
+        gradient.setColorAt(hardness, Qt::black);
+        gradient.setColorAt(1.0,      Qt::white);
+        brushPainter.setBrush(QBrush(gradient));
+
+        int w = brushRect.width();
+        int h = brushRect.height();
+        brushPainter.drawEllipse(QPoint(0, 0), w, h);
     }
 
-    p.end();
-    return pix.toImage();
+    brushPainter.restore();
+    brushPainter.end();
+
+    // rotate the brush, draw it onto a new pixmap
+    QPixmap finalPixmap(MAX_SIZE, MAX_SIZE);
+    finalPixmap.fill(Qt::white);
+    QPainter finalPainter(&finalPixmap);
+    finalPainter.translate(finalPixmap.rect().center());
+
+    // rotate the brush
+    finalPainter.rotate(-angle);
+
+    // draw brush onto the final pixmap
+    finalPainter.drawPixmap(-brushPixmap.width() / 2, -brushPixmap.height() / 2, brushPixmap);
+
+    return finalPixmap.toImage();
 }
