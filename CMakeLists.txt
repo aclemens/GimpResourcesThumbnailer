@@ -39,7 +39,6 @@ ELSE(DOXYGEN_FOUND)
     MESSAGE(STATUS " Doxygen found............................ NO  (optional)")
     MESSAGE(STATUS "")
     MESSAGE(STATUS " You will not be able to to generate the API documentation.")
-    MESSAGE(STATUS " This does not affect building digiKam in any way.")
     MESSAGE(STATUS "")
 ENDIF(DOXYGEN_FOUND)
 
