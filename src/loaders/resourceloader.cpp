@@ -111,7 +111,7 @@ QImage& ResourceLoader::thumbnail()
     return m_thumbnail;
 }
 
-int ResourceLoader::resourceType()
+ResourceLoader::ResourceType ResourceLoader::resourceType()
 {
     return m_type;
 }

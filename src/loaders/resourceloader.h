@@ -45,7 +45,7 @@ public:
     virtual ~ResourceLoader();
 
     bool                   success();
-    int                    resourceType();
+    ResourceType           resourceType();
     QImage&                thumbnail();
     static ResourceLoader* create(const QString& path);
 
@@ -57,7 +57,10 @@ protected:
 
 private:
 
-    int  m_type;
+    ResourceType  m_type;
+
+private:
+
     bool load(const QString& path);
 };
 

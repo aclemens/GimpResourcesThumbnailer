@@ -30,11 +30,17 @@ class ResourceLoaderTest : public QObject
 
 private Q_SLOTS:
 
+    void testSuccess_data();
+    void testSuccess();
+
+    void testThumbnail_data();
+    void testThumbnail();
+
     void testKnownResourcesShouldNotReturnInvalidType_data();
     void testKnownResourcesShouldNotReturnInvalidType();
 
-    void testUnknownResourcesShouldReturnNullPointer_data();
-    void testUnknownResourcesShouldReturnNullPointer();
+    void testInvalidResourcesShouldReturnNullPointer_data();
+    void testInvalidResourcesShouldReturnNullPointer();
 };
 
 #endif /* RESOURCELOADERTEST_H_ */

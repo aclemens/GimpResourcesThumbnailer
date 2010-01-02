@@ -30,13 +30,72 @@
 
 QTEST_MAIN(ResourceLoaderTest)
 
+void ResourceLoaderTest::testSuccess_data()
+{
+    QTest::addColumn<QString>("filename");
+    QTest::addColumn<int>("result");
+
+    QTest::newRow("GBR") << QString(KDESRCDIR"/gbr/13fcircle.gbr");
+    QTest::newRow("GIH") << QString(KDESRCDIR"/gih/vine.gih");
+    QTest::newRow("PAT") << QString(KDESRCDIR"/pat/lala_rgb.pat");
+}
+
+void ResourceLoaderTest::testSuccess()
+{
+    QFETCH(QString, filename);
+
+    ResourceLoader* loader = ResourceLoader::create(filename);
+    QVERIFY(loader);
+
+    // make sure an invalid pointer will not fail the rest of the tests
+    if (!loader)
+    {
+        return;
+    }
+
+    // make sure the content was loaded successfully
+    QVERIFY(loader->success());
+
+    delete loader;
+}
+
+void ResourceLoaderTest::testThumbnail_data()
+{
+    QTest::addColumn<QString>("filename");
+    QTest::addColumn<int>("result");
+
+    QTest::newRow("GBR") << QString(KDESRCDIR"/gbr/13fcircle.gbr");
+    QTest::newRow("GIH") << QString(KDESRCDIR"/gih/vine.gih");
+    QTest::newRow("PAT") << QString(KDESRCDIR"/pat/lala_rgb.pat");
+}
+
+void ResourceLoaderTest::testThumbnail()
+{
+    QFETCH(QString, filename);
+
+    ResourceLoader* loader = ResourceLoader::create(filename);
+    QVERIFY(loader);
+
+    // make sure an invalid pointer will not fail the rest of the tests
+    if (!loader)
+    {
+        return;
+    }
+
+    // make sure the thumbnail was created successfully
+    QVERIFY(!loader->thumbnail().isNull());
+
+    delete loader;
+}
+
 void ResourceLoaderTest::testKnownResourcesShouldNotReturnInvalidType_data()
 {
     QTest::addColumn<QString>("filename");
-    QTest::addColumn<int>    ("result");
+    QTest::addColumn<int>("result");
 
     QTest::newRow("GBR") << QString(KDESRCDIR"/gbr/13fcircle.gbr") << (int)ResourceLoader::GBR;
     QTest::newRow("GIH") << QString(KDESRCDIR"/gih/vine.gih")      << (int)ResourceLoader::GIH;
+    QTest::newRow("PAT") << QString(KDESRCDIR"/pat/lala_rgb.pat")  << (int)ResourceLoader::PAT;
 }
 
 void ResourceLoaderTest::testKnownResourcesShouldNotReturnInvalidType()
@@ -45,28 +104,37 @@ void ResourceLoaderTest::testKnownResourcesShouldNotReturnInvalidType()
     QFETCH(int,     result);
 
     ResourceLoader* loader = ResourceLoader::create(filename);
+    QVERIFY(loader);
+
+    // make sure an invalid pointer will not fail the rest of the tests
+    if (!loader)
+    {
+        return;
+    }
 
     // resource type should not be INVALID...
     QVERIFY(loader->resourceType() != ResourceLoader::INVALID);
 
     // ... and should match the appropriate type for the file extension
-    QCOMPARE(loader->resourceType(), result);
+    QCOMPARE((int)loader->resourceType(), result);
+
+    delete loader;
 }
 
-void ResourceLoaderTest::testUnknownResourcesShouldReturnNullPointer_data()
+void ResourceLoaderTest::testInvalidResourcesShouldReturnNullPointer_data()
 {
     QTest::addColumn<QString>("filename");
 
     QTest::newRow("test1") << "filename.gbr";
     QTest::newRow("test2") << "";
     QTest::newRow("test3") << "filename.blub";
+    QTest::newRow("test4") << "     ";
 }
 
-void ResourceLoaderTest::testUnknownResourcesShouldReturnNullPointer()
+void ResourceLoaderTest::testInvalidResourcesShouldReturnNullPointer()
 {
     QFETCH(QString, filename);
 
     ResourceLoader* loader = ResourceLoader::create(filename);
     QVERIFY(!loader);
-    delete loader;
 }
