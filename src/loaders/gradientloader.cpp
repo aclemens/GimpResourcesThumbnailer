@@ -103,7 +103,7 @@ bool GradientLoader::generateThumbnail(QFile& file)
 
         if (!img.isNull())
         {
-            m_thumbnail = drawGradient(data);
+            m_thumbnail = img;
             m_success   = true;
             kDebug() << "OK!";
             return true;
