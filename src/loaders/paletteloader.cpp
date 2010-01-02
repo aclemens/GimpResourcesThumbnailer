@@ -169,17 +169,20 @@ QImage PaletteLoader::drawPalette(const QStringList& data)
 
     int numberOfColors = data.count();
 
-    int w     = (TILE_SIZE * MAX_COLORS_IN_ROW) + 1;
+    int w     = (TILE_SIZE * MAX_COLORS_IN_ROW);
     int min_h = w / 2;
-    int max_h = ((numberOfColors / MAX_COLORS_IN_ROW) * TILE_SIZE) + 1;
+    int max_h = ((numberOfColors / MAX_COLORS_IN_ROW) * TILE_SIZE);
     int h     = (max_h > min_h) ? max_h : min_h;
 
-    QPixmap pix(w, h);
+    // avoid cutting off the border on the right side of the thumbnail
+    const int BORDER_WIDTH = 1;
+
+    QPixmap pix(w + BORDER_WIDTH, h + BORDER_WIDTH);
     pix.fill(Qt::white);
 
     QPainter p(&pix);
     QPen pen(Qt::black);
-    pen.setWidth(1);
+    pen.setWidth(BORDER_WIDTH);
     p.setPen(pen);
     p.setRenderHint(QPainter::Antialiasing, false);
 
