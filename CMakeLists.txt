@@ -7,9 +7,9 @@ INCLUDE(MacroOptionalAddSubdirectory)
 # Information to update before to release this package.
 
 # GimpResourcesThumbnailer version
-SET(GRT_MAJOR_VERSION "1")
+SET(GRT_MAJOR_VERSION "2")
 SET(GRT_MINOR_VERSION "0")
-SET(GRT_PATCH_VERSION "8")
+SET(GRT_PATCH_VERSION "0")
 
 # Suffix to add at end of version string. Examples:
 # "-svn"
@@ -17,7 +17,7 @@ SET(GRT_PATCH_VERSION "8")
 # "-beta2"
 # "-rc"
 # "" : final release. Can be used in production.
-SET(GRT_SUFFIX_VERSION "-svn")
+SET(GRT_SUFFIX_VERSION "")
 
 SET(GRT_VERSION_SHORT
     "${GRT_MAJOR_VERSION}.${GRT_MINOR_VERSION}.${GRT_PATCH_VERSION}"

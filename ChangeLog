@@ -1,3 +1,7 @@
+2010-01-02 GimpResourcesThumbnailer 2.0.0
+    * quite a big version increment (;-)), but now all basic resource types are
+      supported, which makes this a new milestone release
+
 2009-12-27 GimpResourcesThumbnailer 1.0.7
     * name change
 
