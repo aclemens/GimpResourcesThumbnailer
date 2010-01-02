@@ -220,10 +220,6 @@ bool AbrBrushLoader::loadv1_2_data(QDataStream& stream, AbrHeader& header, QImag
 
 bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage& img)
 {
-    /**
-    * @todo display 2 or 4 brushes in one thumbnail, if the requested size is big enough
-    */
-
     qint32 brush_size;
     qint32 brush_end;
     qint32 complement_to_4;
