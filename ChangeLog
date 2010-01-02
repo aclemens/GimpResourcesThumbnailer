@@ -1,32 +1,35 @@
 2010-01-02 GimpResourcesThumbnailer 2.0.0
-    * quite a big version increment (;-)), but now all basic resource types are
-      supported, which makes this a new milestone release
+    - quite a big version increment (;-)), but now all basic resource types are
+            supported, which makes this a new milestone release
+    - added Gimp Gradients support
+    - added Gimp Palettes support
+    - added Gimp Generic Brushes support (.vbr)
 
 2009-12-27 GimpResourcesThumbnailer 1.0.7
-    * name change
+    - name change
 
 2009-12-27 GimpBrushThumbs 1.0.7
-    * fixed a memory leak
+    - fixed a memory leak
 
 2009-07-18 GimpBrushThumbs 1.0.6
-    * split mime-types into several files
+    - split mime-types into several files
 
 2009-07-05 GimpBrushThumbs 1.0.5
-    * Add support for Photoshop brushes (v6) (.pat)
+    - Add support for Photoshop brushes (v6) (.pat)
 
 2009-07-03 GimpBrushThumbs 1.0.4
-    * Add support for Gimp patterns (.pat)
-    * Refactoring of the loader code
+    - Add support for Gimp patterns (.pat)
+    - Refactoring of the loader code
 
 2009-06-20 GimpBrushThumbs 1.0.3
-    * Add support for animated Gimp Brushes (.gih)
+    - Add support for animated Gimp Brushes (.gih)
 
 2009-06-19 GimpBrushThumbs 1.0.2
-    * Add support for Gimp Brush v1
+    - Add support for Gimp Brush v1
 
 2009-06-19 GimpBrushThumbs 1.0.1
-    * Fix thumbnailing for color brushes.
+    - Fix thumbnailing for color brushes.
 
 2009-06-17 GimpBrushThumbs 1.0
-    * Initial release.
+    - Initial release.
 
