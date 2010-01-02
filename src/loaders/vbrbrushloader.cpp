@@ -33,6 +33,9 @@
 
 #include <kdebug.h>
 
+/**
+ * the maximum thumbnail size
+ */
 const int MAX_SIZE = 256;
 
 bool VbrBrushLoader::generateThumbnail(QFile& file)
@@ -136,6 +139,10 @@ bool VbrBrushLoader::generateThumbnail(QFile& file)
 QImage VbrBrushLoader::generateShapedBrush(QString shape, qreal radius, qreal hardness, qreal aspect, qreal angle, int spikes)
 {
     /**
+     * @todo re-think the "hardness" implementation
+     */
+
+    /**
      * @todo Implement spikes
      */
     Q_UNUSED(spikes)
@@ -150,6 +157,10 @@ QImage VbrBrushLoader::generateShapedBrush(QString shape, qreal radius, qreal ha
 
     // center the coord system in the image
     brushPainter.translate(brushPixmap.rect().center());
+
+    // rotate the brush
+    brushPainter.rotate(-angle);
+
     brushPainter.save();
 
     // radius of the brush
@@ -195,17 +206,5 @@ QImage VbrBrushLoader::generateShapedBrush(QString shape, qreal radius, qreal ha
     brushPainter.restore();
     brushPainter.end();
 
-    // rotate the brush, draw it onto a new pixmap
-    QPixmap finalPixmap(MAX_SIZE, MAX_SIZE);
-    finalPixmap.fill(Qt::white);
-    QPainter finalPainter(&finalPixmap);
-    finalPainter.translate(finalPixmap.rect().center());
-
-    // rotate the brush
-    finalPainter.rotate(-angle);
-
-    // draw brush onto the final pixmap
-    finalPainter.drawPixmap(-brushPixmap.width() / 2, -brushPixmap.height() / 2, brushPixmap);
-
-    return finalPixmap.toImage();
+    return brushPixmap.toImage();
 }
