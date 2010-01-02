@@ -28,6 +28,7 @@
  * Currently the following resource types are supported:
  * @li <b>Gimp Brushes</b> (.GBR, .GIH, .VBR)
  * @li <b>Gimp Patterns</b> (.PAT)
+ * @li <b>Gimp Palettes</b> (.GPL)
  * @li <b>Gimp Gradients</b> (.GGR)
  * @li <b>Adobe Photoshop Brushes</b> (.ABR (v6))
  *
