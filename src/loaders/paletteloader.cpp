@@ -73,10 +73,15 @@ bool PaletteLoader::generateThumbnail(QFile& file)
     if (validData(data))
     {
         prepareData(data);
-        m_thumbnail = drawPalette(data);
-        m_success   = true;
-        kDebug() << "OK!";
-        return true;
+        QImage img = drawPalette(data);
+
+        if (!img.isNull())
+        {
+            m_thumbnail = img;
+            m_success   = true;
+            kDebug() << "OK!";
+            return true;
+        }
     }
     return false;
 }
@@ -105,6 +110,11 @@ void PaletteLoader::prepareData(QStringList& data)
 
 bool PaletteLoader::validData(const QStringList& data)
 {
+    if (data.isEmpty())
+    {
+        return false;
+    }
+
     bool validData        = true;
     int dataSize          = data.count();
     QString magic         = data[0];
@@ -156,6 +166,11 @@ bool PaletteLoader::checkPaletteInformation(const QString& palette)
 
 QImage PaletteLoader::drawPalette(const QStringList& data)
 {
+    if (data.isEmpty())
+    {
+        return QImage();
+    }
+
     int numberOfColors = data.count();
 
     int w     = (TILE_SIZE * MAX_COLORS_IN_ROW) + 1;

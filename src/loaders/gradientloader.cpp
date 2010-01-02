@@ -99,16 +99,26 @@ bool GradientLoader::generateThumbnail(QFile& file)
 
     if (validData(data))
     {
-        m_thumbnail = drawGradient(data);
-        m_success   = true;
-        kDebug() << "OK!";
-        return true;
+        QImage img = drawGradient(data);
+
+        if (!img.isNull())
+        {
+            m_thumbnail = drawGradient(data);
+            m_success   = true;
+            kDebug() << "OK!";
+            return true;
+        }
     }
     return false;
 }
 
 bool GradientLoader::validData(const QStringList& data)
 {
+    if (data.isEmpty())
+    {
+        return false;
+    }
+
     bool validData        = true;
     int dataSize          = data.count();
     QString magic         = data[0];
@@ -208,6 +218,11 @@ bool GradientLoader::checkGradientInformation(const QString& gradient)
 
 QImage GradientLoader::drawGradient(const QStringList& data)
 {
+    if (data.isEmpty())
+    {
+        return QImage();
+    }
+
     QPixmap pix(MAX_THUMB_SIZE, MAX_THUMB_SIZE / 2);
     pix.fill(Qt::white);
 
