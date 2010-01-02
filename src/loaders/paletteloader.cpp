@@ -88,19 +88,15 @@ bool PaletteLoader::generateThumbnail(QFile& file)
 
 void PaletteLoader::prepareData(QStringList& data)
 {
-    QRegExp dataStart("^\\d+\\s+\\d+\\s+\\d+\\s*.*");
+    QRegExp dataReg("^\\d+\\s+\\d+\\s+\\d+\\s*.*");
     QStringList list;
-    bool add = false;
 
     foreach (const QString& line, data)
     {
-        if (add)
+        QString dataLine = line.trimmed();
+        if (dataReg.exactMatch(dataLine))
         {
-            list.append(line.trimmed());
-        }
-        else if (dataStart.exactMatch(line.trimmed()))
-        {
-            add = true;
+            list.append(dataLine);
         }
     }
 
