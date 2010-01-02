@@ -36,6 +36,7 @@
 #include "vbrbrushloader.h"
 #include "patternloader.h"
 #include "gradientloader.h"
+#include "paletteloader.h"
 
 ResourceLoader::ResourceLoader()
 {
@@ -90,6 +91,11 @@ ResourceLoader* ResourceLoader::create(const QString& path)
     {
         loader = new GradientLoader();
         loader->m_type = GGR;
+    }
+    else if (suffix == QString("GPL"))
+    {
+        loader = new PaletteLoader();
+        loader->m_type = GPL;
     }
 
     if (loader)

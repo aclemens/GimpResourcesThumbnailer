@@ -12,6 +12,7 @@ SET(loaders_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/../loaders/vbrbrushloader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../loaders/abrbrushloader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../loaders/patternloader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../loaders/paletteloader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../loaders/gradientloader.cpp
 )
 

@@ -6,13 +6,14 @@ include_directories( ${KDE4_INCLUDES}
 find_package(SharedMimeInfo REQUIRED)
 
 set(loaders_PART_SRCS
-    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/resourceloader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/loaders/abrbrushloader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/loaders/gbrbrushloader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/loaders/gihbrushloader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/patternloader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/vbrbrushloader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/loaders/gradientloader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/paletteloader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/patternloader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/resourceloader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/vbrbrushloader.cpp
 )
 
 set(gimpresourcesthumbnail_PART_SRCS
@@ -28,11 +29,12 @@ ENDIF(KDE4_BUILD_TESTS)
 ####################################################
 
 set(mime_types_SRCS
-    x-gimp-brush.xml
-    x-gimp-brush-animated.xml
-    x-gimp-pattern.xml
-    x-gimp-gradient.xml
     x-adobe-photoshop-brush.xml
+    x-gimp-brush-animated.xml
+    x-gimp-brush.xml
+    x-gimp-gradient.xml
+    x-gimp-palette.xml
+    x-gimp-pattern.xml
 )
 
 kde4_add_plugin(gimpresourcesthumbnail ${gimpresourcesthumbnail_PART_SRCS})

@@ -2,7 +2,7 @@
 Type=Service
 Name=Gimp Resources Thumbnailer
 X-KDE-ServiceTypes=ThumbCreator
-MimeType=image/x-gimp-brush;image/x-gimp-brush-animated;image/x-gimp-pattern;image/x-gimp-gradient;image/x-adobe-photoshop-brush
+MimeType=image/x-gimp-brush;image/x-gimp-brush-animated;image/x-gimp-pattern;image/x-gimp-gradient;image/x-gimp-palette;image/x-adobe-photoshop-brush
 X-KDE-Library=gimpresourcesthumbnail
 CacheThumbnail=true
 IgnoreMaximumSize=true
