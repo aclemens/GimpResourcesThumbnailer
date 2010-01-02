@@ -243,6 +243,28 @@ QImage GradientLoader::drawGradient(const QStringList& data)
 
         qreal start = gradient.startPoint + 0.01;
         qreal end   = gradient.endPoint;
+
+        // do some basic range checks
+        if (start > 1.0)
+        {
+            start = 1.0;
+        }
+
+        if (start < 0.0)
+        {
+            start = 0.0;
+        }
+
+        if (end > 1.0)
+        {
+            end = 1.0;
+        }
+
+        if (end < 0.0)
+        {
+            end = 0.0;
+        }
+
         grad.setColorAt(start, QColor::fromRgbF(gradient.leftColorRed,
                                                 gradient.leftColorGreen,
                                                 gradient.leftColorBlue,
