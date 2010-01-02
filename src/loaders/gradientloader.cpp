@@ -50,7 +50,7 @@ const int MIN_DATA = 4;
 /**
  * The number of parameters to describe a gradient
  */
-const int GRADIENT_PARAMS = 11;     // increase to 15 if optional parameters should be used
+const int GRADIENT_PARAMS = 11;
 
 
 bool GradientLoader::generateThumbnail(QFile& file)

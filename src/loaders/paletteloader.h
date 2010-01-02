@@ -61,7 +61,7 @@ private:
     bool        validData(const QStringList& data);
     void        prepareData(QStringList& data);
 
-    void debugPaletteData(const PaletteData& data);
+    void        debugPaletteData(const PaletteData& data);
 
     bool        checkPaletteInformation(const QString& palette);
     PaletteData getPaletteInformation(const QString& palette);
