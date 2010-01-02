@@ -119,11 +119,25 @@ bool VbrBrushLoader::generateThumbnail(QFile& file)
 
     // --------------------------------------------------------
 
-    qreal r_radius      = radius.toDouble();
-    qreal r_hardness    = hardness.toDouble();
-    qreal r_aspectRatio = aspectRatio.toDouble();
-    qreal r_angle       = angle.toDouble();
-    int r_spikes        = angle.toInt();
+    bool ok;
+    bool allOk = true;
+    qreal r_radius      = radius.toDouble(&ok);      allOk = allOk && ok;
+    qreal r_hardness    = hardness.toDouble(&ok);    allOk = allOk && ok;
+    qreal r_aspectRatio = aspectRatio.toDouble(&ok); allOk = allOk && ok;
+    qreal r_angle       = angle.toDouble(&ok);       allOk = allOk && ok;
+    int r_spikes        = 0;
+
+    if (!spikes.isEmpty())
+    {
+        r_spikes = spikes.toInt(&ok);
+        allOk    = allOk && ok;
+    }
+
+    if (!allOk)
+    {
+        kDebug() << "Error while converting strings to their appropriate value type!";
+        return false;
+    }
 
     QImage img = generateShapedBrush(style, r_radius, r_hardness, r_aspectRatio, r_angle, r_spikes);
 
@@ -133,6 +147,7 @@ bool VbrBrushLoader::generateThumbnail(QFile& file)
         return true;
     }
 
+    kDebug() << "image is empty... why?";
     return false;
 }
 

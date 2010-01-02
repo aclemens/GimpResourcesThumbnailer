@@ -22,13 +22,18 @@
 
 // Qt includes
 
+#include <QDir>
 #include <QString>
+
+// KDE includes
+
+#include <qtest_kde.h>
 
 // Local includes
 
 #include "resourceloader.h"
 
-QTEST_MAIN(ResourceLoaderTest)
+QTEST_KDEMAIN(ResourceLoaderTest, GUI)
 
 void ResourceLoaderTest::testSuccess_data()
 {
@@ -137,4 +142,50 @@ void ResourceLoaderTest::testInvalidResourcesShouldReturnNullPointer()
 
     ResourceLoader* loader = ResourceLoader::create(filename);
     QVERIFY(!loader);
+}
+
+void ResourceLoaderTest::testAllExampleData()
+{
+    QStringList allFiles;
+
+    QStringList filePatterns;
+    filePatterns << "*.abr";
+    filePatterns << "*.gbr";
+    filePatterns << "*.ggr";
+    filePatterns << "*.gih";
+    filePatterns << "*.gpl";
+    filePatterns << "*.pat";
+    filePatterns << "*.vbr";
+
+    QDirIterator it(QString(KDESRCDIR), QDir::NoDotAndDotDot | QDir::AllDirs, QDirIterator::Subdirectories);
+    while (it.hasNext())
+    {
+        QDir exampleDir(it.next());
+
+        QVERIFY(exampleDir.exists());
+        QVERIFY(exampleDir.isReadable());
+
+        QStringList files = exampleDir.entryList(filePatterns, QDir::Files);
+
+        foreach (const QString& file, files)
+        {
+            allFiles.append(exampleDir.absoluteFilePath(file));
+        }
+    }
+
+    QVERIFY(!allFiles.isEmpty());
+
+    foreach (const QString& file, allFiles)
+    {
+        ResourceLoader* loader = ResourceLoader::create(file);
+        QVERIFY(loader);
+
+        if (loader)
+        {
+            QVERIFY(loader->success());
+            QVERIFY(!loader->thumbnail().isNull());
+        }
+
+        delete loader;
+    }
 }

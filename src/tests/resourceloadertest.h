@@ -22,7 +22,7 @@
 
 // Qt includes
 
-#include <QtTest/QtTest>
+#include <QtCore/QObject>
 
 class ResourceLoaderTest : public QObject
 {
@@ -41,6 +41,8 @@ private Q_SLOTS:
 
     void testInvalidResourcesShouldReturnNullPointer_data();
     void testInvalidResourcesShouldReturnNullPointer();
+
+    void testAllExampleData();
 };
 
 #endif /* RESOURCELOADERTEST_H_ */
