@@ -227,15 +227,17 @@ QImage GradientLoader::drawGradient(const GradientList& gradientList)
             continue;
         }
 
-        grad.setColorAt(data.startPoint, QColor::fromRgbF(data.leftColorRed,
-                                                          data.leftColorGreen,
-                                                          data.leftColorBlue,
-                                                          data.leftColorAlpha));
+        qreal start = data.startPoint + 0.01;
+        qreal end   = data.endPoint;
+        grad.setColorAt(start, QColor::fromRgbF(data.leftColorRed,
+                                                data.leftColorGreen,
+                                                data.leftColorBlue,
+                                                data.leftColorAlpha));
 
-        grad.setColorAt(data.endPoint, QColor::fromRgbF(data.rightColorRed,
-                                                        data.rightColorGreen,
-                                                        data.rightColorBlue,
-                                                        data.rightColorAlpha));
+        grad.setColorAt(end, QColor::fromRgbF(data.rightColorRed,
+                                              data.rightColorGreen,
+                                              data.rightColorBlue,
+                                              data.rightColorAlpha));
     }
 
     p.setPen(QPen(Qt::transparent));
