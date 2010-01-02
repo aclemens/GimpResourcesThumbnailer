@@ -144,8 +144,6 @@ PaletteData PaletteLoader::getPaletteInformation(const QString& palette)
     // check if data was converted correctly, set status accordingly
     data.status = allOk ? PaletteData::Ok : PaletteData::Invalid;
 
-    debugPaletteData(data);
-
     return data;
 }
 
