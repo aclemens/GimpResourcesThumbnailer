@@ -23,8 +23,8 @@
 // Qt includes
 
 #include <QImage>
-#include <QString>
 #include <QList>
+#include <QString>
 
 // Local includes
 
@@ -90,6 +90,8 @@ struct GradientData
 
 typedef QList<GradientData> GradientList;
 
+// --------------------------------------------------------
+
 class GradientLoader : public ResourceLoader
 {
 protected:
@@ -104,7 +106,7 @@ private:
     bool         checkGradientInformation(const QString& gradient);
     GradientData getGradientInformation(const QString& gradient);
     GradientList extractGradients(const QStringList& data);
-    QImage       drawGradient(const GradientList& gradientList);
+    QImage       drawGradient(const QStringList& data);
 };
 
 #endif /* GRADIENTLOADER_H */

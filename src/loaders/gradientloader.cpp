@@ -24,12 +24,9 @@
 #include <QFile>
 #include <QPainter>
 #include <QPixmap>
-#include <QRadialGradient>
-#include <QString>
-#include <QStringList>
+#include <QLinearGradient>
 #include <QTextStream>
 #include <QRegExp>
-
 
 // KDE includes
 
@@ -82,7 +79,7 @@ bool GradientLoader::generateThumbnail(QFile& file)
      Column10  (float) : Blue value of right color
      Column11  (float) : Alpha value of right color
 
-     // OPTIONAL (not handled for now)
+     // OPTIONAL (not used at the moment)
      Column12: (int)   : BlendingFunction (linear, curved, sinusoidal, spherical (counterclockwise), spherical (clockwise)
      Column13: (int)   : ColorMode (RGB, HSVcounterclockwise, HSVclockwise)
      Column14: (int)   : Left  ColorType (Fixed, Foreground, ForegroundTransparent, Background, BackgroundTransparent)
@@ -102,7 +99,7 @@ bool GradientLoader::generateThumbnail(QFile& file)
 
     if (validData(data))
     {
-        m_thumbnail = drawGradient(extractGradients(data));
+        m_thumbnail = drawGradient(data);
         m_success   = true;
         kDebug() << "OK!";
         return true;
@@ -209,41 +206,40 @@ bool GradientLoader::checkGradientInformation(const QString& gradient)
     return (data.status == GradientData::Ok);
 }
 
-QImage GradientLoader::drawGradient(const GradientList& gradientList)
+QImage GradientLoader::drawGradient(const QStringList& data)
 {
-//    debugGradientData(data);
-
     QPixmap pix(MAX_THUMB_SIZE, MAX_THUMB_SIZE / 2);
     pix.fill(Qt::white);
+
     QPainter p(&pix);
+    p.setPen(QPen(Qt::transparent));
+    p.setRenderHint(QPainter::Antialiasing, true);
 
     QLinearGradient grad(0.0, 0.0, 1.0, 0.0);
     grad.setCoordinateMode(QGradient::StretchToDeviceMode);
 
-    foreach (const GradientData& data, gradientList)
+    GradientList gradientList = extractGradients(data);
+    foreach (const GradientData& gradient, gradientList)
     {
-        if (data.status != GradientData::Ok)
+        if (gradient.status != GradientData::Ok)
         {
             continue;
         }
 
-        qreal start = data.startPoint + 0.01;
-        qreal end   = data.endPoint;
-        grad.setColorAt(start, QColor::fromRgbF(data.leftColorRed,
-                                                data.leftColorGreen,
-                                                data.leftColorBlue,
-                                                data.leftColorAlpha));
+        qreal start = gradient.startPoint + 0.01;
+        qreal end   = gradient.endPoint;
+        grad.setColorAt(start, QColor::fromRgbF(gradient.leftColorRed,
+                                                gradient.leftColorGreen,
+                                                gradient.leftColorBlue,
+                                                gradient.leftColorAlpha));
 
-        grad.setColorAt(end, QColor::fromRgbF(data.rightColorRed,
-                                              data.rightColorGreen,
-                                              data.rightColorBlue,
-                                              data.rightColorAlpha));
+        grad.setColorAt(end, QColor::fromRgbF(gradient.rightColorRed,
+                                              gradient.rightColorGreen,
+                                              gradient.rightColorBlue,
+                                              gradient.rightColorAlpha));
     }
 
-    p.setPen(QPen(Qt::transparent));
-    p.setRenderHint(QPainter::Antialiasing, true);
     p.fillRect(pix.rect(), QBrush(grad));
-
     p.end();
 
     return pix.toImage();
