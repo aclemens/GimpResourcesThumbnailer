@@ -35,6 +35,7 @@
 #include "abrbrushloader.h"
 #include "vbrbrushloader.h"
 #include "patternloader.h"
+#include "gradientloader.h"
 
 ResourceLoader::ResourceLoader()
 {
@@ -84,6 +85,11 @@ ResourceLoader* ResourceLoader::create(const QString& path)
     {
         loader = new AbrBrushLoader();
         loader->m_type = ABR;
+    }
+    else if (suffix == QString("GGR"))
+    {
+        loader = new GradientLoader();
+        loader->m_type = GGR;
     }
 
     if (loader)

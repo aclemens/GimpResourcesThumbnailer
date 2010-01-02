@@ -36,6 +36,7 @@ public:
         GIH,
         VBR,
         PAT,
+        GGR,
         ABR
     };
 

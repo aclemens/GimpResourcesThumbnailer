@@ -12,6 +12,7 @@ set(loaders_PART_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/loaders/gihbrushloader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/loaders/patternloader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/loaders/vbrbrushloader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/gradientloader.cpp
 )
 
 set(gimpresourcesthumbnail_PART_SRCS
@@ -30,6 +31,7 @@ set(mime_types_SRCS
     x-gimp-brush.xml
     x-gimp-brush-animated.xml
     x-gimp-pattern.xml
+    x-gimp-gradient.xml
     x-adobe-photoshop-brush.xml
 )
 

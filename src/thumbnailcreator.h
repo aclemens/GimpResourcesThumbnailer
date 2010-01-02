@@ -28,6 +28,7 @@
  * Currently the following resource types are supported:
  * @li <b>Gimp Brushes</b> (.GBR, .GIH, .VBR)
  * @li <b>Gimp Patterns</b> (.PAT)
+ * @li <b>Gimp Gradients</b> (.GGR)
  * @li <b>Adobe Photoshop Brushes</b> (.ABR (v6))
  *
  * For a list of missing features, see \ref todo.
