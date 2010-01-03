@@ -22,7 +22,7 @@
  * @author Andi Clemens
  *
  * GimpResourcesThumbnailer is a thumbnail service for KDE. It can be used in any KDE application that supports
- * the thumbnail kioslave, like dolphin, gwenview or digiKam.
+ * the thumbnail kioslave, like dolphin or digiKam.
  * You can preview all of your Gimp resources like brushes and patterns, to easily manage them into folders,
  * without the need to open Gimp.
  *
