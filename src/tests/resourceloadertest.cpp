@@ -38,7 +38,6 @@ QTEST_KDEMAIN(ResourceLoaderTest, GUI)
 void ResourceLoaderTest::testSuccess_data()
 {
     QTest::addColumn<QString>("filename");
-    QTest::addColumn<int>("result");
 
     QTest::newRow("GBR") << QString(KDESRCDIR"/gbr/13fcircle.gbr");
     QTest::newRow("GIH") << QString(KDESRCDIR"/gih/vine.gih");
@@ -130,9 +129,9 @@ void ResourceLoaderTest::testInvalidResourcesShouldReturnNullPointer_data()
 {
     QTest::addColumn<QString>("filename");
 
-    QTest::newRow("test1") << "filename.gbr";
+    QTest::newRow("test1") << "willfail.gbr";
     QTest::newRow("test2") << "";
-    QTest::newRow("test3") << "filename.blub";
+    QTest::newRow("test3") << "willfail.vbr";
     QTest::newRow("test4") << "     ";
 }
 
