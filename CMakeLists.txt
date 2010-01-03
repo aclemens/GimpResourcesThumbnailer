@@ -30,6 +30,16 @@ SET(GRT_VERSION_STRING
 MESSAGE(STATUS "")
 
 # ==================================================================================================
+# Generate an Archlinux PKGBUILD
+
+SET(PKG_NAME        "GimpResourcesThumbnailer")
+set(PKG_ID          "107128")
+SET(PKG_HOME_URL    "http://www.kde-apps.org/content/show.php/${PKG_NAME}?content=${PKG_ID}")
+SET(PKG_SOURCE_URL  "http://www.kde-apps.org/CONTENT/content-files/${PKG_ID}-${PKG_NAME}-$pkgver.tar.gz")
+
+CONFIGURE_FILE(PKGBUILD.cmake PKGBUILD)
+
+# ==================================================================================================
 # API documentation generation
 
 MACRO_OPTIONAL_FIND_PACKAGE(Doxygen)
