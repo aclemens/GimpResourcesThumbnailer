@@ -80,15 +80,22 @@ bool VbrBrushLoader::generateThumbnail(QFile& file)
      Line 10: The brush angle.
      */
 
-    int dataSize     = data.count();
+    int dataSize = data.count();
+
+    // make sure data can be read
+    if (dataSize != 8 && dataSize != 10)
+    {
+        kDebug() << "Invalid Gimp Brush (VBR) header";
+        return false;
+    }
+
     QString& magic   = data[0];
     QString& version = data[1];
 
     // check basic parameters
     if (
-            (magic != QString("GIMP-VBR"))                           ||
-            (version != QString("1.0") && version != QString("1.5")) ||
-            (dataSize != 8 && dataSize != 10)
+            (magic != QString("GIMP-VBR"))  ||
+            (version != QString("1.0") && version != QString("1.5"))
     )
     {
         kDebug() << "Invalid Gimp Brush (VBR) data!";

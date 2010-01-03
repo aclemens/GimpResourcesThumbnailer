@@ -114,7 +114,7 @@ bool GradientLoader::generateThumbnail(QFile& file)
 
 bool GradientLoader::validData(const QStringList& data)
 {
-    if (data.isEmpty())
+    if (data.isEmpty() || data.count() < MIN_DATA)
     {
         return false;
     }
@@ -125,11 +125,7 @@ bool GradientLoader::validData(const QStringList& data)
     int numberOfGradients = data[2].toInt();
 
     // check basic parameters
-    if (
-            (magic != QString("GIMP Gradient")) ||
-            (numberOfGradients < 1)             ||
-            (dataSize < MIN_DATA)
-    )
+    if ( (magic != QString("GIMP Gradient")) || (numberOfGradients < 1) )
     {
         kDebug() << "Invalid basic parameters";
         validData = false;
