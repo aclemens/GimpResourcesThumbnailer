@@ -170,9 +170,9 @@ QImage PaletteLoader::drawPalette(const QStringList& data)
     int numberOfColors = data.count();
 
     int w     = (TILE_SIZE * MAX_COLORS_IN_ROW);
-    int min_h = w / 2;
-    int max_h = ((numberOfColors / MAX_COLORS_IN_ROW) * TILE_SIZE);
-    int h     = (max_h > min_h) ? max_h : min_h;
+    int rows  = (numberOfColors / MAX_COLORS_IN_ROW);
+    rows     += ((numberOfColors % MAX_COLORS_IN_ROW) != 0) ? 1 : 0;
+    int h     = rows * TILE_SIZE;
 
     // avoid cutting off the border on the right side of the thumbnail
     const int BORDER_WIDTH = 1;
