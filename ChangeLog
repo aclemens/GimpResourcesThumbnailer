@@ -1,3 +1,9 @@
+2010-01-xx GimpResourcesThumbnailer 2.0.1
+    - changed rendering of palettes: limit the thumbnail height to the
+      actual colors in the palette, do not use a minimum height like we
+      did before
+    - some minor fixes (mostly code polishing)
+
 2010-01-02 GimpResourcesThumbnailer 2.0.0
     - quite a big version increment (;-)), but now all basic resource types are
             supported, which makes this a new milestone release
