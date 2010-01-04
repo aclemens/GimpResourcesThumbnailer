@@ -36,9 +36,6 @@ private Q_SLOTS:
     void testThumbnail_data();
     void testThumbnail();
 
-    void testKnownResourcesShouldNotReturnInvalidType_data();
-    void testKnownResourcesShouldNotReturnInvalidType();
-
     void testInvalidResourcesShouldReturnNullPointer_data();
     void testInvalidResourcesShouldReturnNullPointer();
 

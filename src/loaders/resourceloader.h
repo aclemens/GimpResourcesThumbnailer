@@ -29,23 +29,10 @@ class ResourceLoader
 {
 public:
 
-    enum ResourceType
-    {
-        INVALID = -1,
-        GBR     =  0,
-        GIH,
-        VBR,
-        PAT,
-        GPL,
-        GGR,
-        ABR
-    };
-
     ResourceLoader();
     virtual ~ResourceLoader();
 
     bool                   success();
-    ResourceType           resourceType();
     QImage&                thumbnail();
     static ResourceLoader* create(const QString& path);
 
@@ -54,10 +41,6 @@ protected:
     bool         m_success;
     QImage       m_thumbnail;
     virtual bool generateThumbnail(QFile& file) = 0;
-
-private:
-
-    ResourceType  m_type;
 
 private:
 

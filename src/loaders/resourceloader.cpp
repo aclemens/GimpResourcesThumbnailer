@@ -41,7 +41,6 @@
 ResourceLoader::ResourceLoader()
 {
     m_success = false;
-    m_type    = INVALID;
 }
 
 ResourceLoader::~ResourceLoader()
@@ -62,41 +61,13 @@ ResourceLoader* ResourceLoader::create(const QString& path)
     QFileInfo fi(file);
     QString suffix = fi.suffix().toUpper();
 
-    if (suffix == QString("GBR"))
-    {
-        loader = new GbrBrushLoader();
-        loader->m_type = GBR;
-    }
-    else if (suffix == QString("GIH"))
-    {
-        loader = new GihBrushLoader();
-        loader->m_type = GIH;
-    }
-    else if (suffix == QString("VBR"))
-    {
-        loader = new VbrBrushLoader();
-        loader->m_type = VBR;
-    }
-    else if (suffix == QString("PAT"))
-    {
-        loader = new PatternLoader();
-        loader->m_type = PAT;
-    }
-    else if (suffix == QString("ABR"))
-    {
-        loader = new AbrBrushLoader();
-        loader->m_type = ABR;
-    }
-    else if (suffix == QString("GGR"))
-    {
-        loader = new GradientLoader();
-        loader->m_type = GGR;
-    }
-    else if (suffix == QString("GPL"))
-    {
-        loader = new PaletteLoader();
-        loader->m_type = GPL;
-    }
+    if      (suffix == QString("GBR")) { loader = new GbrBrushLoader(); }
+    else if (suffix == QString("GIH")) { loader = new GihBrushLoader(); }
+    else if (suffix == QString("VBR")) { loader = new VbrBrushLoader(); }
+    else if (suffix == QString("PAT")) { loader = new PatternLoader();  }
+    else if (suffix == QString("ABR")) { loader = new AbrBrushLoader(); }
+    else if (suffix == QString("GGR")) { loader = new GradientLoader(); }
+    else if (suffix == QString("GPL")) { loader = new PaletteLoader();  }
 
     if (loader)
     {
@@ -109,11 +80,6 @@ ResourceLoader* ResourceLoader::create(const QString& path)
 QImage& ResourceLoader::thumbnail()
 {
     return m_thumbnail;
-}
-
-ResourceLoader::ResourceType ResourceLoader::resourceType()
-{
-    return m_type;
 }
 
 bool ResourceLoader::load(const QString& path)
