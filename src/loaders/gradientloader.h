@@ -40,30 +40,30 @@ struct GradientData
         Invalid
     };
 
-    enum BlendingFunction
-    {
-        Linear = 0,
-        Curved,
-        Sinusoidal,
-        SphericalIncreasing,
-        SphericalDecreasing
-    };
-
-    enum ColorMode
-    {
-        RGB = 0,
-        HSVcounterClockwise,
-        HSVclockwise
-    };
-
-    enum ColorType
-    {
-        Fixed = 0,
-        Foreground,
-        ForegroundTransparent,
-        Background,
-        BackgroundTransparent
-    };
+//    enum BlendingFunction
+//    {
+//        Linear = 0,
+//        Curved,
+//        Sinusoidal,
+//        SphericalIncreasing,
+//        SphericalDecreasing
+//    };
+//
+//    enum ColorMode
+//    {
+//        RGB = 0,
+//        HSVcounterClockwise,
+//        HSVclockwise
+//    };
+//
+//    enum ColorType
+//    {
+//        Fixed = 0,
+//        Foreground,
+//        ForegroundTransparent,
+//        Background,
+//        BackgroundTransparent
+//    };
 
     Status           status;
 
@@ -81,11 +81,11 @@ struct GradientData
     float            rightColorBlue;
     float            rightColorAlpha;
 
-    BlendingFunction blendingFunction;
-    ColorMode        coloringMode;
-
-    ColorType        leftColorType;
-    ColorType        rightColorType;
+//    BlendingFunction blendingFunction;
+//    ColorMode        coloringMode;
+//
+//    ColorType        leftColorType;
+//    ColorType        rightColorType;
 };
 
 typedef QList<GradientData> GradientList;
