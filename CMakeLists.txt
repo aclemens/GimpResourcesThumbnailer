@@ -17,7 +17,7 @@ SET(GRT_PATCH_VERSION "1")
 # "-beta2"
 # "-rc"
 # "" : final release. Can be used in production.
-SET(GRT_SUFFIX_VERSION "-git")
+SET(GRT_SUFFIX_VERSION "")
 
 SET(GRT_VERSION_SHORT
     "${GRT_MAJOR_VERSION}.${GRT_MINOR_VERSION}.${GRT_PATCH_VERSION}"

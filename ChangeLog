@@ -1,4 +1,4 @@
-2010-01-xx GimpResourcesThumbnailer 2.0.1
+2010-01-05 GimpResourcesThumbnailer 2.0.1
     - changed rendering of palettes: limit the thumbnail height to the
       actual colors in the palette, do not use a minimum height like we
       did before
