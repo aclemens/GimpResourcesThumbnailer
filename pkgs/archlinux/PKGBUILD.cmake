@@ -9,6 +9,7 @@ url="@PKG_HOME_URL@"
 depends=('kdebase-workspace')
 makedepends=('cmake' 'automoc4')
 source=(@PKG_SOURCE_URL@)
+install="gimpresourcesthumbnailer.install"
 
 license=('GPL')
 
