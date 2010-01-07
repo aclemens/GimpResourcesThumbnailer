@@ -10,6 +10,7 @@ depends=('kdebase-workspace')
 makedepends=('cmake' 'automoc4')
 source=(http://www.kde-apps.org/CONTENT/content-files/107128-GimpResourcesThumbnailer-$pkgver.tar.gz)
 install="gimpresourcesthumbnailer.install"
+md5sums=('14a91f6e04aca9fa9932a41cdf3df6d5')
 
 license=('GPL')
 

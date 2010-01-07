@@ -10,6 +10,7 @@ depends=('kdebase-workspace')
 makedepends=('cmake' 'automoc4')
 source=(@PKG_SOURCE_URL@)
 install="gimpresourcesthumbnailer.install"
+md5sums=('14a91f6e04aca9fa9932a41cdf3df6d5')
 
 license=('GPL')
 
