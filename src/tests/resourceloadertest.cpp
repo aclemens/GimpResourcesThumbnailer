@@ -28,6 +28,7 @@
 // KDE includes
 
 #include <qtest_kde.h>
+#include <kdebug.h>
 
 // Local includes
 
@@ -123,7 +124,8 @@ void ResourceLoaderTest::testAllExampleData()
     filePatterns << "*.pat";
     filePatterns << "*.vbr";
 
-    QDirIterator it(QString(KDESRCDIR), QDir::NoDotAndDotDot | QDir::AllDirs, QDirIterator::Subdirectories);
+    QDirIterator it(QString(KDESRCDIR), QDir::NoDotAndDotDot | QDir::AllDirs,
+                    QDirIterator::Subdirectories | QDirIterator::FollowSymlinks );
     while (it.hasNext())
     {
         QDir exampleDir(it.next());
@@ -140,6 +142,7 @@ void ResourceLoaderTest::testAllExampleData()
     }
 
     QVERIFY(!allFiles.isEmpty());
+    kDebug() << "testing " << allFiles.count() << " resources...";
 
     foreach (const QString& file, allFiles)
     {
