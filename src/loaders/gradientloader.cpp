@@ -22,11 +22,11 @@
 // Qt includes
 
 #include <QFile>
+#include <QLinearGradient>
 #include <QPainter>
 #include <QPixmap>
-#include <QLinearGradient>
-#include <QTextStream>
 #include <QRegExp>
+#include <QTextStream>
 
 // KDE includes
 

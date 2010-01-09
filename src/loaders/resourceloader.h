@@ -20,10 +20,10 @@
 #ifndef RESOURCELOADER_H
 #define RESOURCELOADER_H
 
-#include <QString>
 #include <QImage>
 
 class QFile;
+class QString;
 
 class ResourceLoader
 {

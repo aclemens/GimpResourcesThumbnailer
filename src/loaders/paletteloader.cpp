@@ -24,8 +24,8 @@
 #include <QFile>
 #include <QPainter>
 #include <QPixmap>
-#include <QTextStream>
 #include <QRegExp>
+#include <QTextStream>
 
 // KDE includes
 

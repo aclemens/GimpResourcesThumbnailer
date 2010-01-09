@@ -23,6 +23,7 @@
 
 #include <QFile>
 #include <QFileInfo>
+#include <QString>
 
 // KDE includes
 
@@ -30,13 +31,13 @@
 
 // Loader includes
 
-#include "gihbrushloader.h"
-#include "gbrbrushloader.h"
 #include "abrbrushloader.h"
-#include "vbrbrushloader.h"
-#include "patternloader.h"
+#include "gbrbrushloader.h"
+#include "gihbrushloader.h"
 #include "gradientloader.h"
 #include "paletteloader.h"
+#include "patternloader.h"
+#include "vbrbrushloader.h"
 
 ResourceLoader::ResourceLoader()
 {
