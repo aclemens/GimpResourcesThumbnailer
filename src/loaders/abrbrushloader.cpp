@@ -360,7 +360,7 @@ int AbrBrushLoader::rle_decode(QDataStream& stream, char* buffer, qint32 height)
         }
     }
 
-    delete cscanline_len;
+    delete [] cscanline_len;
 
     if (!streamIsOk(stream))
         return -1;
