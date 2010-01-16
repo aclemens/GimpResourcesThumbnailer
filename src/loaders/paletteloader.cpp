@@ -79,7 +79,6 @@ bool PaletteLoader::generateThumbnail(QFile& file)
         {
             m_thumbnail = img;
             m_success   = true;
-            kDebug() << "OK!";
             return true;
         }
     }
