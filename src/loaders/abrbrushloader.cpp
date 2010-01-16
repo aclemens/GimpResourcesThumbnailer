@@ -186,7 +186,7 @@ qint16 AbrBrushLoader::getSamplesCount(QDataStream& stream)
 
     stream >> sectionSize;
     dataStart  = stream.device()->pos();
-    sectionEnd = sectionSize + dataStart;
+    sectionEnd = dataStart + sectionSize;
 
     while (!stream.device()->atEnd() && stream.device()->pos() < sectionEnd)
     {
