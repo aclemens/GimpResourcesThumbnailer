@@ -57,7 +57,6 @@ bool GbrBrushLoader::generateThumbnail(QFile& file)
         case 1:
         {
             // no magic number and spacing information
-            kDebug() << "Gimp Brush format: v1";
             break;
         }
         case 2: case 3:
@@ -68,7 +67,6 @@ bool GbrBrushLoader::generateThumbnail(QFile& file)
                 kDebug() << "No valid Gimp Brush file!";
                 validBrushFile = false;
             }
-            kDebug() << "Gimp Brush format: v2/v3";
             break;
         }
         default:
@@ -146,8 +144,6 @@ bool GbrBrushLoader::generateThumbnail(QFile& file)
             }
         }
     }
-
-    kDebug() << "Thumbnail for Gimp Brush '" << brushName << "' successfully generated!";
 
     delete[] brushName_c;
     delete[] data;

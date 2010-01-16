@@ -115,14 +115,14 @@ bool VbrBrushLoader::generateThumbnail(QFile& file)
     QString spikes      = shaped ? data[6] : empty;
     QString style       = shaped ? data[3] : empty;
 
-    kDebug() << "brushName: "   << brushName;
-    kDebug() << "spacing: "     << spacing;
-    kDebug() << "radius: "      << radius;
-    kDebug() << "hardness: "    << hardness;
-    kDebug() << "aspectRatio: " << aspectRatio;
-    kDebug() << "angle: "       << angle;
-    kDebug() << "spikes: "      << spikes;
-    kDebug() << "style: "       << style;
+//    kDebug() << "brushName: "   << brushName;
+//    kDebug() << "spacing: "     << spacing;
+//    kDebug() << "radius: "      << radius;
+//    kDebug() << "hardness: "    << hardness;
+//    kDebug() << "aspectRatio: " << aspectRatio;
+//    kDebug() << "angle: "       << angle;
+//    kDebug() << "spikes: "      << spikes;
+//    kDebug() << "style: "       << style;
 
     // --------------------------------------------------------
 

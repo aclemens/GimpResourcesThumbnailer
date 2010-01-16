@@ -158,8 +158,6 @@ bool PatternLoader::generateThumbnail(QFile& file)
         }
     }
 
-    kDebug() << "Thumbnail for Gimp Pattern '" << brushName << "' successfully generated!";
-
     delete[] brushName_c;
     delete[] data;
 
