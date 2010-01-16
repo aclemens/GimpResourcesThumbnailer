@@ -1,7 +1,7 @@
 # Contributor: Andi Clemens <andi.clemens@gmx.net>
 
 pkgname=gimpresourcesthumbnailer
-pkgver=2.0.1
+pkgver=2.0.2
 pkgrel=1
 pkgdesc="Plugin for KDE to display GIMP resource files like brushes and patterns as thumbnails."
 arch=('i686' 'x86_64')

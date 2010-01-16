@@ -9,7 +9,7 @@ INCLUDE(MacroOptionalAddSubdirectory)
 # GimpResourcesThumbnailer version
 SET(GRT_MAJOR_VERSION "2")
 SET(GRT_MINOR_VERSION "0")
-SET(GRT_PATCH_VERSION "1")
+SET(GRT_PATCH_VERSION "2")
 
 # Suffix to add at end of version string. Examples:
 # "-git"
