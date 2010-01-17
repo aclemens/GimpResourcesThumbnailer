@@ -1,7 +1,7 @@
 /* ============================================================
  *
- * Date        : 2009-06-18
- * Description : a unit test for loading gimp brushes
+ * Date        : 2010-01-17
+ * Description : a unit test for loading gradients
  *
  * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
  *
