@@ -51,6 +51,7 @@ const int MIN_DATA = 4;
  * The number of parameters to describe a gradient
  */
 const int GRADIENT_PARAMS = 11;
+const int GRADIENT_PARAMS_MAX = 15;
 
 
 bool GradientLoader::generateThumbnail(QFile& file)
@@ -83,7 +84,7 @@ bool GradientLoader::generateThumbnail(QFile& file)
      Column12: (int)   : BlendingFunction (linear, curved, sinusoidal, spherical (counterclockwise), spherical (clockwise)
      Column13: (int)   : ColorMode (RGB, HSVcounterclockwise, HSVclockwise)
      Column14: (int)   : Left  ColorType (Fixed, Foreground, ForegroundTransparent, Background, BackgroundTransparent)
-     Column14: (int)   : Right ColorType (Fixed, Foreground, ForegroundTransparent, Background, BackgroundTransparent)
+     Column15: (int)   : Right ColorType (Fixed, Foreground, ForegroundTransparent, Background, BackgroundTransparent)
      */
 
     QTextStream in(&file);
@@ -160,7 +161,7 @@ GradientData GradientLoader::getGradientInformation(const QString& gradient)
     bool allOk         = true;
 
     GradientData data;
-    if (values.count() < GRADIENT_PARAMS)
+    if (values.count() < GRADIENT_PARAMS || values.count() > GRADIENT_PARAMS_MAX)
     {
         data.status = GradientData::Invalid;
         return data;

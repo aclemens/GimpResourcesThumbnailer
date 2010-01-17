@@ -44,3 +44,31 @@ TARGET_LINK_LIBRARIES(resourceloadertest
                       ${QT_QTGUI_LIBRARY}
                       ${QT_QTTEST_LIBRARY}
                       )
+
+#------------------------------------------------------------------------
+
+SET(vbrbrushloadertest_SRCS
+    vbrbrushloadertest.cpp
+    ${loaders_SRCS}
+)
+
+KDE4_ADD_UNIT_TEST(vbrbrushloadertest ${vbrbrushloadertest_SRCS})
+TARGET_LINK_LIBRARIES(vbrbrushloadertest
+                      ${KDE4_KIO_LIBS}
+                      ${QT_QTGUI_LIBRARY}
+                      ${QT_QTTEST_LIBRARY}
+                      )
+
+#------------------------------------------------------------------------
+
+SET(gradientloadertest_SRCS
+    gradientloadertest.cpp
+    ${loaders_SRCS}
+)
+
+KDE4_ADD_UNIT_TEST(gradientloadertest ${gradientloadertest_SRCS})
+TARGET_LINK_LIBRARIES(gradientloadertest
+                      ${KDE4_KIO_LIBS}
+                      ${QT_QTGUI_LIBRARY}
+                      ${QT_QTTEST_LIBRARY}
+                      )

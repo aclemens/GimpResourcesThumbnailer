@@ -98,8 +98,6 @@ protected:
 
     virtual bool generateThumbnail(QFile& file);
 
-private:
-
     bool validData(const QStringList& data);
     void debugGradientData(const GradientData& data);
 
