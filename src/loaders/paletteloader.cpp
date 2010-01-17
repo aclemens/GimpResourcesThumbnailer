@@ -130,21 +130,20 @@ bool PaletteLoader::validData(const QStringList& data)
 
 PaletteData PaletteLoader::getPaletteInformation(const QString& palette)
 {
-    QRegExp sep("\\s+");
-    QStringList values = palette.split(sep);
-    bool ok            = true;
-    bool allOk         = true;
+    QRegExp reg("(\\d{1,3})\\s+(\\d{1,3})\\s+(\\d{1,3})(\\s+.*)?");
+    bool ok    = true;
+    bool allOk = true;
 
     PaletteData data;
-    if (values.count() < PALETTE_PARAMS)
+    if (!reg.exactMatch(palette.trimmed()))
     {
         data.status = PaletteData::Invalid;
         return data;
     }
 
-    data.red   = values[0].toInt(&ok);  allOk = allOk && ok;
-    data.green = values[1].toInt(&ok);  allOk = allOk && ok;
-    data.blue  = values[2].toInt(&ok);  allOk = allOk && ok;
+    data.red   = reg.cap(1).toInt(&ok);  allOk = allOk && ok;
+    data.green = reg.cap(2).toInt(&ok);  allOk = allOk && ok;
+    data.blue  = reg.cap(3).toInt(&ok);  allOk = allOk && ok;
 
     // check if data was converted correctly, set status accordingly
     data.status = allOk ? PaletteData::Ok : PaletteData::Invalid;

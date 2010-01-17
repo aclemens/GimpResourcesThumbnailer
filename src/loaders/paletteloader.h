@@ -56,8 +56,6 @@ protected:
 
     virtual bool generateThumbnail(QFile& file);
 
-private:
-
     bool        validData(const QStringList& data);
     void        prepareData(QStringList& data);
 

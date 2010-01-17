@@ -72,3 +72,17 @@ TARGET_LINK_LIBRARIES(gradientloadertest
                       ${QT_QTGUI_LIBRARY}
                       ${QT_QTTEST_LIBRARY}
                       )
+
+#------------------------------------------------------------------------
+
+SET(paletteloadertest_SRCS
+    paletteloadertest.cpp
+    ${loaders_SRCS}
+)
+
+KDE4_ADD_UNIT_TEST(paletteloadertest ${paletteloadertest_SRCS})
+TARGET_LINK_LIBRARIES(paletteloadertest
+                      ${KDE4_KIO_LIBS}
+                      ${QT_QTGUI_LIBRARY}
+                      ${QT_QTTEST_LIBRARY}
+                      )
