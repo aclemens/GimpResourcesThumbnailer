@@ -8,8 +8,8 @@ INCLUDE(MacroOptionalAddSubdirectory)
 
 # GimpResourcesThumbnailer version
 SET(GRT_MAJOR_VERSION "2")
-SET(GRT_MINOR_VERSION "0")
-SET(GRT_PATCH_VERSION "3")
+SET(GRT_MINOR_VERSION "1")
+SET(GRT_PATCH_VERSION "0")
 
 # Suffix to add at end of version string. Examples:
 # "-git"
@@ -17,7 +17,7 @@ SET(GRT_PATCH_VERSION "3")
 # "-beta2"
 # "-rc"
 # "" : final release. Can be used in production.
-SET(GRT_SUFFIX_VERSION "-git")
+SET(GRT_SUFFIX_VERSION "")
 
 SET(GRT_VERSION_SHORT
     "${GRT_MAJOR_VERSION}.${GRT_MINOR_VERSION}.${GRT_PATCH_VERSION}"

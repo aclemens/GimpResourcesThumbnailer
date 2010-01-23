@@ -1,3 +1,6 @@
+2010-01-23 GimpResourcesThumbnailer 2.1.0
+	- implement HSV color mode for gradient rendering
+
 2010-01-16 GimpResourcesThumbnailer 2.0.2
 	- fix minor memory leak
 
