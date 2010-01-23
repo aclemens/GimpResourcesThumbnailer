@@ -46,23 +46,26 @@ struct GradientData
 //        Curved,
 //        Sinusoidal,
 //        SphericalIncreasing,
-//        SphericalDecreasing
+//        SphericalDecreasing,
+//        LAST_BLENDINGFUNCTION
 //    };
-//
-//    enum ColorMode
-//    {
-//        RGB = 0,
-//        HSVcounterClockwise,
-//        HSVclockwise
-//    };
-//
+
+    enum ColorMode
+    {
+        RGB = 0,
+        HSVcounterClockwise,
+        HSVclockwise,
+        LAST_COLORMODE
+    };
+
 //    enum ColorType
 //    {
 //        Fixed = 0,
 //        Foreground,
 //        ForegroundTransparent,
 //        Background,
-//        BackgroundTransparent
+//        BackgroundTransparent,
+//        LAST_COLORTYPE
 //    };
 
     Status           status;
@@ -82,7 +85,7 @@ struct GradientData
     float            rightColorAlpha;
 
 //    BlendingFunction blendingFunction;
-//    ColorMode        coloringMode;
+    ColorMode        coloringMode;
 //
 //    ColorType        leftColorType;
 //    ColorType        rightColorType;

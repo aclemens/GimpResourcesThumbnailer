@@ -50,7 +50,7 @@ const int MIN_DATA = 4;
 /**
  * The number of parameters to describe a gradient
  */
-const int GRADIENT_PARAMS = 11;
+const int GRADIENT_PARAMS_MIN = 11;
 const int GRADIENT_PARAMS_MAX = 15;
 
 
@@ -161,35 +161,46 @@ GradientData GradientLoader::getGradientInformation(const QString& gradient)
     bool allOk         = true;
 
     GradientData data;
-    if (values.count() < GRADIENT_PARAMS || values.count() > GRADIENT_PARAMS_MAX)
+    if (values.count() < GRADIENT_PARAMS_MIN || values.count() > GRADIENT_PARAMS_MAX)
     {
         data.status = GradientData::Invalid;
         return data;
     }
 
+    // --------------------------------------------------------
+
     data.startPoint      = values[0].toFloat(&ok);  allOk = allOk && ok;
     data.middlePoint     = values[1].toFloat(&ok);  allOk = allOk && ok;
     data.endPoint        = values[2].toFloat(&ok);  allOk = allOk && ok;
-                                                    allOk = allOk && ok;
+
     data.leftColorRed    = values[3].toFloat(&ok);  allOk = allOk && ok;
     data.leftColorGreen  = values[4].toFloat(&ok);  allOk = allOk && ok;
     data.leftColorBlue   = values[5].toFloat(&ok);  allOk = allOk && ok;
     data.leftColorAlpha  = values[6].toFloat(&ok);  allOk = allOk && ok;
-                                                    allOk = allOk && ok;
+
     data.rightColorRed   = values[7].toFloat(&ok);  allOk = allOk && ok;
     data.rightColorGreen = values[8].toFloat(&ok);  allOk = allOk && ok;
     data.rightColorBlue  = values[9].toFloat(&ok);  allOk = allOk && ok;
     data.rightColorAlpha = values[10].toFloat(&ok); allOk = allOk && ok;
 
+    if (values.count() >= (GRADIENT_PARAMS_MIN + 2))
+    {
+        int _tmp = values[12].toInt(&ok);
+        ok = ok && (_tmp >= 0 && _tmp < GradientData::LAST_COLORMODE);
+        allOk = allOk && ok;
+        if (allOk)
+        {
+            data.coloringMode = (GradientData::ColorMode)values[12].toInt(&ok);
+        }
+    }
+
     /**
      * @todo use blendingFunction and other optional parameters for better representation
       of the gradient
      */
+
     /*
     data.blendingFunction  = (GradientData::BlendingFunction)values[11].toInt(&ok);
-    allOk = allOk && ok;
-
-    data.coloringMode      = (GradientData::ColorMode)values[12].toInt(&ok);
     allOk = allOk && ok;
 
     data.leftColorType     = (GradientData::ColorType)values[13].toInt(&ok);
@@ -198,6 +209,8 @@ GradientData GradientLoader::getGradientInformation(const QString& gradient)
     data.rightColorType    = (GradientData::ColorType)values[14].toInt(&ok);
     allOk = allOk && ok;
     */
+
+    // --------------------------------------------------------
 
     // check if data was converted correctly, set status accordingly
     data.status = allOk ? GradientData::Ok : GradientData::Invalid;
