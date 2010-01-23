@@ -248,7 +248,7 @@ QImage GradientLoader::drawGradient(const QStringList& data)
             gradient.coloringMode == GradientData::HSVcounterClockwise
         )
         {
-            const int hue_range = 360.0;
+            const int hue_range = 360;
 
             bool reverse        = (gradient.coloringMode == GradientData::HSVcounterClockwise);
             qreal stepping      = qAbs(end - start) / (qreal)hue_range;

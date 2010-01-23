@@ -31,7 +31,6 @@
 #include "resourceloader.h"
 
 class QFile;
-class QLinearGradient;
 
 struct GradientData
 {
