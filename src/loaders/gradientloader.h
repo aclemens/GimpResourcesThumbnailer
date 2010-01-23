@@ -41,16 +41,6 @@ struct GradientData
         Invalid
     };
 
-//    enum BlendingFunction
-//    {
-//        Linear = 0,
-//        Curved,
-//        Sinusoidal,
-//        SphericalIncreasing,
-//        SphericalDecreasing,
-//        LAST_BLENDINGFUNCTION
-//    };
-
     enum ColorMode
     {
         RGB = 0,
@@ -58,16 +48,6 @@ struct GradientData
         HSVclockwise,
         LAST_COLORMODE
     };
-
-//    enum ColorType
-//    {
-//        Fixed = 0,
-//        Foreground,
-//        ForegroundTransparent,
-//        Background,
-//        BackgroundTransparent,
-//        LAST_COLORTYPE
-//    };
 
     Status           status;
 
@@ -85,11 +65,7 @@ struct GradientData
     float            rightColorBlue;
     float            rightColorAlpha;
 
-//    BlendingFunction blendingFunction;
     ColorMode        coloringMode;
-//
-//    ColorType        leftColorType;
-//    ColorType        rightColorType;
 };
 
 typedef QList<GradientData> GradientList;

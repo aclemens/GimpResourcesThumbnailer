@@ -188,27 +188,11 @@ GradientData GradientLoader::getGradientInformation(const QString& gradient)
         int _tmp = values[12].toInt(&ok);
         ok = ok && (_tmp >= 0 && _tmp < GradientData::LAST_COLORMODE);
         allOk = allOk && ok;
-        if (allOk)
+        if (ok)
         {
-            data.coloringMode = (GradientData::ColorMode)values[12].toInt(&ok);
+            data.coloringMode = (GradientData::ColorMode)_tmp;
         }
     }
-
-    /**
-     * @todo use blendingFunction and other optional parameters for better representation
-      of the gradient
-     */
-
-    /*
-    data.blendingFunction  = (GradientData::BlendingFunction)values[11].toInt(&ok);
-    allOk = allOk && ok;
-
-    data.leftColorType     = (GradientData::ColorType)values[13].toInt(&ok);
-    allOk = allOk && ok;
-
-    data.rightColorType    = (GradientData::ColorType)values[14].toInt(&ok);
-    allOk = allOk && ok;
-    */
 
     // --------------------------------------------------------
 
