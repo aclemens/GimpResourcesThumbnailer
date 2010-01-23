@@ -259,15 +259,52 @@ QImage GradientLoader::drawGradient(const QStringList& data)
         end   = qMin(1.0, end);
         end   = qMax(0.0, end);
 
-        grad.setColorAt(start, QColor::fromRgbF(gradient.leftColorRed,
-                                                gradient.leftColorGreen,
-                                                gradient.leftColorBlue,
-                                                gradient.leftColorAlpha));
+        // check coloring mode
+        if (gradient.coloringMode == GradientData::HSVclockwise ||
+            gradient.coloringMode == GradientData::HSVcounterClockwise
+        )
+        {
+            const int hue_range = 360.0;
 
-        grad.setColorAt(end, QColor::fromRgbF(gradient.rightColorRed,
-                                              gradient.rightColorGreen,
-                                              gradient.rightColorBlue,
-                                              gradient.rightColorAlpha));
+            bool reverse        = (gradient.coloringMode == GradientData::HSVcounterClockwise);
+            qreal stepping      = qAbs(end - start) / (qreal)hue_range;
+            qreal pos           = reverse ? start : end;
+
+            QColor col = QColor::fromRgbF(gradient.leftColorRed,
+                                          gradient.leftColorGreen,
+                                          gradient.leftColorBlue,
+                                          gradient.leftColorAlpha);
+            QColor hsv = col.toHsv();
+
+            for (int h = 0.0; h < hue_range; ++h)
+            {
+                grad.setColorAt(pos, QColor::fromHsvF((qreal)h / hue_range,
+                                                      hsv.saturationF(),
+                                                      hsv.valueF(),
+                                                      hsv.alphaF()));
+
+                if (reverse)
+                {
+                    pos += stepping;
+                }
+                else
+                {
+                    pos -= stepping;
+                }
+            }
+        }
+        else
+        {
+            grad.setColorAt(start, QColor::fromRgbF(gradient.leftColorRed,
+                                                    gradient.leftColorGreen,
+                                                    gradient.leftColorBlue,
+                                                    gradient.leftColorAlpha));
+
+            grad.setColorAt(end, QColor::fromRgbF(gradient.rightColorRed,
+                                                  gradient.rightColorGreen,
+                                                  gradient.rightColorBlue,
+                                                  gradient.rightColorAlpha));
+        }
     }
 
     p.fillRect(pix.rect(), QBrush(grad));
