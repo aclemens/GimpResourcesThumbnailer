@@ -54,7 +54,7 @@ const int GRADIENT_PARAMS_MIN = 11;
 const int GRADIENT_PARAMS_MAX = 15;
 
 
-bool GradientLoader::generateThumbnail(QFile& file)
+QImage GradientLoader::generateThumbnail(QFile& file)
 {
     /*
      GRADIENT FILE SPECIFICATION:
@@ -89,6 +89,7 @@ bool GradientLoader::generateThumbnail(QFile& file)
 
     QTextStream in(&file);
     QStringList data;
+    QImage thumb;
 
     while (!in.atEnd())
     {
@@ -100,16 +101,9 @@ bool GradientLoader::generateThumbnail(QFile& file)
 
     if (validData(data))
     {
-        QImage img = drawGradient(data);
-
-        if (!img.isNull())
-        {
-            m_thumbnail = img;
-            m_success   = true;
-            return true;
-        }
+        thumb = drawGradient(data);
     }
-    return false;
+    return thumb;
 }
 
 bool GradientLoader::validData(const QStringList& data)

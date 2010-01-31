@@ -29,7 +29,7 @@ class GihBrushLoader : public GbrBrushLoader
 
 protected:
 
-    virtual bool generateThumbnail(QFile& file);
+    virtual QImage generateThumbnail(QFile& file);
 };
 
 #endif /* GIHBRUSHLOADER_H */

@@ -47,7 +47,7 @@ const int MAX_COLORS_IN_ROW = 16;
 const int PALETTE_PARAMS = 3;
 
 
-bool PaletteLoader::generateThumbnail(QFile& file)
+QImage PaletteLoader::generateThumbnail(QFile& file)
 {
     /*
      GRADIENT FILE SPECIFICATION:
@@ -61,6 +61,7 @@ bool PaletteLoader::generateThumbnail(QFile& file)
 
     QTextStream in(&file);
     QStringList data;
+    QImage thumb;
 
     while (!in.atEnd())
     {
@@ -73,16 +74,9 @@ bool PaletteLoader::generateThumbnail(QFile& file)
     if (validData(data))
     {
         prepareData(data);
-        QImage img = drawPalette(data);
-
-        if (!img.isNull())
-        {
-            m_thumbnail = img;
-            m_success   = true;
-            return true;
-        }
+        thumb = drawPalette(data);
     }
-    return false;
+    return thumb;
 }
 
 void PaletteLoader::prepareData(QStringList& data)

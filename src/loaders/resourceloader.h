@@ -32,19 +32,11 @@ public:
     ResourceLoader();
     virtual ~ResourceLoader();
 
-    bool                   success();
-    QImage&                thumbnail();
-    static ResourceLoader* create(const QString& path);
+    static QImage load(const QString& path);
 
 protected:
 
-    bool         m_success;
-    QImage       m_thumbnail;
-    virtual bool generateThumbnail(QFile& file) = 0;
-
-private:
-
-    bool load(const QString& path);
+    virtual QImage generateThumbnail(QFile& file) = 0;
 };
 
 #endif /* RESOURCELOADER_H */

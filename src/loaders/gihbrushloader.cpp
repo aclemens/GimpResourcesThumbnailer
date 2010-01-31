@@ -24,7 +24,7 @@
 #include <QFile>
 #include <QString>
 
-bool GihBrushLoader::generateThumbnail(QFile& file)
+QImage GihBrushLoader::generateThumbnail(QFile& file)
 {
     // Read ahead the first two lines and skip the textual information. We don't need it.
     // The actual GBR data is found at line 3.

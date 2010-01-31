@@ -29,10 +29,12 @@
 
 #include <kdebug.h>
 
-bool GbrBrushLoader::generateThumbnail(QFile& file)
+QImage GbrBrushLoader::generateThumbnail(QFile& file)
 {
     const int HEADERSIZEv1 = 20;
     const int HEADERSIZEv2 = 28;
+
+    QImage thumb;
 
     quint32 header;
     quint32 version;
@@ -82,7 +84,7 @@ bool GbrBrushLoader::generateThumbnail(QFile& file)
     if (!validBrushFile)
     {
         file.close();
-        return false;
+        return thumb;
     }
 
     // read the brush name
@@ -106,14 +108,14 @@ bool GbrBrushLoader::generateThumbnail(QFile& file)
                  << ")";
         delete[] brushName_c;
         delete[] data;
-        return false;
+        return thumb;
     }
 
     // generate thumbnail
     QImage::Format imageFormat;
     imageFormat = (colorDepth == 1) ? QImage::Format_RGB32 : QImage::Format_ARGB32;
 
-    m_thumbnail = QImage(w, h, imageFormat);
+    thumb = QImage(w, h, imageFormat);
     quint32 step = 0;
 
     switch (colorDepth)
@@ -125,7 +127,7 @@ bool GbrBrushLoader::generateThumbnail(QFile& file)
                 for (quint32 x = 0; x < w; ++x, ++step)
                 {
                     qint32 val = 255 - static_cast<uchar> (data[step]);
-                    m_thumbnail.setPixel(x, y, qRgb(val, val, val));
+                    thumb.setPixel(x, y, qRgb(val, val, val));
                 }
             }
             break;
@@ -136,10 +138,10 @@ bool GbrBrushLoader::generateThumbnail(QFile& file)
             {
                 for (quint32 x = 0; x < w; ++x, step += 4)
                 {
-                    m_thumbnail.setPixel(x, y, qRgba(static_cast<uchar>(data[step]),
-                                                     static_cast<uchar>(data[step+1]),
-                                                     static_cast<uchar>(data[step+2]),
-                                                     static_cast<uchar>(data[step+3])));
+                    thumb.setPixel(x, y, qRgba(static_cast<uchar>(data[step]),
+                                                static_cast<uchar>(data[step+1]),
+                                                static_cast<uchar>(data[step+2]),
+                                                static_cast<uchar>(data[step+3])));
                 }
             }
         }
@@ -148,5 +150,5 @@ bool GbrBrushLoader::generateThumbnail(QFile& file)
     delete[] brushName_c;
     delete[] data;
 
-    return true;
+    return thumb;
 }

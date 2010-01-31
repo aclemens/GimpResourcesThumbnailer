@@ -38,10 +38,11 @@
  */
 const int MAX_SIZE = 256;
 
-bool VbrBrushLoader::generateThumbnail(QFile& file)
+QImage VbrBrushLoader::generateThumbnail(QFile& file)
 {
     QTextStream in(&file);
     QStringList data;
+    QImage thumb;
 
     while (!in.atEnd())
     {
@@ -86,7 +87,7 @@ bool VbrBrushLoader::generateThumbnail(QFile& file)
     if (dataSize != 8 && dataSize != 10)
     {
         kDebug() << "Invalid Gimp Brush (VBR) header";
-        return false;
+        return thumb;
     }
 
     QString& magic   = data[0];
@@ -99,7 +100,7 @@ bool VbrBrushLoader::generateThumbnail(QFile& file)
     )
     {
         kDebug() << "Invalid Gimp Brush (VBR) data!";
-        return false;
+        return thumb;
     }
 
     // now load the rest
@@ -143,19 +144,11 @@ bool VbrBrushLoader::generateThumbnail(QFile& file)
     if (!allOk)
     {
         kDebug() << "Error while converting strings to their appropriate value type!";
-        return false;
+        return thumb;
     }
 
-    QImage img = generateShapedBrush(style, r_radius, r_hardness, r_aspectRatio, r_angle, r_spikes);
-
-    if (!img.isNull())
-    {
-        m_thumbnail = img;
-        return true;
-    }
-
-    kDebug() << "image is empty... why?";
-    return false;
+    thumb = generateShapedBrush(style, r_radius, r_hardness, r_aspectRatio, r_angle, r_spikes);
+    return thumb;
 }
 
 QImage VbrBrushLoader::generateShapedBrush(QString shape, qreal radius, qreal hardness, qreal aspect, qreal angle, int spikes)

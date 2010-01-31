@@ -34,5 +34,5 @@ void VbrBrushLoaderTest::testGenerateThumbnail()
 {
     VbrLoaderStub loader;
     QFile f;
-    QVERIFY(!loader.generateThumb(f));
+    QVERIFY(loader.generateThumb(f).isNull());
 }

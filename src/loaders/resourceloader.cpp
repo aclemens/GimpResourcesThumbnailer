@@ -41,22 +41,22 @@
 
 ResourceLoader::ResourceLoader()
 {
-    m_success = false;
 }
 
 ResourceLoader::~ResourceLoader()
 {
 }
 
-ResourceLoader* ResourceLoader::create(const QString& path)
+QImage ResourceLoader::load(const QString& path)
 {
     ResourceLoader* loader = 0;
+    QImage thumb;
 
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly))
     {
         kDebug() << "Error loading resource file.";
-        return loader;
+        return thumb;
     }
 
     QFileInfo fi(file);
@@ -72,31 +72,9 @@ ResourceLoader* ResourceLoader::create(const QString& path)
 
     if (loader)
     {
-        loader->load(path);
+        thumb = loader->generateThumbnail(file);
     }
 
-    return loader;
-}
-
-QImage& ResourceLoader::thumbnail()
-{
-    return m_thumbnail;
-}
-
-bool ResourceLoader::load(const QString& path)
-{
-    QFile file(path);
-    if (!file.open(QIODevice::ReadOnly))
-    {
-        kDebug() << "Error loading resource file.";
-        return false;
-    }
-
-    m_success = generateThumbnail(file);
-    return m_success;
-}
-
-bool ResourceLoader::success()
-{
-    return (!m_thumbnail.isNull() && m_success);
+    delete loader;
+    return thumb;
 }

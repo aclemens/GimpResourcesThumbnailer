@@ -36,64 +36,7 @@
 
 QTEST_KDEMAIN(ResourceLoaderTest, GUI)
 
-void ResourceLoaderTest::testSuccess_data()
-{
-    QTest::addColumn<QString>("filename");
-
-    QTest::newRow("GBR") << QString(KDESRCDIR"/gbr/13fcircle.gbr");
-    QTest::newRow("GIH") << QString(KDESRCDIR"/gih/vine.gih");
-    QTest::newRow("PAT") << QString(KDESRCDIR"/pat/lala_rgb.pat");
-}
-
-void ResourceLoaderTest::testSuccess()
-{
-    QFETCH(QString, filename);
-
-    ResourceLoader* loader = ResourceLoader::create(filename);
-    QVERIFY(loader);
-
-    // make sure an invalid pointer will not fail the rest of the tests
-    if (!loader)
-    {
-        return;
-    }
-
-    // make sure the content was loaded successfully
-    QVERIFY(loader->success());
-
-    delete loader;
-}
-
-void ResourceLoaderTest::testThumbnail_data()
-{
-    QTest::addColumn<QString>("filename");
-    QTest::addColumn<int>("result");
-
-    QTest::newRow("GBR") << QString(KDESRCDIR"/gbr/13fcircle.gbr");
-    QTest::newRow("GIH") << QString(KDESRCDIR"/gih/vine.gih");
-    QTest::newRow("PAT") << QString(KDESRCDIR"/pat/lala_rgb.pat");
-}
-
-void ResourceLoaderTest::testThumbnail()
-{
-    QFETCH(QString, filename);
-
-    ResourceLoader* loader = ResourceLoader::create(filename);
-    QVERIFY(loader);
-
-    // make sure an invalid pointer will not fail the rest of the tests
-    if (!loader)
-    {
-        return;
-    }
-
-    // make sure the thumbnail was created successfully
-    QVERIFY(!loader->thumbnail().isNull());
-
-    delete loader;
-}
-
-void ResourceLoaderTest::testInvalidResourcesShouldReturnNullPointer_data()
+void ResourceLoaderTest::testInvalidResourcesShouldReturnEmptyImage_data()
 {
     QTest::addColumn<QString>("filename");
 
@@ -103,12 +46,12 @@ void ResourceLoaderTest::testInvalidResourcesShouldReturnNullPointer_data()
     QTest::newRow("test4") << "     ";
 }
 
-void ResourceLoaderTest::testInvalidResourcesShouldReturnNullPointer()
+void ResourceLoaderTest::testInvalidResourcesShouldReturnEmptyImage()
 {
     QFETCH(QString, filename);
 
-    ResourceLoader* loader = ResourceLoader::create(filename);
-    QVERIFY(!loader);
+    QImage thumb = ResourceLoader::load(filename);
+    QVERIFY(thumb.isNull());
 }
 
 void ResourceLoaderTest::testAllExampleData()
@@ -146,15 +89,7 @@ void ResourceLoaderTest::testAllExampleData()
 
     foreach (const QString& file, allFiles)
     {
-        ResourceLoader* loader = ResourceLoader::create(file);
-        QVERIFY(loader);
-
-        if (loader)
-        {
-            QVERIFY(loader->success());
-            QVERIFY(!loader->thumbnail().isNull());
-        }
-
-        delete loader;
+        QImage thumb = ResourceLoader::load(file);
+        QVERIFY(!thumb.isNull());
     }
 }

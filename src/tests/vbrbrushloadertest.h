@@ -24,6 +24,7 @@
 
 #include <QtCore/QObject>
 #include <QtTest/QtTest>
+#include <QtGui/QImage>
 
 // Local includes
 
@@ -40,7 +41,7 @@ public:
     VbrLoaderStub() {};
     ~VbrLoaderStub() {};
 
-    bool generateThumb(QFile& file) { return generateThumbnail(file); };
+    QImage generateThumb(QFile& file) { return generateThumbnail(file); };
 };
 
 // --------------------------------------------------------

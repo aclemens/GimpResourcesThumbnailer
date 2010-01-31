@@ -29,9 +29,11 @@
 
 #include <kdebug.h>
 
-bool PatternLoader::generateThumbnail(QFile& file)
+QImage PatternLoader::generateThumbnail(QFile& file)
 {
     const int HEADERSIZE = 24;
+
+    QImage thumb;
 
     quint32 header;
     quint32 version;
@@ -73,7 +75,7 @@ bool PatternLoader::generateThumbnail(QFile& file)
     if (!validPatternFile)
     {
         file.close();
-        return false;
+        return thumb;
     }
 
     // read the brush name
@@ -93,14 +95,14 @@ bool PatternLoader::generateThumbnail(QFile& file)
     {
         delete[] brushName_c;
         delete[] data;
-        return false;
+        return thumb;
     }
 
     // generate thumbnail
     QImage::Format imageFormat;
     imageFormat = (colorDepth == 1 || colorDepth == 3) ? QImage::Format_RGB32 : QImage::Format_ARGB32;
 
-    m_thumbnail  = QImage(w, h, imageFormat);
+    thumb  = QImage(w, h, imageFormat);
     quint32 step = 0;
 
     switch (colorDepth)
@@ -112,7 +114,7 @@ bool PatternLoader::generateThumbnail(QFile& file)
                 for (quint32 x = 0; x < w; ++x, ++step)
                 {
                     qint32 val = static_cast<uchar> (data[step]);
-                    m_thumbnail.setPixel(x, y, qRgb(val, val, val));
+                    thumb.setPixel(x, y, qRgb(val, val, val));
                 }
             }
             break;
@@ -125,7 +127,7 @@ bool PatternLoader::generateThumbnail(QFile& file)
                 {
                     qint32 val   = static_cast<uchar> (data[step]);
                     qint32 alpha = static_cast<uchar> (data[step+1]);
-                    m_thumbnail.setPixel(x, y, qRgba(val, val, val, alpha));
+                    thumb.setPixel(x, y, qRgba(val, val, val, alpha));
                 }
             }
             break;
@@ -136,9 +138,9 @@ bool PatternLoader::generateThumbnail(QFile& file)
             {
                 for (quint32 x = 0; x < w; ++x, step += 3)
                 {
-                    m_thumbnail.setPixel(x, y, qRgb(static_cast<uchar>(data[step]),
-                            static_cast<uchar>(data[step+1]),
-                            static_cast<uchar>(data[step+2])));
+                    thumb.setPixel(x, y, qRgb(static_cast<uchar>(data[step]),
+                                              static_cast<uchar>(data[step+1]),
+                                              static_cast<uchar>(data[step+2])));
                 }
             }
             break;
@@ -149,10 +151,10 @@ bool PatternLoader::generateThumbnail(QFile& file)
             {
                 for (quint32 x = 0; x < w; ++x, step += 4)
                 {
-                    m_thumbnail.setPixel(x, y, qRgba(static_cast<uchar>(data[step]),
-                                                     static_cast<uchar>(data[step+1]),
-                                                     static_cast<uchar>(data[step+2]),
-                                                     static_cast<uchar>(data[step+3])));
+                    thumb.setPixel(x, y, qRgba(static_cast<uchar>(data[step]),
+                                               static_cast<uchar>(data[step+1]),
+                                               static_cast<uchar>(data[step+2]),
+                                               static_cast<uchar>(data[step+3])));
                 }
             }
         }
@@ -161,5 +163,5 @@ bool PatternLoader::generateThumbnail(QFile& file)
     delete[] brushName_c;
     delete[] data;
 
-    return true;
+    return thumb;
 }

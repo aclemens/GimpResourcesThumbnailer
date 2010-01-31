@@ -37,31 +37,30 @@
 
 #include <kdebug.h>
 
-bool AbrBrushLoader::generateThumbnail(QFile& file)
+QImage AbrBrushLoader::generateThumbnail(QFile& file)
 {
+    QImage thumb;
     QDataStream in(&file);
+    AbrHeader header;
 
     // read header
-    AbrHeader header;
     if (!readHeader(in, header) || !streamIsOk(in))
-        return false;
-
-    bool success = false;
+        return thumb;
 
     switch (header.version)
     {
         case 1:
         case 2:
-            success = loadv1_2_data(in, header, m_thumbnail);
+            loadv1_2_data(in, header, thumb);
             break;
         case 6:
-            success = loadv6_data(in, header, m_thumbnail);
+            loadv6_data(in, header, thumb);
             break;
         default:
-            success = false;
+            break;
     }
 
-    return success;
+    return thumb;
 }
 
 bool AbrBrushLoader::streamIsOk(QDataStream& stream)

@@ -31,7 +31,7 @@ class GbrBrushLoader : public ResourceLoader
 
 protected:
 
-    virtual bool generateThumbnail(QFile& file);
+    virtual QImage generateThumbnail(QFile& file);
 };
 
 #endif /* GBRBRUSHLOADER_H */

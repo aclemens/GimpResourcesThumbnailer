@@ -54,7 +54,7 @@ class PaletteLoader : public ResourceLoader
 {
 protected:
 
-    virtual bool generateThumbnail(QFile& file);
+    virtual QImage generateThumbnail(QFile& file);
 
     bool        validData(const QStringList& data);
     void        prepareData(QStringList& data);

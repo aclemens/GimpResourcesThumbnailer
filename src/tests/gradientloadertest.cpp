@@ -34,7 +34,7 @@ void GradientLoaderTest::testGenerateThumbnail()
 {
     GradientLoaderStub loader;
     QFile f;
-    QVERIFY(!loader.generateThumb(f));
+    QVERIFY(loader.generateThumb(f).isNull());
 }
 
 void GradientLoaderTest::testGradientInformation()

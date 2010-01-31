@@ -31,7 +31,7 @@ class PatternLoader : public ResourceLoader
 
 protected:
 
-    virtual bool generateThumbnail(QFile& file);
+    virtual QImage generateThumbnail(QFile& file);
 };
 
 #endif /* PATTERNLOADER_H */
