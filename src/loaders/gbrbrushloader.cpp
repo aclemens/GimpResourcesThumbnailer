@@ -139,9 +139,9 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
                 for (quint32 x = 0; x < w; ++x, step += 4)
                 {
                     thumb.setPixel(x, y, qRgba(static_cast<uchar>(data[step]),
-                                                static_cast<uchar>(data[step+1]),
-                                                static_cast<uchar>(data[step+2]),
-                                                static_cast<uchar>(data[step+3])));
+                                               static_cast<uchar>(data[step+1]),
+                                               static_cast<uchar>(data[step+2]),
+                                               static_cast<uchar>(data[step+3])));
                 }
             }
         }
