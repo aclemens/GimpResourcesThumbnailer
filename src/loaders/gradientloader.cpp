@@ -56,37 +56,6 @@ const int GRADIENT_PARAMS_MAX = 15;
 
 QImage GradientLoader::generateThumbnail(QFile& file)
 {
-    /*
-     GRADIENT FILE SPECIFICATION:
-
-     Line 1 (string)   : Resource type (must be "GIMP Gradient")
-     Line 2 (string)   : The name of the gradient ("Name: <THENAME>")
-     Line 3 (int)      : The number of gradients in the following sections, each gradient is represented by a single line
-     Line 4-X          : The line describing one gradient
-
-     GRADIENT DEFINITION (line 4-X):
-
-     Column1   (float) : Start point
-     Column2   (float) : Middle point
-     Column3   (float) : End point
-
-     Column4   (float) : Red value of left color
-     Column5   (float) : Green value of left color
-     Column6   (float) : Blue value of left color
-     Column7   (float) : Alpha value of left color
-
-     Column8   (float) : Red value of right color
-     Column9   (float) : Green value of right color
-     Column10  (float) : Blue value of right color
-     Column11  (float) : Alpha value of right color
-
-     // OPTIONAL (not used at the moment)
-     Column12: (int)   : BlendingFunction (linear, curved, sinusoidal, spherical (counterclockwise), spherical (clockwise)
-     Column13: (int)   : ColorMode (RGB, HSVcounterclockwise, HSVclockwise)
-     Column14: (int)   : Left  ColorType (Fixed, Foreground, ForegroundTransparent, Background, BackgroundTransparent)
-     Column15: (int)   : Right ColorType (Fixed, Foreground, ForegroundTransparent, Background, BackgroundTransparent)
-     */
-
     QTextStream in(&file);
     QStringList data;
     QImage thumb;
@@ -99,14 +68,14 @@ QImage GradientLoader::generateThumbnail(QFile& file)
     // close the file
     file.close();
 
-    if (validData(data))
+    if (isValidResourceFileData(data))
     {
         thumb = drawGradient(data);
     }
     return thumb;
 }
 
-bool GradientLoader::validData(const QStringList& data)
+bool GradientLoader::isValidResourceFileData(const QStringList& data)
 {
     if (data.isEmpty() || data.count() < MIN_DATA)
     {
@@ -210,6 +179,17 @@ QImage GradientLoader::drawGradient(const QStringList& data)
         return QImage();
     }
 
+    GradientList gradientList = extractGradients(data);
+    return drawGradient(gradientList);
+}
+
+QImage GradientLoader::drawGradient(const GradientList& data)
+{
+    if (data.isEmpty())
+    {
+        return QImage();
+    }
+
     QPixmap pix(MAX_THUMB_SIZE, MAX_THUMB_SIZE / 2);
     pix.fill(Qt::white);
 
@@ -220,8 +200,7 @@ QImage GradientLoader::drawGradient(const QStringList& data)
     QLinearGradient grad(0.0, 0.0, 1.0, 0.0);
     grad.setCoordinateMode(QGradient::StretchToDeviceMode);
 
-    GradientList gradientList = extractGradients(data);
-    foreach (const GradientData& gradient, gradientList)
+    foreach (const GradientData& gradient, data)
     {
         if (gradient.status != GradientData::Ok)
         {
