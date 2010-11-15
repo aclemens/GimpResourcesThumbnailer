@@ -45,6 +45,11 @@ bool ThumbnailCreator::create(const QString &path, int width, int height, QImage
     Q_UNUSED(width)
     Q_UNUSED(height)
 
+    if (path.isEmpty())
+    {
+        return false;
+    }
+
     QImage thumb = ResourceLoader::load(path);
     bool success = !thumb.isNull();
 

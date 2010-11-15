@@ -45,7 +45,9 @@ QImage AbrBrushLoader::generateThumbnail(QFile& file)
 
     // read header
     if (!readHeader(in, header) || !streamIsOk(in))
+    {
         return thumb;
+    }
 
     switch (header.version)
     {
@@ -108,7 +110,9 @@ bool AbrBrushLoader::validHeader(AbrHeader& header)
             break;
         case 6:
             if (header.subversion == 1 || header.subversion == 2)
+            {
                 valid = true;
+            }
             break;
         default:
             valid = false;
@@ -134,7 +138,9 @@ bool AbrBrushLoader::seachFor8BIM(QDataStream& stream)
     qint32 sectionSize;
 
     if (!streamIsOk(stream))
+    {
         return false;
+    }
 
     while (!stream.device()->atEnd())
     {
@@ -146,17 +152,23 @@ bool AbrBrushLoader::seachFor8BIM(QDataStream& stream)
         }
 
         if (tag == TAG)
+        {
             return true;
+        }
 
         if (!streamIsOk(stream))
+        {
             return false;
+        }
 
         stream >> sectionSize;
         qint64 pos = stream.device()->pos() + sectionSize;
         stream.device()->seek(pos);
 
         if (!streamIsOk(stream))
+        {
             return false;
+        }
     }
     return false;
 }
@@ -164,7 +176,9 @@ bool AbrBrushLoader::seachFor8BIM(QDataStream& stream)
 qint16 AbrBrushLoader::getSamplesCount(QDataStream& stream)
 {
     if (!streamIsOk(stream))
+    {
         return 0;
+    }
 
     qint64 oldPos;
     qint32 sectionSize;
@@ -193,7 +207,9 @@ qint16 AbrBrushLoader::getSamplesCount(QDataStream& stream)
         brushEnd = brushSize;
         /* complement to 4 */
         while (brushEnd % 4 != 0)
+        {
             ++brushEnd;
+        }
 
         qint64 newPos = brushEnd + stream.device()->pos();
         stream.device()->seek(newPos);
@@ -237,7 +253,9 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
     brush_end = brush_size;
     /* complement to 4 */
     while (brush_end % 4 != 0)
+    {
         ++brush_end;
+    }
     complement_to_4 = brush_end - brush_size;
     next_brush = stream.device()->pos() + brush_end;
 
@@ -255,7 +273,9 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
     }
 
     if (!streamIsOk(stream))
+    {
         return false;
+    }
 
     stream >> top
            >> left
@@ -307,7 +327,9 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
     delete[] buffer;
 
     if (!streamIsOk(stream) || img.isNull())
+    {
         return false;
+    }
 
     return true;
 }
@@ -337,16 +359,22 @@ int AbrBrushLoader::rle_decode(QDataStream& stream, char* buffer, qint32 height)
             n = n_tmp;
             ++j;
             if (n >= 128) /* force sign */
+            {
                 n -= 256;
+            }
             if (n < 0)
             { /* copy the following char -n + 1 times */
                 if (n == -128) /* it's a nop */
+                {
                     continue;
+                }
                 n = -n + 1;
                 stream >> ch;
                 ++j;
                 for (c = 0; c < n; ++c, ++buffer)
+                {
                     *buffer = ch;
+                }
             }
             else
             { /* read the following n + 1 chars (no compr) */
@@ -362,7 +390,9 @@ int AbrBrushLoader::rle_decode(QDataStream& stream, char* buffer, qint32 height)
     delete [] cscanline_len;
 
     if (!streamIsOk(stream))
+    {
         return -1;
+    }
 
     return 0;
 }

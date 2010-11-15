@@ -104,9 +104,9 @@ bool PaletteLoader::validData(const QStringList& data)
         return false;
     }
 
-    bool validData        = true;
-    int dataSize          = data.count();
-    QString magic         = data[0];
+    bool validData = true;
+    int dataSize   = data.count();
+    QString magic  = data[0];
 
     // check basic parameters
     if (magic != QString("GIMP Palette") || dataSize < 1)
