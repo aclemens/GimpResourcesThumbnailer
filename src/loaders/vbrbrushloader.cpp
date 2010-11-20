@@ -95,8 +95,8 @@ QImage VbrBrushLoader::generateThumbnail(QFile& file)
 
     // check basic parameters
     if (
-            (magic != QString("GIMP-VBR"))  ||
-            (version != QString("1.0") && version != QString("1.5"))
+        (magic != QString("GIMP-VBR"))  ||
+        (version != QString("1.0") && version != QString("1.5"))
     )
     {
         kDebug() << "Invalid Gimp Brush (VBR) data!";
@@ -116,29 +116,38 @@ QImage VbrBrushLoader::generateThumbnail(QFile& file)
     QString spikes      = shaped ? data[6] : empty;
     QString style       = shaped ? data[3] : empty;
 
-//    kDebug() << "brushName: "   << brushName;
-//    kDebug() << "spacing: "     << spacing;
-//    kDebug() << "radius: "      << radius;
-//    kDebug() << "hardness: "    << hardness;
-//    kDebug() << "aspectRatio: " << aspectRatio;
-//    kDebug() << "angle: "       << angle;
-//    kDebug() << "spikes: "      << spikes;
-//    kDebug() << "style: "       << style;
+    //    kDebug() << "brushName: "   << brushName;
+    //    kDebug() << "spacing: "     << spacing;
+    //    kDebug() << "radius: "      << radius;
+    //    kDebug() << "hardness: "    << hardness;
+    //    kDebug() << "aspectRatio: " << aspectRatio;
+    //    kDebug() << "angle: "       << angle;
+    //    kDebug() << "spikes: "      << spikes;
+    //    kDebug() << "style: "       << style;
 
     // --------------------------------------------------------
 
     bool ok;
     bool allOk = true;
-    qreal r_radius      = radius.toDouble(&ok);      allOk = allOk && ok;
-    qreal r_hardness    = hardness.toDouble(&ok);    allOk = allOk && ok;
-    qreal r_aspectRatio = aspectRatio.toDouble(&ok); allOk = allOk && ok;
-    qreal r_angle       = angle.toDouble(&ok);       allOk = allOk && ok;
-    int r_spikes        = 0;
+
+    qreal r_radius = radius.toDouble(&ok);
+    allOk = allOk && ok;
+
+    qreal r_hardness = hardness.toDouble(&ok);
+    allOk = allOk && ok;
+
+    qreal r_aspectRatio = aspectRatio.toDouble(&ok);
+    allOk = allOk && ok;
+
+    qreal r_angle = angle.toDouble(&ok);
+    allOk = allOk && ok;
+
+    int r_spikes = 0;
 
     if (!spikes.isEmpty())
     {
         r_spikes = spikes.toInt(&ok);
-        allOk    = allOk && ok;
+        allOk = allOk && ok;
     }
 
     if (!allOk)
@@ -185,6 +194,7 @@ QImage VbrBrushLoader::generateShapedBrush(QString shape, qreal radius, qreal ha
     QRectF brushRect(0, 0, brushRadius, brushRadius / aspect);
 
     QString _shape = shape.toLower();
+
     if (_shape == "square")
     {
         // hardness of the brush

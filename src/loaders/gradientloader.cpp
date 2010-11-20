@@ -72,6 +72,7 @@ QImage GradientLoader::generateThumbnail(QFile& file)
     {
         thumb = drawGradient(data);
     }
+
     return thumb;
 }
 
@@ -96,11 +97,13 @@ bool GradientLoader::isValidResourceFileData(const QStringList& data)
 
     // check if gradient data is valid
     validData = validData && (numberOfGradients == (dataSize - HEADER_SIZE));
+
     if (validData)
     {
         for (int i = HEADER_SIZE; i < dataSize; ++i)
         {
             validData = validData && checkGradientInformation(data[i]);
+
             if (!validData)
             {
                 kDebug() << "Invalid gradient lines";
@@ -113,17 +116,18 @@ bool GradientLoader::isValidResourceFileData(const QStringList& data)
     {
         kDebug() << "Invalid Gimp Gradient (GGR) data!";
     }
+
     return validData;
 }
 
 GradientData GradientLoader::getGradientInformation(const QString& gradient)
 {
+    GradientData data;
     QRegExp sep("\\s+");
     QStringList values = gradient.split(sep);
     bool ok            = true;
     bool allOk         = true;
 
-    GradientData data;
     if (values.count() < GRADIENT_PARAMS_MIN || values.count() > GRADIENT_PARAMS_MAX)
     {
         data.status = GradientData::Invalid;
@@ -132,25 +136,45 @@ GradientData GradientLoader::getGradientInformation(const QString& gradient)
 
     // --------------------------------------------------------
 
-    data.startPoint      = values[0].toFloat(&ok);  allOk = allOk && ok;
-    data.middlePoint     = values[1].toFloat(&ok);  allOk = allOk && ok;
-    data.endPoint        = values[2].toFloat(&ok);  allOk = allOk && ok;
+    data.startPoint = values[0].toFloat(&ok);
+    allOk = allOk && ok;
 
-    data.leftColorRed    = values[3].toFloat(&ok);  allOk = allOk && ok;
-    data.leftColorGreen  = values[4].toFloat(&ok);  allOk = allOk && ok;
-    data.leftColorBlue   = values[5].toFloat(&ok);  allOk = allOk && ok;
-    data.leftColorAlpha  = values[6].toFloat(&ok);  allOk = allOk && ok;
+    data.middlePoint = values[1].toFloat(&ok);
+    allOk = allOk && ok;
 
-    data.rightColorRed   = values[7].toFloat(&ok);  allOk = allOk && ok;
-    data.rightColorGreen = values[8].toFloat(&ok);  allOk = allOk && ok;
-    data.rightColorBlue  = values[9].toFloat(&ok);  allOk = allOk && ok;
-    data.rightColorAlpha = values[10].toFloat(&ok); allOk = allOk && ok;
+    data.endPoint = values[2].toFloat(&ok);
+    allOk = allOk && ok;
+
+    data.leftColorRed = values[3].toFloat(&ok);
+    allOk = allOk && ok;
+
+    data.leftColorGreen = values[4].toFloat(&ok);
+    allOk = allOk && ok;
+
+    data.leftColorBlue = values[5].toFloat(&ok);
+    allOk = allOk && ok;
+
+    data.leftColorAlpha = values[6].toFloat(&ok);
+    allOk = allOk && ok;
+
+    data.rightColorRed = values[7].toFloat(&ok);
+    allOk = allOk && ok;
+
+    data.rightColorGreen = values[8].toFloat(&ok);
+    allOk = allOk && ok;
+
+    data.rightColorBlue = values[9].toFloat(&ok);
+    allOk = allOk && ok;
+
+    data.rightColorAlpha = values[10].toFloat(&ok);
+    allOk = allOk && ok;
 
     if (values.count() >= (GRADIENT_PARAMS_MIN + 2))
     {
         int _tmp = values[12].toInt(&ok);
         ok = ok && (_tmp >= 0 && _tmp < GradientData::LAST_COLORMODE);
         allOk = allOk && ok;
+
         if (ok)
         {
             data.coloringMode = (GradientData::ColorMode)_tmp;
@@ -219,7 +243,7 @@ QImage GradientLoader::drawGradient(const GradientList& data)
         // check coloring mode
         if (gradient.coloringMode == GradientData::HSVclockwise ||
             gradient.coloringMode == GradientData::HSVcounterClockwise
-        )
+           )
         {
             const int hue_range = 360;
 

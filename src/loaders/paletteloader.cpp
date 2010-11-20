@@ -76,6 +76,7 @@ QImage PaletteLoader::generateThumbnail(QFile& file)
         prepareData(data);
         thumb = drawPalette(data);
     }
+
     return thumb;
 }
 
@@ -87,6 +88,7 @@ void PaletteLoader::prepareData(QStringList& data)
     foreach (const QString& line, data)
     {
         QString dataLine = line.trimmed();
+
         if (dataReg.exactMatch(dataLine))
         {
             list.append(dataLine);
@@ -119,25 +121,31 @@ bool PaletteLoader::validData(const QStringList& data)
     {
         kDebug() << "Invalid Gimp Palette (GPL) data!";
     }
+
     return validData;
 }
 
 PaletteData PaletteLoader::getPaletteInformation(const QString& palette)
 {
+    PaletteData data;
     QRegExp reg("(\\d{1,3})\\s+(\\d{1,3})\\s+(\\d{1,3})(\\s+.*)?");
     bool ok    = true;
     bool allOk = true;
 
-    PaletteData data;
     if (!reg.exactMatch(palette.trimmed()))
     {
         data.status = PaletteData::Invalid;
         return data;
     }
 
-    data.red   = reg.cap(1).toInt(&ok);  allOk = allOk && ok;
-    data.green = reg.cap(2).toInt(&ok);  allOk = allOk && ok;
-    data.blue  = reg.cap(3).toInt(&ok);  allOk = allOk && ok;
+    data.red = reg.cap(1).toInt(&ok);
+    allOk = allOk && ok;
+
+    data.green = reg.cap(2).toInt(&ok);
+    allOk = allOk && ok;
+
+    data.blue = reg.cap(3).toInt(&ok);
+    allOk = allOk && ok;
 
     // check if data was converted correctly, set status accordingly
     data.status = allOk ? PaletteData::Ok : PaletteData::Invalid;
@@ -195,6 +203,7 @@ QImage PaletteLoader::drawPalette(const QStringList& data)
         p.drawRect(r);
 
         column += TILE_SIZE;
+
         if (column >= w)
         {
             row += TILE_SIZE;

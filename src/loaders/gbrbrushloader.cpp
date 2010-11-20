@@ -54,6 +54,7 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
 
     // check if the brush has the right version and magic number
     bool validBrushFile = true;
+
     switch (version)
     {
         case 1:
@@ -61,14 +62,17 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
             // no magic number and spacing information
             break;
         }
-        case 2: case 3:
+        case 2:
+        case 3:
         {
             in >> magic >> spacing;
+
             if ((magic != 0x47494D50))
             {
                 kDebug() << "No valid Gimp Brush file!";
                 validBrushFile = false;
             }
+
             break;
         }
         default:
@@ -130,6 +134,7 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
                     thumb.setPixel(x, y, qRgb(val, val, val));
                 }
             }
+
             break;
         }
         case 4: // RGBA

@@ -41,8 +41,14 @@ public:
     GradientLoaderStub() {};
     ~GradientLoaderStub() {};
 
-    QImage generateThumb(QFile& file) { return generateThumbnail(file); };
-    bool checkGradientInfo(const QString& gradient) { return checkGradientInformation(gradient); };
+    QImage generateThumb(QFile& file)
+    {
+        return generateThumbnail(file);
+    };
+    bool checkGradientInfo(const QString& gradient)
+    {
+        return checkGradientInformation(gradient);
+    };
 };
 
 // --------------------------------------------------------

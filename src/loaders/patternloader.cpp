@@ -117,6 +117,7 @@ QImage PatternLoader::generateThumbnail(QFile& file)
                     thumb.setPixel(x, y, qRgb(val, val, val));
                 }
             }
+
             break;
         }
         case 2: // Grayscale with alpha
@@ -130,6 +131,7 @@ QImage PatternLoader::generateThumbnail(QFile& file)
                     thumb.setPixel(x, y, qRgba(val, val, val, alpha));
                 }
             }
+
             break;
         }
         case 3: // RGB
@@ -143,6 +145,7 @@ QImage PatternLoader::generateThumbnail(QFile& file)
                                               static_cast<uchar>(data[step+2])));
                 }
             }
+
             break;
         }
         case 4: // RGBA

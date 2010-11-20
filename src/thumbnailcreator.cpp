@@ -30,7 +30,7 @@
 
 extern "C"
 {
-    KDE_EXPORT ThumbCreator *new_creator()
+    KDE_EXPORT ThumbCreator* new_creator()
     {
         return new ThumbnailCreator;
     }
@@ -40,7 +40,7 @@ ThumbnailCreator::ThumbnailCreator()
 {
 }
 
-bool ThumbnailCreator::create(const QString &path, int width, int height, QImage &img)
+bool ThumbnailCreator::create(const QString& path, int width, int height, QImage& img)
 {
     Q_UNUSED(width)
     Q_UNUSED(height)

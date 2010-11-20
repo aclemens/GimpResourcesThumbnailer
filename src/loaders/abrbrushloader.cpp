@@ -72,12 +72,14 @@ bool AbrBrushLoader::streamIsOk(QDataStream& stream)
         kDebug() << "Error reading ABR brush data stream.";
         return false;
     }
+
     return true;
 }
 
 bool AbrBrushLoader::readHeader(QDataStream& stream, AbrHeader& header)
 {
     stream >> header.version;
+
     switch (header.version)
     {
         case 1:
@@ -109,10 +111,12 @@ bool AbrBrushLoader::validHeader(AbrHeader& header)
             valid = true;
             break;
         case 6:
+
             if (header.subversion == 1 || header.subversion == 2)
             {
                 valid = true;
             }
+
             break;
         default:
             valid = false;
@@ -145,6 +149,7 @@ bool AbrBrushLoader::seachFor8BIM(QDataStream& stream)
     while (!stream.device()->atEnd())
     {
         stream >> magic >> tag;
+
         if (magic != MAGIC)
         {
             kDebug() << "invalid magic number: " << QByteArray::fromHex(QString::number(magic, 16).toAscii());;
@@ -170,6 +175,7 @@ bool AbrBrushLoader::seachFor8BIM(QDataStream& stream)
             return false;
         }
     }
+
     return false;
 }
 
@@ -205,6 +211,7 @@ qint16 AbrBrushLoader::getSamplesCount(QDataStream& stream)
     {
         stream >> brushSize;
         brushEnd = brushSize;
+
         /* complement to 4 */
         while (brushEnd % 4 != 0)
         {
@@ -251,16 +258,19 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
 
     stream >> brush_size;
     brush_end = brush_size;
+
     /* complement to 4 */
     while (brush_end % 4 != 0)
     {
         ++brush_end;
     }
+
     complement_to_4 = brush_end - brush_size;
     next_brush = stream.device()->pos() + brush_end;
 
     // discard key
     stream.device()->seek(stream.device()->pos() + 37);
+
     if (header.subversion == 1)
     {
         /* discard short coordinates and unknown short */
@@ -345,6 +355,7 @@ int AbrBrushLoader::rle_decode(QDataStream& stream, char* buffer, qint32 height)
 
     // read compressed sizes for the scanlines
     cscanline_len = new qint16[height];
+
     for (i = 0; i < height; ++i)
     {
         stream >> cscanline_len[i];
@@ -358,26 +369,32 @@ int AbrBrushLoader::rle_decode(QDataStream& stream, char* buffer, qint32 height)
             stream >> n_tmp;
             n = n_tmp;
             ++j;
+
             if (n >= 128) /* force sign */
             {
                 n -= 256;
             }
+
             if (n < 0)
-            { /* copy the following char -n + 1 times */
+            {
+                /* copy the following char -n + 1 times */
                 if (n == -128) /* it's a nop */
                 {
                     continue;
                 }
+
                 n = -n + 1;
                 stream >> ch;
                 ++j;
+
                 for (c = 0; c < n; ++c, ++buffer)
                 {
                     *buffer = ch;
                 }
             }
             else
-            { /* read the following n + 1 chars (no compr) */
+            {
+                /* read the following n + 1 chars (no compr) */
                 for (c = 0; c < n + 1; ++c, ++j, ++buffer)
                 {
                     stream >> ch_tmp;

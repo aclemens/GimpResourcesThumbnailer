@@ -41,8 +41,14 @@ public:
     PaletteLoaderStub() {};
     ~PaletteLoaderStub() {};
 
-    QImage generateThumb(QFile& file) { return generateThumbnail(file); };
-    bool checkPaletteInfo(const QString& palette) { return checkPaletteInformation(palette); };
+    QImage generateThumb(QFile& file)
+    {
+        return generateThumbnail(file);
+    };
+    bool checkPaletteInfo(const QString& palette)
+    {
+        return checkPaletteInformation(palette);
+    };
 };
 
 // --------------------------------------------------------

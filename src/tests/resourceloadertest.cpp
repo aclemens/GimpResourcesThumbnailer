@@ -69,6 +69,7 @@ void ResourceLoaderTest::testAllExampleData()
 
     QDirIterator it(QString(KDESRCDIR), QDir::NoDotAndDotDot | QDir::AllDirs,
                     QDirIterator::Subdirectories | QDirIterator::FollowSymlinks );
+
     while (it.hasNext())
     {
         QDir exampleDir(it.next());

@@ -53,6 +53,7 @@ QImage ResourceLoader::load(const QString& path)
     QImage thumb;
 
     QFile file(path);
+
     if (!file.open(QIODevice::ReadOnly))
     {
         kDebug() << "Error loading resource file.";
@@ -62,13 +63,34 @@ QImage ResourceLoader::load(const QString& path)
     QFileInfo fi(file);
     QString suffix = fi.suffix().toUpper();
 
-    if      (suffix == QString("GBR")) { loader = new GbrBrushLoader(); }
-    else if (suffix == QString("GIH")) { loader = new GihBrushLoader(); }
-    else if (suffix == QString("VBR")) { loader = new VbrBrushLoader(); }
-    else if (suffix == QString("PAT")) { loader = new PatternLoader();  }
-    else if (suffix == QString("ABR")) { loader = new AbrBrushLoader(); }
-    else if (suffix == QString("GGR")) { loader = new GradientLoader(); }
-    else if (suffix == QString("GPL")) { loader = new PaletteLoader();  }
+    if      (suffix == QString("GBR"))
+    {
+        loader = new GbrBrushLoader();
+    }
+    else if (suffix == QString("GIH"))
+    {
+        loader = new GihBrushLoader();
+    }
+    else if (suffix == QString("VBR"))
+    {
+        loader = new VbrBrushLoader();
+    }
+    else if (suffix == QString("PAT"))
+    {
+        loader = new PatternLoader();
+    }
+    else if (suffix == QString("ABR"))
+    {
+        loader = new AbrBrushLoader();
+    }
+    else if (suffix == QString("GGR"))
+    {
+        loader = new GradientLoader();
+    }
+    else if (suffix == QString("GPL"))
+    {
+        loader = new PaletteLoader();
+    }
 
     if (loader)
     {

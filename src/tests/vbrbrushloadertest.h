@@ -41,7 +41,10 @@ public:
     VbrLoaderStub() {};
     ~VbrLoaderStub() {};
 
-    QImage generateThumb(QFile& file) { return generateThumbnail(file); };
+    QImage generateThumb(QFile& file)
+    {
+        return generateThumbnail(file);
+    };
 };
 
 // --------------------------------------------------------
