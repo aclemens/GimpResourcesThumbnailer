@@ -1,0 +1,321 @@
+This file's purpose is to guide contributors and developers to help on the
+gimpresourcesthumbnailer project.
+
+========================================================================
+10 golden rules for starting with open source
+========================================================================
+
+Before to contribute to gimpresourcesthumbnailer project, please take a look to this link:
+
+http://schlitt.info/applications/blog/index.php?/archives/541-10-golden-rules-for-starting-with-open-source.html
+
+========================================================================
+Source code formatting:
+========================================================================
+
+Adhere to this style guide strictly while adding new code to gimpresourcesthumbnailer or
+working on existing code.
+
+-------------------------------------------------------------------------
+* Indentation length
+-------------------------------------------------------------------------
+
+Indent with 4 spaces exactly.
+
+for eg:
+
+void function()
+{
+....int a;                    // 4 spaces from beginning
+....for (int i=0; i<10; i++)  // 4 spaces from beginning
+....{                         // 4 spaces from beginning
+........a = i;                // 4 spaces from previous indent block
+
+Emacs by default will indent to 4 spaces
+vim users add this to you .vimrc
+ set tabstop=4
+
+-------------------------------------------------------------------------
+* Tabs vs Spaces
+-------------------------------------------------------------------------
+
+Absolutely no tabs. Use a sensible editor which will convert tabs to spaces.
+This will reduce unnecessary changes in your cvs commits.
+
+Emacs by default will convert tab to spaces.
+For vim users, add this to your .vimrc
+  set expandtab
+
+-------------------------------------------------------------------------
+* Line length
+-------------------------------------------------------------------------
+
+Line length should never exceed 80 chars (unless really necessary - these
+cases are rare). Having long lines greatly reduces readability of code
+
+-------------------------------------------------------------------------
+* Bracketing
+-------------------------------------------------------------------------
+
+In all cases, {} brackets should start on a newline and should be
+aligned with previous line (follow the indentation spaces). for eg.
+
+class A
+{ //new line
+...
+
+for (int i=0; i<10; i++)
+{ //new line
+
+if (a == foobar)
+{ //new line
+...
+}
+else
+{ // new line
+..
+}
+
+-------------------------------------------------------------------------
+* Positioning of Access modifiers
+-------------------------------------------------------------------------
+
+public, private, protected, public slots, ... should be aligned to the
+beginning of the line with no margin
+
+class A
+{
+public: // aligned to left
+...
+private Q_SLOTS: // aligned to left
+
+
+Follow a consistent order in defining these attributes. The recommended
+order is public, protected (functions), private (functions),
+signals, public slots, protected slots, private slots, private (variables)
+
+========================================================================
+Class, file and Variable names:
+========================================================================
+
+-------------------------------------------------------------------------
+* Class and filenames
+-------------------------------------------------------------------------
+
+- filenames should always be in lower-case
+- class names should match the filenames. Capitalize the first letter and
+  other letters logically to improve readability
+
+-------------------------------------------------------------------------
+* Protected Member variables
+-------------------------------------------------------------------------
+
+- protected member variable names should always be of the form m_varName.
+- Capitalize logically so that it becomes easy to read it. Do not capitalize
+  the first letter after _ (Use m_varName not m_VarName)
+- variable names should be indicative of their functionality and also of
+  the type they belong too if they are instances of qt widgets.
+  for eg, QCheckBox* m_autoRotateCheckBox;
+
+-------------------------------------------------------------------------
+* Non-Member variables
+-------------------------------------------------------------------------
+
+- non-member variables should follow the same naming convention as the member
+  variables, except for the leading m_
+
+-------------------------------------------------------------------------
+* Private Member variables
+-------------------------------------------------------------------------
+
+- private member variables must be stored in a d private container to reduce
+  compilation time and improve binary compatibility between gimpresourcesthumbnailer components.
+  See more information how to use a 'd' private class at this url:
+
+  http://developer.kde.org/policies/librarypolicy.html
+
+========================================================================
+Comments and Whitespace
+========================================================================
+
+Use whitespaces liberally to improve readability. Add blank lines between logical
+sections of the code.
+
+Comment as much as possible. Position comments at the beginning of the
+section/line you want to comment, NEVER at the end of the line
+
+// put your comments here
+a = (b == foobar) ? 1 : -1;
+
+a = (b == foobar) ? 1 : -1; // you are asking for trouble by putting comments here
+
+
+========================================================================
+Header files
+========================================================================
+
+- Add copyright to top of every file. Use the same header than others gimpresourcesthumbnailer
+  source code.
+- Double inclusion protection defines are all upper case letters and are
+  composed of the classname and a H suffix separated by underscore
+
+#ifndef ANOTHERNICECLASS_H
+#define ANOTHERNICECLASS_H
+
+class AnotherNiceClass
+{
+...
+}
+
+#endif
+
+- Use forward declarations as much as possible.
+
+class QFileInfo;
+
+class A
+{
+....QFileInfo* m_fileInfo;
+
+
+========================================================================
+Automatic source code formatting
+========================================================================
+
+The above coding style guidelines can be automatically applied with
+astyle (http://astyle.sourceforge.net/).
+
+Run it in the directory where the files are located that should be formatted
+with the following command:
+
+astyle --brackets=break --indent=spaces=4 --convert-tabs --indent-switches \
+       --break-blocks --break-closing-brackets --pad-header                \
+       --align-pointer=type --indent-col1-comments --add-brackets          \
+       --min-conditional-indent=0                                          \
+       `find -type f -name '*.cpp'` `find -type f -name '*.cc'` `find -type f -name '*.h'`
+
+========================================================================
+
+To handle the command easier, create a bash function in ~/.bashrc, e.g.
+
+formatcode()
+{
+    astyle --brackets=break --indent=spaces=4 --convert-tabs --indent-switches  \
+        --break-blocks --break-closing-brackets --pad-header \
+        --align-pointer=type --indent-col1-comments --add-brackets \
+        --min-conditional-indent=0 \
+        `find $1 -type f -name '*.cpp'` `find $1 -type f -name '*.cc'` `find $1 -type f -name '*.h'`
+}
+
+You can pass a parameter to the function, in this case the first parameter is the directory, where
+files should be formatted.
+
+Examples:
+
+1. Run astyle in the current directory
+$> formatcode
+
+2. Run astyle in a different directory
+$> formatcode /home/user/code/svn/src/
+
+
+========================================================================
+General recommendations
+========================================================================
+
+Please take a look into KDE contrib page tips before to write code/patches for
+gimpresourcesthumbnailer project : http://techbase.kde.org/Contribute
+
+Use the same .cpp/.h header than the rest of gimpresourcesthumbnailer project.
+
+Use a decent editor which does auto-indentation/syntax-highlighting for you.
+I personally use Kate (Gilles).
+There are excellent initializer scripts in the kdesdk
+package for xemacs and vim which can substantially increase your productivity.
+
+Just to give a taste of what i can do with emacs (and kdesdk):
+
+* automatically insert copyright (and ifdefs) in new files.
+* insertion of class function definitions for declared class
+  functions in header with one keystroke
+* switch between header and declaration files with one keystroke
+* go to corresponding definition/declaration with one keystroke
+* tab completion of variable/function names already declared.
+
+
+========================================================================
+Unit Testing / Automated Testing
+========================================================================
+
+Unit Testing is great way to ensure that software units (in OOP this normally
+means classes) work as expected. Wikipedia gives a good introduction to
+Unit Testing:
+http://en.wikipedia.org/wiki/Unit_testing
+It is also worth to follow most of these rules while writing unit tests:
+http://geosoft.no/development/unittesting.html
+
+The gimpresourcesthumbnailer test suite is located under tests and will be compiled if
+KDE4_BUILD_TESTS is set to ON in the CMake call. After compiling the source code
+the tests can be executed via
+
+make test
+
+The console output while running the tests is stored in
+Testing/Temporary/LastTest.log
+in the CMake binary dir.
+
+All tests are simple binaries that can be executed separately if needed.
+
+To see kdebug messages during testing you need to setup kdebug once again for a
+special testing environment used while running the unit tests. This can be done
+via
+
+KDEHOME=$HOME/.kde-unit-test kdebugdialog
+
+
+=========================================================================
+Finding duplicated code
+=========================================================================
+
+Code duplication should be avoided as bugs have to be fixed for every piece of
+duplicated code. The current duplication can be analyzed eg. with Simian:
+http://www.redhillconsulting.com.au/products/simian/
+
+In the gimpresourcesthumbnailer checkout directory run:
+java -jar simian.jar `find . -regex '.*\.cpp\|.*\.h' | grep -v 3rdparty`
+
+This prints out a list of duplicated code segments.
+
+=================================================================================
+API Documentation Validation, User Documentation Validation, Source Code Checking
+=================================================================================
+
+The following site check on a daily basis for the a.m. errors:
+www.englishbreakfastnetwork.org/krazy/
+
+It can be very useful, in particular before major releases.
+Don't trust it blindly! Sometimes they propose too advanced modifications that
+are no compatible with the prevailant include files.
+
+========================================================================
+Usability issues
+========================================================================
+
+OpenUsability project has define default menu structure and keyboard shortcuts:
+
+http://wiki.openusability.org/guidelines/index.php/Appendices:Keyboard_Shortcuts
+
+========================================================================
+Generate API documentation
+========================================================================
+
+To generate API documentation, you need to install:
+
+- Doxygen program (http://www.doxygen.org)
+- Dot program (http://www.graphviz.org)
+
+After cmake generated a Makefile you can call 'make doc'. A new subfolder named
+'doc' will be create in the program's binary dir.
+
+For finding documentation errors, doxygen generates a warning log file at the
+cmake binary dir called 'doxygen-warn.log'.
