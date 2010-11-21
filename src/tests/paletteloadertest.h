@@ -39,7 +39,7 @@ class PaletteLoaderStub : public QObject, public PaletteLoader
 public:
 
     PaletteLoaderStub() {};
-    ~PaletteLoaderStub() {};
+    virtual ~PaletteLoaderStub() {};
 
     QImage generateThumb(QFile& file)
     {

@@ -39,7 +39,7 @@ class VbrLoaderStub : public QObject, public VbrBrushLoader
 public:
 
     VbrLoaderStub() {};
-    ~VbrLoaderStub() {};
+    virtual ~VbrLoaderStub() {};
 
     QImage generateThumb(QFile& file)
     {

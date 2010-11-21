@@ -39,7 +39,7 @@ class GradientLoaderStub : public QObject, public GradientLoader
 public:
 
     GradientLoaderStub() {};
-    ~GradientLoaderStub() {};
+    virtual ~GradientLoaderStub() {};
 
     QImage generateThumb(QFile& file)
     {
