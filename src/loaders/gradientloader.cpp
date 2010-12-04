@@ -32,27 +32,30 @@
 
 #include <kdebug.h>
 
+// const variables
+namespace
+{
 /**
  * the maximum thumbnail size
  */
-const int MAX_THUMB_SIZE = 256;
+static const int MAX_THUMB_SIZE = 256;
 
 /**
  * The size of the header
  */
-const int HEADER_SIZE = 3;
+static const int HEADER_SIZE = 3;
 
 /**
  * The minimum data in a gradient file
  */
-const int MIN_DATA = 4;
+static const int MIN_DATA = 4;
 
 /**
  * The number of parameters to describe a gradient
  */
-const int GRADIENT_PARAMS_MIN = 11;
-const int GRADIENT_PARAMS_MAX = 15;
-
+static const int GRADIENT_PARAMS_MIN = 11;
+static const int GRADIENT_PARAMS_MAX = 15;
+}
 
 QImage GradientLoader::generateThumbnail(QFile& file)
 {
@@ -125,8 +128,6 @@ GradientData GradientLoader::getGradientInformation(const QString& gradient)
     GradientData data;
     QRegExp sep("\\s+");
     QStringList values = gradient.split(sep);
-    bool ok            = true;
-    bool allOk         = true;
 
     if (values.count() < GRADIENT_PARAMS_MIN || values.count() > GRADIENT_PARAMS_MAX)
     {
@@ -135,6 +136,9 @@ GradientData GradientLoader::getGradientInformation(const QString& gradient)
     }
 
     // --------------------------------------------------------
+
+    bool ok    = true;
+    bool allOk = true;
 
     data.startPoint = values[0].toFloat(&ok);
     allOk = allOk && ok;
@@ -255,14 +259,17 @@ QImage GradientLoader::drawGradient(const GradientList& data)
                                           gradient.leftColorGreen,
                                           gradient.leftColorBlue,
                                           gradient.leftColorAlpha);
-            QColor hsv = col.toHsv();
+            QColor hsv        = col.toHsv();
+            qreal saturationF = hsv.saturationF();
+            qreal valueF      = hsv.valueF();
+            qreal alphaF      = hsv.alphaF();
 
             for (int h = 0.0; h < hue_range; ++h)
             {
                 grad.setColorAt(pos, QColor::fromHsvF((qreal)h / hue_range,
-                                                      hsv.saturationF(),
-                                                      hsv.valueF(),
-                                                      hsv.alphaF()));
+                                                      saturationF,
+                                                      valueF,
+                                                      alphaF));
 
                 if (reverse)
                 {

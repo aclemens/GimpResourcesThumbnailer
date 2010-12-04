@@ -29,19 +29,21 @@
 
 #include <kdebug.h>
 
+namespace
+{
+static const int HEADERSIZE = 24;
+}
+
 QImage PatternLoader::generateThumbnail(QFile& file)
 {
-    const int HEADERSIZE = 24;
-
     QImage thumb;
 
-    quint32 header;
-    quint32 version;
-    quint32 w;
-    quint32 h;
-    quint32 colorDepth;
-    quint32 magic;
-    QString brushName;
+    quint32 header     = 0;
+    quint32 version    = 0;
+    quint32 w          = 0;
+    quint32 h          = 0;
+    quint32 colorDepth = 0;
+    quint32 magic      = 0;
 
     QDataStream in(&file);
     in >> header
@@ -79,6 +81,7 @@ QImage PatternLoader::generateThumbnail(QFile& file)
     }
 
     // read the brush name
+    QString brushName;
     unsigned int nameLength = header - HEADERSIZE;
     char* brushName_c       = new char[nameLength];
     in.readRawData(brushName_c, nameLength);

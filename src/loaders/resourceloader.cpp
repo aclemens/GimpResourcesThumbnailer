@@ -49,7 +49,6 @@ ResourceLoader::~ResourceLoader()
 
 QImage ResourceLoader::load(const QString& path)
 {
-    ResourceLoader* loader = 0;
     QImage thumb;
 
     QFile file(path);
@@ -63,7 +62,9 @@ QImage ResourceLoader::load(const QString& path)
     QFileInfo fi(file);
     QString suffix = fi.suffix().toUpper();
 
-    if      (suffix == QString("GBR"))
+    ResourceLoader* loader = 0;
+
+    if (suffix == QString("GBR"))
     {
         loader = new GbrBrushLoader();
     }

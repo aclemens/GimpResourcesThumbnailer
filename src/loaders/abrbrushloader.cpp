@@ -37,6 +37,12 @@
 
 #include <kdebug.h>
 
+namespace
+{
+static const qint32 _8BIM_MAGIC = 0x3842494D; // 8BIM
+static const qint32 _8BIM_TAG   = 0x73616D70; // samp
+}
+
 QImage AbrBrushLoader::generateThumbnail(QFile& file)
 {
     QImage thumb;
@@ -111,7 +117,6 @@ bool AbrBrushLoader::validHeader(AbrHeader& header)
             valid = true;
             break;
         case 6:
-
             if (header.subversion == 1 || header.subversion == 2)
             {
                 valid = true;
@@ -134,13 +139,6 @@ bool AbrBrushLoader::validHeader(AbrHeader& header)
 
 bool AbrBrushLoader::seachFor8BIM(QDataStream& stream)
 {
-    const qint32 MAGIC = 0x3842494D; // 8BIM
-    const qint32 TAG   = 0x73616D70; // samp
-
-    qint32 magic;
-    qint32 tag;
-    qint32 sectionSize;
-
     if (!streamIsOk(stream))
     {
         return false;
@@ -148,15 +146,18 @@ bool AbrBrushLoader::seachFor8BIM(QDataStream& stream)
 
     while (!stream.device()->atEnd())
     {
+        qint32 magic = 0;
+        qint32 tag   = 0;
+
         stream >> magic >> tag;
 
-        if (magic != MAGIC)
+        if (magic != _8BIM_MAGIC)
         {
             kDebug() << "invalid magic number: " << QByteArray::fromHex(QString::number(magic, 16).toAscii());;
             return false;
         }
 
-        if (tag == TAG)
+        if (tag == _8BIM_TAG)
         {
             return true;
         }
@@ -166,7 +167,9 @@ bool AbrBrushLoader::seachFor8BIM(QDataStream& stream)
             return false;
         }
 
+        qint32 sectionSize = 0;
         stream >> sectionSize;
+
         qint64 pos = stream.device()->pos() + sectionSize;
         stream.device()->seek(pos);
 
@@ -186,22 +189,20 @@ qint16 AbrBrushLoader::getSamplesCount(QDataStream& stream)
         return 0;
     }
 
-    qint64 oldPos;
-    qint32 sectionSize;
-    qint32 sectionEnd;
-    qint32 samples = 0;
-    qint32 dataStart;
-
-    qint32 brushSize;
-    qint32 brushEnd;
-
-    oldPos = stream.device()->pos();
+    qint64 oldPos = stream.device()->pos();
 
     if (!seachFor8BIM(stream))
     {
         stream.device()->seek(oldPos);
         return 0;
     }
+
+    qint32 sectionSize = 0;
+    qint32 sectionEnd  = 0;
+    qint32 samples     = 0;
+    qint32 dataStart   = 0;
+    qint32 brushSize   = 0;
+    qint32 brushEnd    = 0;
 
     stream >> sectionSize;
     dataStart  = stream.device()->pos();
@@ -242,19 +243,10 @@ bool AbrBrushLoader::loadv1_2_data(QDataStream& stream, AbrHeader& header, QImag
 
 bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage& img)
 {
-    qint32 brush_size;
-    qint32 brush_end;
-    qint32 complement_to_4;
-    qint64 next_brush;
-
-    qint32 top, left, bottom, right;
-    qint16 depth;
-    qint8  compression;
-
-    qint32 width, height;
-    qint32 size;
-
-    char* buffer;
+    qint32 brush_size      = 0;
+    qint32 brush_end       = 0;
+    qint32 complement_to_4 = 0;
+    qint64 next_brush      = 0;
 
     stream >> brush_size;
     brush_end = brush_size;
@@ -287,6 +279,17 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
         return false;
     }
 
+    qint32 top         = 0;
+    qint32 left        = 0;
+    qint32 bottom      = 0;
+    qint32 right       = 0;
+    qint16 depth       = 0;
+    qint8  compression = 0;
+
+    qint32 width       = 0;
+    qint32 height      = 0;
+    qint32 size        = 0;
+
     stream >> top
            >> left
            >> bottom
@@ -298,8 +301,8 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
     height = bottom - top;
     size   = width * height;
 
-    buffer = new char[size];
-    int r  = -1;
+    char* buffer = new char[size];
+    int r        = -1;
 
     if (!compression)
     {

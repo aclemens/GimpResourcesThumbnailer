@@ -31,20 +31,23 @@
 
 #include <kdebug.h>
 
+namespace
+{
 /**
  * the tile size
  */
-const int TILE_SIZE = 16;
+static const int TILE_SIZE = 16;
 
 /**
  * maximum number of colors per row
  */
-const int MAX_COLORS_IN_ROW = 16;
+static const int MAX_COLORS_IN_ROW = 16;
 
 /**
  * The number of parameters to describe a palette
  */
-const int PALETTE_PARAMS = 3;
+static const int PALETTE_PARAMS = 3;
+}
 
 
 QImage PaletteLoader::generateThumbnail(QFile& file)
@@ -129,14 +132,15 @@ PaletteData PaletteLoader::getPaletteInformation(const QString& palette)
 {
     PaletteData data;
     QRegExp reg("(\\d{1,3})\\s+(\\d{1,3})\\s+(\\d{1,3})(\\s+.*)?");
-    bool ok    = true;
-    bool allOk = true;
 
     if (!reg.exactMatch(palette.trimmed()))
     {
         data.status = PaletteData::Invalid;
         return data;
     }
+
+    bool ok    = true;
+    bool allOk = true;
 
     data.red = reg.cap(1).toInt(&ok);
     allOk = allOk && ok;

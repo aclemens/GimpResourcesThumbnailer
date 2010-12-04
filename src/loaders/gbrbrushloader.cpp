@@ -29,21 +29,24 @@
 
 #include <kdebug.h>
 
+// const variables
+namespace
+{
+static const int HEADERSIZEv1 = 20;
+static const int HEADERSIZEv2 = 28;
+}
+
 QImage GbrBrushLoader::generateThumbnail(QFile& file)
 {
-    const int HEADERSIZEv1 = 20;
-    const int HEADERSIZEv2 = 28;
-
     QImage thumb;
 
-    quint32 header;
-    quint32 version;
-    quint32 w;
-    quint32 h;
-    quint32 colorDepth;
-    quint32 magic;
-    quint32 spacing;
-    QString brushName;
+    quint32 header      = 0;
+    quint32 version     = 0;
+    quint32 w           = 0;
+    quint32 h           = 0;
+    quint32 colorDepth  = 0;
+    quint32 magic       = 0;
+    quint32 spacing     = 0;
 
     QDataStream in(&file);
     in >> header
@@ -76,7 +79,10 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
             break;
         }
         default:
+        {
             validBrushFile = false;
+            break;
+        }
     }
 
     if (colorDepth != 1 && colorDepth != 4)
@@ -92,6 +98,7 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
     }
 
     // read the brush name
+    QString brushName;
     unsigned int nameLength = header - ((version == 1) ? HEADERSIZEv1 : HEADERSIZEv2);
     char* brushName_c       = new char[nameLength];
     in.readRawData(brushName_c, nameLength);

@@ -33,10 +33,13 @@
 
 #include <kdebug.h>
 
+namespace
+{
 /**
  * the maximum thumbnail size
  */
-const int MAX_SIZE = 256;
+static const int MAX_SIZE = 256;
+}
 
 QImage VbrBrushLoader::generateThumbnail(QFile& file)
 {
