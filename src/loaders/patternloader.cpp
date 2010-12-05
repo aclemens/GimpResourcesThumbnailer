@@ -80,12 +80,9 @@ QImage PatternLoader::generateThumbnail(QFile& file)
         return thumb;
     }
 
-    // read the brush name
-    QString brushName;
+    // get the brush name size, skip the bytes
     unsigned int nameLength = header - HEADERSIZE;
-    char* brushName_c       = new char[nameLength];
-    in.readRawData(brushName_c, nameLength);
-    brushName = QString(brushName_c);
+    in.skipRawData(nameLength);
 
     // read the image data
     int dataLength = w * h * colorDepth;
@@ -96,7 +93,6 @@ QImage PatternLoader::generateThumbnail(QFile& file)
     // valid brush data?
     if (bytesRead == -1 || bytesRead != dataLength)
     {
-        delete[] brushName_c;
         delete[] data;
         return thumb;
     }
@@ -166,7 +162,6 @@ QImage PatternLoader::generateThumbnail(QFile& file)
         }
     }
 
-    delete[] brushName_c;
     delete[] data;
 
     return thumb;

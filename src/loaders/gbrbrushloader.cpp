@@ -97,12 +97,9 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
         return thumb;
     }
 
-    // read the brush name
-    QString brushName;
+    // get the brush name size, skip the bytes
     unsigned int nameLength = header - ((version == 1) ? HEADERSIZEv1 : HEADERSIZEv2);
-    char* brushName_c       = new char[nameLength];
-    in.readRawData(brushName_c, nameLength);
-    brushName = QString(brushName_c);
+    in.skipRawData(nameLength);
 
     // read the image data
     int dataLength = w * h * colorDepth;
@@ -117,7 +114,6 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
                  <<     "expected: " << dataLength << " bytes, "
                  <<     "read: "     << bytesRead  << " bytes"
                  << ")";
-        delete[] brushName_c;
         delete[] data;
         return thumb;
     }
@@ -159,7 +155,6 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
         }
     }
 
-    delete[] brushName_c;
     delete[] data;
 
     return thumb;
