@@ -96,8 +96,8 @@ QImage ResourceLoader::load(const QString& path)
     if (loader)
     {
         thumb = loader->generateThumbnail(file);
+        delete loader;
     }
 
-    delete loader;
     return thumb;
 }
