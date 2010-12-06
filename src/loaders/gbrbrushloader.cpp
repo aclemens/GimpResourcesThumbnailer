@@ -119,8 +119,7 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
     }
 
     // generate thumbnail
-    QImage::Format imageFormat;
-    imageFormat = (colorDepth == 1) ? QImage::Format_RGB32 : QImage::Format_ARGB32;
+    QImage::Format imageFormat = (colorDepth == 1) ? QImage::Format_RGB32 : QImage::Format_ARGB32;
 
     thumb = QImage(w, h, imageFormat);
     quint32 step = 0;
