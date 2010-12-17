@@ -3,7 +3,7 @@
  * Date        : 2009-06-27
  * Description : a generator for photoshop brushes
  *
- * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
+ * Copyright (C) 2009-2010 by Andi Clemens <andi dot clemens at gmx dot net>
  *
  * Code was inspired by Eric Lamarque <eric.lamarque@free.fr>
  *      (ABR plugin, http://registry.gimp.org/node/126)
