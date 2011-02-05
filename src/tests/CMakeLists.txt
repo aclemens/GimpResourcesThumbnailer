@@ -5,15 +5,8 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../
 
 #------------------------------------------------------------------------
 
-SET(loaders_SRCS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../loaders/resourceloader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/../loaders/gbrbrushloader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/../loaders/gihbrushloader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/../loaders/vbrbrushloader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/../loaders/abrbrushloader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/../loaders/patternloader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/../loaders/paletteloader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/../loaders/gradientloader.cpp
+FILE(GLOB loaders_SRCS
+    ${CMAKE_CURRENT_SOURCE_DIR}/../loaders/*.cpp
 )
 
 #------------------------------------------------------------------------
