@@ -84,9 +84,9 @@ typedef QList<GradientData> GradientList;
      Line 1 (string)   : Resource type (must be "GIMP Gradient")
      Line 2 (string)   : The name of the gradient ("Name: <THENAME>")
      Line 3 (int)      : The number of gradients in the following sections, each gradient is represented by a single line
-     Line 4-...        : A line describing one gradient
+     Line 4            : One or more gradient definitions
 
-     GRADIENT DEFINITION (line 4-...):
+     GRADIENT DEFINITION:
 
      Column1   (float) : Start point
      Column2   (float) : Middle point
