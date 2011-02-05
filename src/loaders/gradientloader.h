@@ -102,9 +102,10 @@ typedef QList<GradientData> GradientList;
      Column10  (float) : Blue value of right color
      Column11  (float) : Alpha value of right color
 
+     Column13: (int)   : ColorMode (RGB, HSVcounterclockwise, HSVclockwise)
+
      // OPTIONAL (not used at the moment)
      Column12: (int)   : BlendingFunction (linear, curved, sinusoidal, spherical (counterclockwise), spherical (clockwise)
-     Column13: (int)   : ColorMode (RGB, HSVcounterclockwise, HSVclockwise)
      Column14: (int)   : Left  ColorType (Fixed, Foreground, ForegroundTransparent, Background, BackgroundTransparent)
      Column15: (int)   : Right ColorType (Fixed, Foreground, ForegroundTransparent, Background, BackgroundTransparent)
      \endverbatim
