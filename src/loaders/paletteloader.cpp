@@ -116,13 +116,8 @@ bool PaletteLoader::validData(const QStringList& data)
     // check basic parameters
     if (magic != QString("GIMP Palette") || dataSize < 1)
     {
-        kDebug() << "Invalid basic parameters";
-        validData = false;
-    }
-
-    if (!validData)
-    {
         kDebug() << "Invalid Gimp Palette (GPL) data!";
+        validData = false;
     }
 
     return validData;
