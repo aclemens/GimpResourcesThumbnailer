@@ -117,6 +117,7 @@ bool AbrBrushLoader::validHeader(AbrHeader& header)
             valid = true;
             break;
         case 6:
+
             if (header.subversion == 1 || header.subversion == 2)
             {
                 valid = true;
@@ -245,8 +246,8 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
 {
     qint32 brush_size      = 0;
     qint32 brush_end       = 0;
-    qint32 complement_to_4 = 0;
-    qint64 next_brush      = 0;
+//    qint32 complement_to_4 = 0;
+//    qint64 next_brush      = 0;
 
     stream >> brush_size;
     brush_end = brush_size;
@@ -257,8 +258,8 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
         ++brush_end;
     }
 
-    complement_to_4 = brush_end - brush_size;
-    next_brush = stream.device()->pos() + brush_end;
+//    complement_to_4 = brush_end - brush_size;
+//    next_brush = stream.device()->pos() + brush_end;
 
     // discard key
     stream.device()->seek(stream.device()->pos() + 37);
