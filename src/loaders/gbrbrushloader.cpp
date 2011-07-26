@@ -151,6 +151,7 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
                                                static_cast<uchar>(data[step+3])));
                 }
             }
+            break;
         }
     }
 

@@ -99,6 +99,7 @@ bool AbrBrushLoader::readHeader(QDataStream& stream, AbrHeader& header)
         default:
             header.subversion = 0;
             header.count = 0;
+            break;
     }
 
     return validHeader(header);
@@ -127,6 +128,7 @@ bool AbrBrushLoader::validHeader(AbrHeader& header)
         default:
             valid = false;
             kDebug() << "Invalid ABR header version: " << header.version;
+            break;
     }
 
     if (header.count <= 0)
