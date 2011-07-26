@@ -52,6 +52,10 @@ typedef QList<PaletteData> PaletteList;
 
 class PaletteLoader : public ResourceLoader
 {
+public:
+
+    PaletteLoader() {};
+
 protected:
 
     virtual QImage generateThumbnail(QFile& file);
@@ -65,6 +69,11 @@ protected:
     PaletteData getPaletteInformation(const QString& palette);
     PaletteList extractPaletteColors(const QStringList& data);
     QImage      drawPalette(const QStringList& data);
+
+private:
+
+    PaletteLoader(const PaletteLoader&);
+    PaletteLoader& operator=(const PaletteLoader&);
 };
 
 #endif /* PALETTELOADER_H */

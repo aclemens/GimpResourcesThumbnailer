@@ -28,10 +28,18 @@ class QFile;
 
 class GbrBrushLoader : public ResourceLoader
 {
+public:
+
+    GbrBrushLoader() {};
 
 protected:
 
     virtual QImage generateThumbnail(QFile& file);
+
+private:
+
+    GbrBrushLoader(const GbrBrushLoader&);
+    GbrBrushLoader& operator=(const GbrBrushLoader&);
 };
 
 #endif /* GBRBRUSHLOADER_H */

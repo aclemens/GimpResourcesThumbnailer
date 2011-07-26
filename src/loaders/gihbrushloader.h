@@ -26,10 +26,18 @@ class QFile;
 
 class GihBrushLoader : public GbrBrushLoader
 {
+public:
+
+    GihBrushLoader() {};
 
 protected:
 
     virtual QImage generateThumbnail(QFile& file);
+
+private:
+
+    GihBrushLoader(const GihBrushLoader&);
+    GihBrushLoader& operator=(const GihBrushLoader&);
 };
 
 #endif /* GIHBRUSHLOADER_H */

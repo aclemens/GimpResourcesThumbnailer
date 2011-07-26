@@ -47,12 +47,18 @@ struct AbrHeader
 
 class AbrBrushLoader : public ResourceLoader
 {
+public:
+
+    AbrBrushLoader() {};
 
 protected:
 
     virtual QImage generateThumbnail(QFile& file);
 
 private:
+
+    AbrBrushLoader(const AbrBrushLoader&);
+    AbrBrushLoader& operator=(const AbrBrushLoader&);
 
     bool   streamIsOk(QDataStream& stream);
 

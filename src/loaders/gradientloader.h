@@ -112,6 +112,10 @@ typedef QList<GradientData> GradientList;
  */
 class GradientLoader : public ResourceLoader
 {
+public:
+
+    GradientLoader() {};
+
 protected:
 
     /**
@@ -170,6 +174,11 @@ protected:
      * @return a QImage used for the thumbnail creator object
      */
     QImage drawGradient(const GradientList& data);
+
+private:
+
+    GradientLoader(const GradientLoader&);
+    GradientLoader& operator=(const GradientLoader&);
 };
 
 #endif /* GRADIENTLOADER_H */

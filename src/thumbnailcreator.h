@@ -86,6 +86,11 @@ public:
      * @return flags for this plugin
      */
     virtual Flags flags() const;
+
+private:
+
+    ThumbnailCreator(const ThumbnailCreator&);
+    ThumbnailCreator& operator=(const ThumbnailCreator&);
 };
 
 #endif /* THUMBNAILCREATOR_H */

@@ -33,14 +33,20 @@ class QFile;
 
 class VbrBrushLoader : public ResourceLoader
 {
+public:
+
+    VbrBrushLoader() {};
+
 protected:
 
     virtual QImage generateThumbnail(QFile& file);
 
 private:
 
-    QImage generateShapedBrush(QString shape, qreal radius, qreal hardness, qreal aspect, qreal angle, int spikes);
+    VbrBrushLoader(const VbrBrushLoader&);
+    VbrBrushLoader& operator=(const VbrBrushLoader&);
 
+    QImage generateShapedBrush(QString shape, qreal radius, qreal hardness, qreal aspect, qreal angle, int spikes);
 };
 
 #endif /* VBRBRUSHLOADER_H */

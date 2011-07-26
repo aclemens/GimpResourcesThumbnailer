@@ -37,6 +37,11 @@ public:
 protected:
 
     virtual QImage generateThumbnail(QFile& file) = 0;
+
+private:
+
+    ResourceLoader(const ResourceLoader&);
+    ResourceLoader& operator=(const ResourceLoader&);
 };
 
 #endif /* RESOURCELOADER_H */

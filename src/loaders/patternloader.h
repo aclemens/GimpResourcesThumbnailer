@@ -28,10 +28,18 @@ class QFile;
 
 class PatternLoader : public ResourceLoader
 {
+public:
+
+    PatternLoader() {};
 
 protected:
 
     virtual QImage generateThumbnail(QFile& file);
+
+private:
+
+    PatternLoader(const PatternLoader&);
+    PatternLoader& operator=(const PatternLoader&);
 };
 
 #endif /* PATTERNLOADER_H */
