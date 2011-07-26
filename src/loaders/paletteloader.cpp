@@ -42,11 +42,6 @@ static const int TILE_SIZE = 16;
  * maximum number of colors per row
  */
 static const int MAX_COLORS_IN_ROW = 16;
-
-/**
- * The number of parameters to describe a palette
- */
-static const int PALETTE_PARAMS = 3;
 }
 
 
