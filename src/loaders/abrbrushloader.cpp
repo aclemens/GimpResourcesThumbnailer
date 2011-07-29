@@ -339,25 +339,22 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
 
 int AbrBrushLoader::rle_decode(QDataStream& stream, char* buffer, qint32 height)
 {
-    qint32  n;
-    qint8   n_tmp;
-    qint8   ch;
-    qint8   ch_tmp;
-    qint32  i, j, c;
     qint16* cscanline_len;
 
     // read compressed sizes for the scanlines
     cscanline_len = new qint16[height];
 
-    for (i = 0; i < height; ++i)
+    for (qint32 i = 0; i < height; ++i)
     {
         stream >> cscanline_len[i];
     }
 
     // unpack scanline data
-    for (i = 0; i < height; ++i)
+    for (qint32 i = 0; i < height; ++i)
     {
-        for (j = 0; j < cscanline_len[i];)
+        qint32  n   = 0;
+        qint8 n_tmp = 0;
+        for (qint32 j = 0; j < cscanline_len[i];)
         {
             stream >> n_tmp;
             n = n_tmp;
@@ -377,10 +374,12 @@ int AbrBrushLoader::rle_decode(QDataStream& stream, char* buffer, qint32 height)
                 }
 
                 n = -n + 1;
+
+                qint8 ch = 0;
                 stream >> ch;
                 ++j;
 
-                for (c = 0; c < n; ++c, ++buffer)
+                for (qint32 c = 0; c < n; ++c, ++buffer)
                 {
                     *buffer = ch;
                 }
@@ -388,7 +387,8 @@ int AbrBrushLoader::rle_decode(QDataStream& stream, char* buffer, qint32 height)
             else
             {
                 /* read the following n + 1 chars (no compr) */
-                for (c = 0; c < n + 1; ++c, ++j, ++buffer)
+                qint8 ch_tmp = 0;
+                for (qint32 c = 0; c < n + 1; ++c, ++j, ++buffer)
                 {
                     stream >> ch_tmp;
                     *buffer = ch_tmp;
