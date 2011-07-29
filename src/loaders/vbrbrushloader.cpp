@@ -45,7 +45,6 @@ QImage VbrBrushLoader::generateThumbnail(QFile& file)
 {
     QTextStream in(&file);
     QStringList data;
-    QImage thumb;
 
     while (!in.atEnd())
     {
@@ -84,6 +83,7 @@ QImage VbrBrushLoader::generateThumbnail(QFile& file)
      Line 10: The brush angle.
      */
 
+    QImage thumb;
     int dataSize = data.count();
 
     // make sure data can be read

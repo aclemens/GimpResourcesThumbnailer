@@ -59,7 +59,6 @@ QImage PaletteLoader::generateThumbnail(QFile& file)
 
     QTextStream in(&file);
     QStringList data;
-    QImage thumb;
 
     while (!in.atEnd())
     {
@@ -69,6 +68,7 @@ QImage PaletteLoader::generateThumbnail(QFile& file)
     // close the file
     file.close();
 
+    QImage thumb;
     if (validData(data))
     {
         prepareData(data);

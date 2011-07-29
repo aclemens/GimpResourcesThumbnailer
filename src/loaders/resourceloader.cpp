@@ -50,7 +50,6 @@ ResourceLoader::~ResourceLoader()
 QImage ResourceLoader::load(const QString& path)
 {
     QImage thumb;
-
     QFile file(path);
 
     if (!file.open(QIODevice::ReadOnly))

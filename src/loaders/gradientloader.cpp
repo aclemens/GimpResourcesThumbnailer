@@ -61,7 +61,6 @@ QImage GradientLoader::generateThumbnail(QFile& file)
 {
     QTextStream in(&file);
     QStringList data;
-    QImage thumb;
 
     while (!in.atEnd())
     {
@@ -71,6 +70,7 @@ QImage GradientLoader::generateThumbnail(QFile& file)
     // close the file
     file.close();
 
+    QImage thumb;
     if (isValidResourceFileData(data))
     {
         thumb = drawGradient(data);
