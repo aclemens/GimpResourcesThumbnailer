@@ -201,20 +201,16 @@ qint16 AbrBrushLoader::getSamplesCount(QDataStream& stream)
     }
 
     qint32 sectionSize = 0;
-    qint32 sectionEnd  = 0;
-    qint32 samples     = 0;
-    qint32 dataStart   = 0;
-    qint32 brushSize   = 0;
-    qint32 brushEnd    = 0;
-
     stream >> sectionSize;
-    dataStart  = stream.device()->pos();
-    sectionEnd = dataStart + sectionSize;
+    qint32 dataStart  = stream.device()->pos();
+    qint32 sectionEnd = dataStart + sectionSize;
 
+    qint32 samples = 0;
     while (!stream.device()->atEnd() && stream.device()->pos() < sectionEnd)
     {
+        qint32 brushSize = 0;
         stream >> brushSize;
-        brushEnd = brushSize;
+        qint32 brushEnd = brushSize;
 
         /* complement to 4 */
         while (brushEnd % 4 != 0)
