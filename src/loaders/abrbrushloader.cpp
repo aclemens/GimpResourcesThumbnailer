@@ -243,9 +243,6 @@ bool AbrBrushLoader::loadv1_2_data(QDataStream& stream, AbrHeader& header, QImag
 
 bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage& img)
 {
-//    qint32 complement_to_4 = 0;
-//    qint64 next_brush      = 0;
-
     qint32 brush_size = 0;
     stream >> brush_size;
 
@@ -256,9 +253,6 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
     {
         ++brush_end;
     }
-
-//    complement_to_4 = brush_end - brush_size;
-//    next_brush = stream.device()->pos() + brush_end;
 
     // discard key
     stream.device()->seek(stream.device()->pos() + 37);
