@@ -243,13 +243,13 @@ bool AbrBrushLoader::loadv1_2_data(QDataStream& stream, AbrHeader& header, QImag
 
 bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage& img)
 {
-    qint32 brush_size      = 0;
-    qint32 brush_end       = 0;
 //    qint32 complement_to_4 = 0;
 //    qint64 next_brush      = 0;
 
+    qint32 brush_size = 0;
     stream >> brush_size;
-    brush_end = brush_size;
+
+    qint32 brush_end = brush_size;
 
     /* complement to 4 */
     while (brush_end % 4 != 0)
@@ -286,10 +286,6 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
     qint16 depth       = 0;
     qint8  compression = 0;
 
-    qint32 width       = 0;
-    qint32 height      = 0;
-    qint32 size        = 0;
-
     stream >> top
            >> left
            >> bottom
@@ -297,9 +293,9 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
            >> depth
            >> compression;
 
-    width  = right - left;
-    height = bottom - top;
-    size   = width * height;
+    qint32 width  = right - left;
+    qint32 height = bottom - top;
+    qint32 size   = width * height;
 
     char* buffer = new char[size];
     int r        = -1;
