@@ -45,8 +45,6 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
     quint32 w           = 0;
     quint32 h           = 0;
     quint32 colorDepth  = 0;
-    quint32 magic       = 0;
-    quint32 spacing     = 0;
 
     QDataStream in(&file);
     in >> header
@@ -68,6 +66,8 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
         case 2:
         case 3:
         {
+            quint32 magic   = 0;
+            quint32 spacing = 0;
             in >> magic >> spacing;
 
             if ((magic != 0x47494D50))
