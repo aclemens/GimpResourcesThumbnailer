@@ -48,23 +48,23 @@ struct GradientData
         LAST_COLORMODE
     };
 
-    Status           status;
+    Status    status;
 
-    float            startPoint;
-    float            middlePoint;
-    float            endPoint;
+    float     startPoint;
+    float     middlePoint;
+    float     endPoint;
 
-    float            leftColorRed;
-    float            leftColorGreen;
-    float            leftColorBlue;
-    float            leftColorAlpha;
+    float     leftColorRed;
+    float     leftColorGreen;
+    float     leftColorBlue;
+    float     leftColorAlpha;
 
-    float            rightColorRed;
-    float            rightColorGreen;
-    float            rightColorBlue;
-    float            rightColorAlpha;
+    float     rightColorRed;
+    float     rightColorGreen;
+    float     rightColorBlue;
+    float     rightColorAlpha;
 
-    ColorMode        coloringMode;
+    ColorMode coloringMode;
 };
 
 typedef QList<GradientData> GradientList;
