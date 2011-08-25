@@ -29,13 +29,13 @@ class ResourceLoader
 {
 public:
 
-    ResourceLoader();
     virtual ~ResourceLoader();
 
     static QImage load(const QString& path);
 
 protected:
 
+    ResourceLoader();
     virtual QImage generateThumbnail(QFile& file) = 0;
 
 private:
