@@ -47,20 +47,8 @@ ResourceLoader::~ResourceLoader()
 {
 }
 
-QImage ResourceLoader::load(const QString& path)
+ResourceLoader* ResourceLoader::createLoader(const QString& suffix)
 {
-    QImage thumb;
-    QFile file(path);
-
-    if (!file.open(QIODevice::ReadOnly))
-    {
-        kDebug() << "Error loading resource file.";
-        return thumb;
-    }
-
-    QFileInfo fi(file);
-    QString suffix = fi.suffix().toUpper();
-
     ResourceLoader* loader = 0;
 
     if (suffix == QString("GBR"))
@@ -91,6 +79,25 @@ QImage ResourceLoader::load(const QString& path)
     {
         loader = new PaletteLoader();
     }
+
+    return loader;
+}
+
+QImage ResourceLoader::load(const QString& path)
+{
+    QImage thumb;
+    QFile file(path);
+
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        kDebug() << "Error loading resource file.";
+        return thumb;
+    }
+
+    QFileInfo fi(file);
+    QString suffix = fi.suffix().toUpper();
+
+    ResourceLoader* loader = createLoader(suffix);
 
     if (loader)
     {
