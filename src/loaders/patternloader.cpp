@@ -86,14 +86,13 @@ QImage PatternLoader::generateThumbnail(QFile& file)
 
     // read the image data
     int dataLength = w * h * colorDepth;
-    char* data     = new char[dataLength];
-    int bytesRead  = in.readRawData(data, dataLength);
+    QScopedArrayPointer<char> data(new char[dataLength]);
+    int bytesRead  = in.readRawData(data.data(), dataLength);
     file.close();
 
     // valid brush data?
     if (bytesRead == -1 || bytesRead != dataLength)
     {
-        delete[] data;
         return thumb;
     }
 
@@ -161,8 +160,5 @@ QImage PatternLoader::generateThumbnail(QFile& file)
             break;
         }
     }
-
-    delete[] data;
-
     return thumb;
 }
