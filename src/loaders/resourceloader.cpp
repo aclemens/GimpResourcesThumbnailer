@@ -98,6 +98,7 @@ QImage ResourceLoader::load(const QString& path)
     QString suffix = fi.suffix().toUpper();
 
     QScopedPointer<ResourceLoader> loader(createLoader(suffix));
+
     if (!loader.isNull())
     {
         thumb = loader->generateThumbnail(file);

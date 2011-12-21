@@ -61,9 +61,11 @@ QImage AbrBrushLoader::generateThumbnail(QFile& file)
         case 2:
             loadv1_2_data(in, header, thumb);
             break;
+
         case 6:
             loadv6_data(in, header, thumb);
             break;
+
         default:
             break;
     }
@@ -92,10 +94,12 @@ bool AbrBrushLoader::readHeader(QDataStream& stream, AbrHeader& header)
         case 2:
             stream >> header.count;
             break;
+
         case 6:
             stream >> header.subversion;
             header.count = getSamplesCount(stream);
             break;
+
         default:
             header.subversion = 0;
             header.count = 0;
@@ -117,6 +121,7 @@ bool AbrBrushLoader::validHeader(AbrHeader& header)
         case 2:
             valid = true;
             break;
+
         case 6:
 
             if (header.subversion == 1 || header.subversion == 2)
@@ -125,6 +130,7 @@ bool AbrBrushLoader::validHeader(AbrHeader& header)
             }
 
             break;
+
         default:
             valid = false;
             kDebug() << "Invalid ABR header version: " << header.version;
@@ -207,6 +213,7 @@ qint16 AbrBrushLoader::getSamplesCount(QDataStream& stream)
     qint32 sectionEnd = dataStart + sectionSize;
 
     qint32 samples = 0;
+
     while (!stream.device()->atEnd() && stream.device()->pos() < sectionEnd)
     {
         qint32 brushSize = 0;
@@ -349,6 +356,7 @@ int AbrBrushLoader::rle_decode(QDataStream& stream, char* buffer, qint32 height)
     {
         qint32  n   = 0;
         qint8 n_tmp = 0;
+
         for (qint32 j = 0; j < cscanline_len[i];)
         {
             stream >> n_tmp;
@@ -383,6 +391,7 @@ int AbrBrushLoader::rle_decode(QDataStream& stream, char* buffer, qint32 height)
             {
                 /* read the following n + 1 chars (no compr) */
                 qint8 ch_tmp = 0;
+
                 for (qint32 c = 0; c < n + 1; ++c, ++j, ++buffer)
                 {
                     stream >> ch_tmp;

@@ -68,7 +68,7 @@ void ResourceLoaderTest::testAllExampleData()
     filePatterns << "*.vbr";
 
     QDirIterator it(QString(KDESRCDIR), QDir::NoDotAndDotDot | QDir::AllDirs,
-                    QDirIterator::Subdirectories | QDirIterator::FollowSymlinks );
+                    QDirIterator::Subdirectories | QDirIterator::FollowSymlinks);
 
     while (it.hasNext())
     {
@@ -79,7 +79,7 @@ void ResourceLoaderTest::testAllExampleData()
 
         QStringList files = exampleDir.entryList(filePatterns, QDir::Files);
 
-        foreach (const QString& file, files)
+        foreach(const QString & file, files)
         {
             allFiles.append(exampleDir.absoluteFilePath(file));
         }
@@ -88,7 +88,7 @@ void ResourceLoaderTest::testAllExampleData()
     QVERIFY(!allFiles.isEmpty());
     kDebug() << "testing " << allFiles.count() << " resources...";
 
-    foreach (const QString& file, allFiles)
+    foreach(const QString & file, allFiles)
     {
         QImage thumb = ResourceLoader::load(file);
         QVERIFY(!thumb.isNull());

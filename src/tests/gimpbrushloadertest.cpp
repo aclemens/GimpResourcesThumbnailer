@@ -54,7 +54,7 @@ void GimpBrushLoaderTest::testLoadGBRv1()
 
     // basic test: does create() work?
     ThumbnailCreator c;
-    QVERIFY( c.create(brushfile, width, height, img) );
+    QVERIFY(c.create(brushfile, width, height, img));
 
     // compare the resulting thumbnail with an example output
     QImage example = QImage(exampleBrushFile).convertToFormat(img.format());
@@ -91,7 +91,7 @@ void GimpBrushLoaderTest::testLoadGBRv2_3()
 
     // basic test: does create() work?
     ThumbnailCreator c;
-    QVERIFY( c.create(brushfile, width, height, img) );
+    QVERIFY(c.create(brushfile, width, height, img));
 
     // compare the resulting thumbnail with an example output
     QImage example = QImage(exampleBrushFile).convertToFormat(img.format());
@@ -126,7 +126,7 @@ void GimpBrushLoaderTest::testLoadGIH()
 
     // basic test: does create() work?
     ThumbnailCreator c;
-    QVERIFY( c.create(brushfile, width, height, img) );
+    QVERIFY(c.create(brushfile, width, height, img));
 
     // compare the resulting thumbnail with an example output
     QImage example = QImage(exampleBrushFile).convertToFormat(img.format());
@@ -165,7 +165,7 @@ void GimpBrushLoaderTest::testLoadPAT()
 
     // basic test: does create() work?
     ThumbnailCreator c;
-    QVERIFY( c.create(patfile, width, height, img) );
+    QVERIFY(c.create(patfile, width, height, img));
 
     // compare the resulting thumbnail with an example output
     QImage example = QImage(examplePatFile).convertToFormat(img.format());

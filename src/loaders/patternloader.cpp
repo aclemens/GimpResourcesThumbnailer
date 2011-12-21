@@ -110,27 +110,29 @@ QImage PatternLoader::generateThumbnail(QFile& file)
             {
                 for (quint32 x = 0; x < w; ++x, ++step)
                 {
-                    qint32 val = static_cast<uchar> (data[step]);
+                    qint32 val = static_cast<uchar>(data[step]);
                     thumb.setPixel(x, y, qRgb(val, val, val));
                 }
             }
 
             break;
         }
+
         case 2: // Grayscale with alpha
         {
             for (quint32 y = 0; y < h; ++y)
             {
                 for (quint32 x = 0; x < w; ++x, step += 2)
                 {
-                    qint32 val   = static_cast<uchar> (data[step]);
-                    qint32 alpha = static_cast<uchar> (data[step+1]);
+                    qint32 val   = static_cast<uchar>(data[step]);
+                    qint32 alpha = static_cast<uchar>(data[step + 1]);
                     thumb.setPixel(x, y, qRgba(val, val, val, alpha));
                 }
             }
 
             break;
         }
+
         case 3: // RGB
         {
             for (quint32 y = 0; y < h; ++y)
@@ -138,13 +140,14 @@ QImage PatternLoader::generateThumbnail(QFile& file)
                 for (quint32 x = 0; x < w; ++x, step += 3)
                 {
                     thumb.setPixel(x, y, qRgb(static_cast<uchar>(data[step]),
-                                              static_cast<uchar>(data[step+1]),
-                                              static_cast<uchar>(data[step+2])));
+                                              static_cast<uchar>(data[step + 1]),
+                                              static_cast<uchar>(data[step + 2])));
                 }
             }
 
             break;
         }
+
         case 4: // RGBA
         {
             for (quint32 y = 0; y < h; ++y)
@@ -152,13 +155,15 @@ QImage PatternLoader::generateThumbnail(QFile& file)
                 for (quint32 x = 0; x < w; ++x, step += 4)
                 {
                     thumb.setPixel(x, y, qRgba(static_cast<uchar>(data[step]),
-                                               static_cast<uchar>(data[step+1]),
-                                               static_cast<uchar>(data[step+2]),
-                                               static_cast<uchar>(data[step+3])));
+                                               static_cast<uchar>(data[step + 1]),
+                                               static_cast<uchar>(data[step + 2]),
+                                               static_cast<uchar>(data[step + 3])));
                 }
             }
+
             break;
         }
     }
+
     return thumb;
 }

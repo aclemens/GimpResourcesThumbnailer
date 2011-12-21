@@ -69,6 +69,7 @@ QImage PaletteLoader::generateThumbnail(QFile& file)
     file.close();
 
     QImage thumb;
+
     if (validData(data))
     {
         prepareData(data);
@@ -83,7 +84,7 @@ void PaletteLoader::prepareData(QStringList& data)
     QRegExp dataReg("^\\d+\\s+\\d+\\s+\\d+\\s*.*");
     QStringList list;
 
-    foreach (const QString& line, data)
+    foreach(const QString & line, data)
     {
         QString dataLine = line.trimmed();
 
@@ -184,7 +185,7 @@ QImage PaletteLoader::drawPalette(const QStringList& data)
 
     int column = 0;
     int row    = 0;
-    foreach (const PaletteData& palette, paletteList)
+    foreach(const PaletteData & palette, paletteList)
     {
         if (palette.status != PaletteData::Ok)
         {
@@ -222,7 +223,7 @@ PaletteList PaletteLoader::extractPaletteColors(const QStringList& data)
 {
     PaletteList list;
 
-    foreach (const QString& info, data)
+    foreach(const QString & info, data)
     {
         if (checkPaletteInformation(info))
         {

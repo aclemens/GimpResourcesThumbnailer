@@ -71,6 +71,7 @@ QImage GradientLoader::generateThumbnail(QFile& file)
     file.close();
 
     QImage thumb;
+
     if (isValidResourceFileData(data))
     {
         thumb = drawGradient(data);
@@ -92,7 +93,7 @@ bool GradientLoader::isValidResourceFileData(const QStringList& data)
     int numberOfGradients = data[2].toInt();
 
     // check basic parameters
-    if ( (magic != QString("GIMP Gradient")) || (numberOfGradients < 1) )
+    if ((magic != QString("GIMP Gradient")) || (numberOfGradients < 1))
     {
         kDebug() << "Invalid basic parameters";
         validData = false;
@@ -228,7 +229,7 @@ QImage GradientLoader::drawGradient(const GradientList& data)
     QLinearGradient grad(0.0, 0.0, 1.0, 0.0);
     grad.setCoordinateMode(QGradient::StretchToDeviceMode);
 
-    foreach (const GradientData& gradient, data)
+    foreach(const GradientData & gradient, data)
     {
         if (gradient.status != GradientData::Ok)
         {
@@ -324,7 +325,7 @@ GradientList GradientLoader::extractGradients(const QStringList& data)
 {
     GradientList list;
 
-    foreach (const QString& info, data)
+    foreach(const QString & info, data)
     {
         if (checkGradientInformation(info))
         {

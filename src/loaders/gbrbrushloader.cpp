@@ -63,6 +63,7 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
             // no magic number and spacing information
             break;
         }
+
         case 2:
         case 3:
         {
@@ -78,6 +79,7 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
 
             break;
         }
+
         default:
         {
             validBrushFile = false;
@@ -131,13 +133,14 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
             {
                 for (quint32 x = 0; x < w; ++x, ++step)
                 {
-                    qint32 val = 255 - static_cast<uchar> (data[step]);
+                    qint32 val = 255 - static_cast<uchar>(data[step]);
                     thumb.setPixel(x, y, qRgb(val, val, val));
                 }
             }
 
             break;
         }
+
         case 4: // RGBA
         {
             for (quint32 y = 0; y < h; ++y)
@@ -145,11 +148,12 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
                 for (quint32 x = 0; x < w; ++x, step += 4)
                 {
                     thumb.setPixel(x, y, qRgba(static_cast<uchar>(data[step]),
-                                               static_cast<uchar>(data[step+1]),
-                                               static_cast<uchar>(data[step+2]),
-                                               static_cast<uchar>(data[step+3])));
+                                               static_cast<uchar>(data[step + 1]),
+                                               static_cast<uchar>(data[step + 2]),
+                                               static_cast<uchar>(data[step + 3])));
                 }
             }
+
             break;
         }
     }
