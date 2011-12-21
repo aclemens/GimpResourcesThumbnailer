@@ -291,24 +291,23 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
     qint32 height = bottom - top;
     qint32 size   = width * height;
 
-    char* buffer = new char[size];
-    int r        = -1;
+    QScopedArrayPointer<char> buffer(new char[size]);
+    int r = -1;
 
     if (!compression)
     {
         kDebug() << "trying to read uncompressed data...";
-        r = stream.readRawData(buffer, size);
+        r = stream.readRawData(buffer.data(), size);
     }
     else
     {
         kDebug() << "trying to read compressed data...";
-        r = rle_decode(stream, buffer, height);
+        r = rle_decode(stream, buffer.data(), height);
     }
 
     if (r == -1)
     {
         kDebug() << "failed while reading data...";
-        delete[] buffer;
         return false;
     }
 
@@ -327,8 +326,6 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
 
     img = tmpImage;
 
-    delete[] buffer;
-
     if (!streamIsOk(stream) || img.isNull())
     {
         return false;
@@ -339,10 +336,8 @@ bool AbrBrushLoader::loadv6_data(QDataStream& stream, AbrHeader& header, QImage&
 
 int AbrBrushLoader::rle_decode(QDataStream& stream, char* buffer, qint32 height)
 {
-    qint16* cscanline_len;
-
     // read compressed sizes for the scanlines
-    cscanline_len = new qint16[height];
+    QScopedArrayPointer<qint16> cscanline_len(new qint16[height]);
 
     for (qint32 i = 0; i < height; ++i)
     {
@@ -396,8 +391,6 @@ int AbrBrushLoader::rle_decode(QDataStream& stream, char* buffer, qint32 height)
             }
         }
     }
-
-    delete[] cscanline_len;
 
     if (!streamIsOk(stream))
     {
