@@ -134,23 +134,23 @@ QImage VbrBrushLoader::generateThumbnail(QFile& file)
     bool allOk = true;
 
     qreal r_radius = radius.toDouble(&ok);
-    allOk = allOk && ok;
+    allOk &= ok;
 
     qreal r_hardness = hardness.toDouble(&ok);
-    allOk = allOk && ok;
+    allOk &= ok;
 
     qreal r_aspectRatio = aspectRatio.toDouble(&ok);
-    allOk = allOk && ok;
+    allOk &= ok;
 
     qreal r_angle = angle.toDouble(&ok);
-    allOk = allOk && ok;
+    allOk &= ok;
 
     int r_spikes = 0;
 
     if (!spikes.isEmpty())
     {
         r_spikes = spikes.toInt(&ok);
-        allOk = allOk && ok;
+        allOk &= ok;
     }
 
     if (!allOk)

@@ -134,13 +134,13 @@ PaletteData PaletteLoader::getPaletteInformation(const QString& palette)
     bool allOk = true;
 
     data.red = reg.cap(1).toInt(&ok);
-    allOk = allOk && ok;
+    allOk &= ok;
 
     data.green = reg.cap(2).toInt(&ok);
-    allOk = allOk && ok;
+    allOk &= ok;
 
     data.blue = reg.cap(3).toInt(&ok);
-    allOk = allOk && ok;
+    allOk &= ok;
 
     // check if data was converted correctly, set status accordingly
     data.status = allOk ? PaletteData::Ok : PaletteData::Invalid;
