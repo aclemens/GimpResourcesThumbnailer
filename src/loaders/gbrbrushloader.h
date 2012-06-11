@@ -3,7 +3,7 @@
  * Date        : 2009-07-03
  * Description : a generator for gimp brushes
  *
- * Copyright (C) 2009-2011 by Andi Clemens <andi dot clemens at gmx dot net>
+ * Copyright (C) 2009-2012 by Andi Clemens <andi dot clemens at gmx dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -25,6 +25,7 @@
 #include "resourceloader.h"
 
 class QFile;
+class QDataStream;
 
 class GbrBrushLoader : public ResourceLoader
 {
@@ -40,6 +41,8 @@ private:
 
     GbrBrushLoader(const GbrBrushLoader&);
     GbrBrushLoader& operator=(const GbrBrushLoader&);
+
+    bool checkHeaderInformation(QDataStream& ds, quint32 version);
 };
 
 #endif /* GBRBRUSHLOADER_H */

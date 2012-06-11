@@ -3,7 +3,7 @@
  * Date        : 2009-07-03
  * Description : a generator for gimp brushes
  *
- * Copyright (C) 2009-2011 by Andi Clemens <andi dot clemens at gmx dot net>
+ * Copyright (C) 2009-2012 by Andi Clemens <andi dot clemens at gmx dot net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -54,38 +54,7 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
        >> colorDepth;
 
     // check if the brush has the right version and magic number
-    bool validBrushFile = true;
-
-    switch (version)
-    {
-        case 1:
-        {
-            // no magic number and spacing information
-            break;
-        }
-
-        case 2:
-        case 3:
-        {
-            quint32 magic   = 0;
-            quint32 spacing = 0;
-            in >> magic >> spacing;
-
-            if ((magic != 0x47494D50))
-            {
-                kDebug() << "No valid Gimp Brush file!";
-                validBrushFile = false;
-            }
-
-            break;
-        }
-
-        default:
-        {
-            validBrushFile = false;
-            break;
-        }
-    }
+    bool validBrushFile = checkHeaderInformation(in, version);
 
     if (colorDepth != 1 && colorDepth != 4)
     {
@@ -106,7 +75,7 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
     // read the image data
     int dataLength = w * h * colorDepth;
     QScopedArrayPointer<char> data(new char[dataLength]);
-    int bytesRead  = in.readRawData(data.data(), dataLength);
+    int bytesRead = in.readRawData(data.data(), dataLength);
     file.close();
 
     // valid brush data?
@@ -160,3 +129,43 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
 
     return thumb;
 }
+
+bool GbrBrushLoader::checkHeaderInformation(QDataStream& ds, quint32 version)
+{
+    bool isValid = true;
+
+    switch (version)
+    {
+        case 1:
+        {
+            // no magic number and spacing information
+            break;
+        }
+
+        case 2:
+        case 3:
+        {
+            quint32 magic   = 0;
+            quint32 spacing = 0;
+            ds  >> magic
+                >> spacing;
+
+            if ((magic != 0x47494D50))
+            {
+                kDebug() << "No valid Gimp Brush file!";
+                isValid = false;
+            }
+
+            break;
+        }
+
+        default:
+        {
+            isValid = false;
+            break;
+        }
+    }
+
+    return isValid;
+}
+
