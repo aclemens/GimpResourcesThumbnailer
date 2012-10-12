@@ -88,46 +88,7 @@ QImage GbrBrushLoader::generateThumbnail(QFile& file)
         return thumb;
     }
 
-    // generate thumbnail
-    QImage::Format imageFormat = (colorDepth == 1) ? QImage::Format_RGB32 : QImage::Format_ARGB32;
-
-    thumb = QImage(w, h, imageFormat);
-    quint32 step = 0;
-
-    switch (colorDepth)
-    {
-        case 1: // Grayscale
-        {
-            for (quint32 y = 0; y < h; ++y)
-            {
-                for (quint32 x = 0; x < w; ++x, ++step)
-                {
-                    qint32 val = 255 - static_cast<uchar>(data[step]);
-                    thumb.setPixel(x, y, qRgb(val, val, val));
-                }
-            }
-
-            break;
-        }
-
-        case 4: // RGBA
-        {
-            for (quint32 y = 0; y < h; ++y)
-            {
-                for (quint32 x = 0; x < w; ++x, step += 4)
-                {
-                    thumb.setPixel(x, y, qRgba(static_cast<uchar>(data[step]),
-                                               static_cast<uchar>(data[step + 1]),
-                                               static_cast<uchar>(data[step + 2]),
-                                               static_cast<uchar>(data[step + 3])));
-                }
-            }
-
-            break;
-        }
-    }
-
-    return thumb;
+    return renderThumbnail(w, h, colorDepth, data);
 }
 
 bool GbrBrushLoader::checkHeaderInformation(QDataStream& ds, quint32 version)
@@ -169,3 +130,42 @@ bool GbrBrushLoader::checkHeaderInformation(QDataStream& ds, quint32 version)
     return isValid;
 }
 
+QImage GbrBrushLoader::renderThumbnail(quint32 w, quint32 h, quint32 colorDepth, const QScopedArrayPointer<char> &data)
+{
+    QImage::Format imageFormat = (colorDepth == 1) ? QImage::Format_RGB32 : QImage::Format_ARGB32;
+
+    QImage thumb = QImage(w, h, imageFormat);
+    quint32 step = 0;
+
+    switch (colorDepth)
+    {
+        case 1: // Grayscale
+        {
+            for (quint32 y = 0; y < h; ++y)
+            {
+                for (quint32 x = 0; x < w; ++x, ++step)
+                {
+                    qint32 val = 255 - static_cast<uchar>(data[step]);
+                    thumb.setPixel(x, y, qRgb(val, val, val));
+                }
+            }
+            break;
+        }
+
+        case 4: // RGBA
+        {
+            for (quint32 y = 0; y < h; ++y)
+            {
+                for (quint32 x = 0; x < w; ++x, step += 4)
+                {
+                    thumb.setPixel(x, y, qRgba(static_cast<uchar>(data[step]),
+                                               static_cast<uchar>(data[step + 1]),
+                                               static_cast<uchar>(data[step + 2]),
+                                               static_cast<uchar>(data[step + 3])));
+                }
+            }
+            break;
+        }
+    }
+    return thumb;
+}

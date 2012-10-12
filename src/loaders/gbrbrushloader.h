@@ -43,6 +43,8 @@ private:
     GbrBrushLoader& operator=(const GbrBrushLoader&);
 
     bool checkHeaderInformation(QDataStream& ds, quint32 version);
+
+    QImage renderThumbnail(quint32 w, quint32 h, quint32 colorDepth, const QScopedArrayPointer<char> &data);
 };
 
 #endif /* GBRBRUSHLOADER_H */
