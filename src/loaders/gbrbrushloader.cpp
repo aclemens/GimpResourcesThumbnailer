@@ -145,7 +145,7 @@ QImage GbrBrushLoader::renderThumbnail(quint32 w, quint32 h, quint32 colorDepth,
             {
                 for (quint32 x = 0; x < w; ++x, ++step)
                 {
-                    qint32 val = 255 - static_cast<uchar>(data[step]);
+                    quint32 val = 255 - static_cast<uchar>(data[step]);
                     thumb.setPixel(x, y, qRgb(val, val, val));
                 }
             }
