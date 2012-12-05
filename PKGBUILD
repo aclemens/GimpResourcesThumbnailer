@@ -1,4 +1,4 @@
-# Contributor: Andi Clemens <andi.clemens@gmx.net>
+# Contributor: Andi Clemens <andi.clemens@gmail.com>
 
 pkgname=gimpresourcesthumbnailer
 pkgver=2.0.1

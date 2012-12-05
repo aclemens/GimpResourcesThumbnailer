@@ -3,7 +3,7 @@
  * Date        : 2009-07-03
  * Description : an abstract class for gimp resources
  *
- * Copyright (C) 2009-2011 by Andi Clemens <andi dot clemens at gmx dot net>
+ * Copyright (C) 2009-2011 by Andi Clemens <andi dot clemens at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
