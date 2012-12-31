@@ -43,7 +43,7 @@ private:
     ResourceLoader(const ResourceLoader&);
     ResourceLoader& operator=(const ResourceLoader&);
 
-    static ResourceLoader* createLoader(const QString& suffix);
+    static ResourceLoader* createLoader(const QFile &file);
 };
 
 #endif /* RESOURCELOADER_H */

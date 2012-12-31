@@ -47,9 +47,12 @@ ResourceLoader::~ResourceLoader()
 {
 }
 
-ResourceLoader* ResourceLoader::createLoader(const QString& suffix)
+ResourceLoader* ResourceLoader::createLoader(const QFile &file)
 {
     ResourceLoader* loader = 0;
+
+    QFileInfo fi(file);
+    const QString suffix = fi.suffix().toUpper();
 
     if (suffix == QString("GBR"))
     {
@@ -94,10 +97,7 @@ QImage ResourceLoader::load(const QString& path)
         return thumb;
     }
 
-    QFileInfo fi(file);
-    QString suffix = fi.suffix().toUpper();
-
-    QScopedPointer<ResourceLoader> loader(createLoader(suffix));
+    QScopedPointer<ResourceLoader> loader(createLoader(file));
 
     if (!loader.isNull())
     {
