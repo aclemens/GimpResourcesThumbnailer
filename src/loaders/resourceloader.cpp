@@ -31,13 +31,13 @@
 
 // Loader includes
 
-#include "abrbrushloader.h"
-#include "gbrbrushloader.h"
-#include "gihbrushloader.h"
-#include "gradientloader.h"
-#include "paletteloader.h"
-#include "patternloader.h"
-#include "vbrbrushloader.h"
+#include "AdobePhotoshop/abrbrushloader.h"
+#include "Gimp/gbrbrushloader.h"
+#include "Gimp/gihbrushloader.h"
+#include "Gimp/gradientloader.h"
+#include "Gimp/paletteloader.h"
+#include "Gimp/patternloader.h"
+#include "Gimp/vbrbrushloader.h"
 
 ResourceLoader::ResourceLoader()
 {

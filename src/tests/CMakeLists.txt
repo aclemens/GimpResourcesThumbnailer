@@ -7,6 +7,8 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../
 
 FILE(GLOB loaders_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/../loaders/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../loaders/AdobePhotoshop/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../loaders/Gimp/*.cpp
 )
 
 #------------------------------------------------------------------------

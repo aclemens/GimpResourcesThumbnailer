@@ -1,12 +1,17 @@
 find_package(KDE4 REQUIRED)
-include_directories( ${KDE4_INCLUDES}
-                     ${CMAKE_CURRENT_SOURCE_DIR}/loaders
+include_directories(
+    ${KDE4_INCLUDES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/loaders
+    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/AdobePhotoshop
+    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/Gimp
 )
 
 find_package(SharedMimeInfo REQUIRED)
 
 file(GLOB loaders_PART_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/loaders/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/AdobePhotoshop/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/loaders/Gimp/*.cpp
 )
 
 set(gimpresourcesthumbnail_PART_SRCS
