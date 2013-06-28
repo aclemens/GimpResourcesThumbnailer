@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  * ============================================================ */
 
-#include "resourceloader1.h"
+#include "resourceloader.h"
 
 // Qt includes
 
